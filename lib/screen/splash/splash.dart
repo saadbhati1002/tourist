@@ -19,9 +19,9 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Center(
         child: SizedBox(
-          height: 100,
-          width: MediaQuery.of(context).size.width * .6,
-          child: Image.asset(Images.logo),
+          height: 200,
+          width: MediaQuery.of(context).size.width * .8,
+          child: Image.asset(Images.logoName),
         ),
       ),
     );
