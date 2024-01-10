@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tourist/screen/auth/login/login_screen.dart';
 import 'package:tourist/utility/images.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -11,6 +13,9 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
+    Future.delayed(const Duration(seconds: 2), () {
+      Get.to(() => const LoginScreen());
+    });
     super.initState();
   }
 
