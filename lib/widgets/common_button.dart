@@ -10,6 +10,7 @@ class CommonButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: onTap,
       child: Container(
         height: 45,
         width: width,
