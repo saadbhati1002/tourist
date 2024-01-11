@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tourist/screen/dashboard/dashboard_screen.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:tourist/utility/constant.dart';
 import 'package:tourist/utility/images.dart';
@@ -187,7 +189,9 @@ class _QuestionScreenState extends State<QuestionScreen> {
       if (AppConstant.selectedSubRole == null) {
         toastShow(message: "Please select your sub role.");
         return;
-      } else {}
+      } else {
+        Get.to(() => const DashBoardScreen());
+      }
     }
   }
 }
