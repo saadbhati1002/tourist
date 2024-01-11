@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tourist/screen/account_setup/question_screen.dart';
 import 'package:tourist/utility/images.dart';
 import 'package:tourist/widgets/common_button.dart';
 import 'package:tourist/widgets/common_text_field.dart';
@@ -110,7 +111,14 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 25),
                   child: CommonButton(
                     width: MediaQuery.of(context).size.width,
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const QuestionScreen(),
+                        ),
+                      );
+                    },
                     title: "Proceed",
                   ),
                 )

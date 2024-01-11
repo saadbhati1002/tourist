@@ -91,9 +91,11 @@ class _PasswordScreenState extends State<PasswordScreen> {
                     width: MediaQuery.of(context).size.width,
                     onTap: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const SetPasswordScreen()));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SetPasswordScreen(),
+                        ),
+                      );
                     },
                     title: "Login",
                   ),
