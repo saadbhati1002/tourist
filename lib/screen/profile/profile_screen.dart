@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tourist/screen/auth/edit_profile/edit_profile_screen.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:tourist/utility/images.dart';
 import 'package:tourist/widgets/app_bar_back.dart';
@@ -197,7 +199,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   customButtons(
                     Images.edit,
                     'Edit profile',
-                    () {},
+                    () {
+                      Get.to(() => const EditProfileScreen());
+                    },
                   ),
                   customButtons(
                     Images.qr,
@@ -231,35 +235,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget customButtons(String? image, String? title, Function? onTap) {
-    return Container(
-      height: 35,
-      width: MediaQuery.of(context).size.width * .3,
-      decoration: BoxDecoration(
-        color: ColorConstants.mainColor,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(
-            image!,
-            color: ColorConstants.white,
-          ),
-          const SizedBox(
-            width: 7,
-          ),
-          Text(
-            title!,
-            style: TextStyle(
-              fontSize: 12,
-              fontFamily: 'poppins',
+  Widget customButtons(String? image, String? title, VoidCallback? onTap) {
+    return GestureDetector(
+      onTap: onTap!,
+      child: Container(
+        height: 35,
+        width: MediaQuery.of(context).size.width * .3,
+        decoration: BoxDecoration(
+          color: ColorConstants.mainColor,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              image!,
               color: ColorConstants.white,
-              fontWeight: FontWeight.w600,
             ),
-          )
-        ],
+            const SizedBox(
+              width: 7,
+            ),
+            Text(
+              title!,
+              style: TextStyle(
+                fontSize: 12,
+                fontFamily: 'poppins',
+                color: ColorConstants.white,
+                fontWeight: FontWeight.w600,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

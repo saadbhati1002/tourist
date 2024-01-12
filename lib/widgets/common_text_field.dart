@@ -20,7 +20,8 @@ class CustomTextFormField extends StatelessWidget {
       this.suffixConstraints,
       this.validator,
       this.onTap,
-      this.context});
+      this.context,
+      this.isMaxLine});
 
   final Alignment? alignment;
 
@@ -50,6 +51,7 @@ class CustomTextFormField extends StatelessWidget {
   final keyboardType;
   final BuildContext? context;
   final BoxConstraints? suffixConstraints;
+  final bool? isMaxLine;
 
   final FormFieldValidator<String>? validator;
 
@@ -67,7 +69,7 @@ class CustomTextFormField extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context!).size.width,
       margin: margin,
-      height: 45,
+      height: isMaxLine == true ? 180 : 45,
       child: TextField(
         onChanged: onChanged,
         keyboardType: keyboardType,
@@ -81,7 +83,7 @@ class CustomTextFormField extends StatelessWidget {
         ),
         obscureText: isObscureText!,
         textInputAction: textInputAction,
-        maxLines: maxLines ?? 1,
+        maxLines: isMaxLine == true ? 7 : 1,
         decoration: InputDecoration(
           hintText: hintText ?? "",
           hintStyle: const TextStyle(
