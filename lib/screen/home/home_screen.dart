@@ -22,9 +22,9 @@ class _HomeScreenState extends State<HomeScreen> {
     'Delegate',
     'Vendor',
     'Speaker',
-    'Vendor',
     'Delegate',
-    'Speaker'
+    'Media',
+    'Vendor'
   ];
   List whatsON = [Images.homeBanner2, Images.homeBanner1];
   List sponsorList = [Images.sponsor];

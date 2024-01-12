@@ -12,4 +12,8 @@ class Images {
   static const String meeting = "assets/images/meeting.png";
   static const String userMain = "assets/images/userMain.png";
   static const String sponsor = "assets/images/sponsor.png";
+  static const String home = "assets/images/home.png";
+  static const String network = "assets/images/network.png";
+  static const String calender = "assets/images/calender.png";
+  static const String notification = "assets/images/notification.png";
 }
