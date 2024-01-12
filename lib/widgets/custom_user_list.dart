@@ -51,7 +51,9 @@ class _UserListDataState extends State<UserListData> {
                               ? ColorConstants.delegateColor
                               : widget.userType == 'Vendor'
                                   ? ColorConstants.vendorColor
-                                  : ColorConstants.speakerColor),
+                                  : widget.userType == 'Media'
+                                      ? ColorConstants.mediaColor
+                                      : ColorConstants.speakerColor),
                       alignment: Alignment.center,
                       child: Text(
                         widget.userType!,
@@ -59,7 +61,8 @@ class _UserListDataState extends State<UserListData> {
                             fontSize: 10,
                             fontWeight: FontWeight.w700,
                             fontFamily: 'poppins',
-                            color: widget.userType == "Delegate"
+                            color: widget.userType == "Delegate" ||
+                                    widget.userType == "Media"
                                 ? ColorConstants.white
                                 : ColorConstants.black),
                       ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tourist/screen/home/home_screen.dart';
+import 'package:tourist/screen/network/network_screen.dart';
 import 'package:tourist/utility/color.dart';
+import 'package:tourist/utility/images.dart';
 
 class DashBoardScreen extends StatefulWidget {
   const DashBoardScreen({super.key});
@@ -15,7 +17,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
   TabController? _tabController;
   final _screens = [
     const HomeScreen(),
-    const HomeScreen(),
+    const NetworkScreen(),
     const HomeScreen(),
     const HomeScreen(),
   ];
@@ -44,10 +46,10 @@ class _DashBoardScreenState extends State<DashBoardScreen>
               indicatorColor: Colors.black,
               isScrollable: true,
               tabs: [
-                _barItem(Icons.home, 0, "Home"),
-                _barItem(Icons.chat_outlined, 1, "Network"),
-                _barItem(Icons.calendar_month_outlined, 2, "Schedule"),
-                _barItem(Icons.notifications, 3, "Notifications"),
+                _barItem(Images.home, 0, "Home"),
+                _barItem(Images.network, 1, "Network"),
+                _barItem(Images.calender, 2, "Schedule"),
+                _barItem(Images.notification, 3, "Notifications"),
               ],
             ),
           ),
@@ -63,7 +65,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
     });
   }
 
-  Widget _barItem(IconData icon, int index, String? title) {
+  Widget _barItem(String image, int index, String? title) {
     return index == _pageIndex
         ? SizedBox(
             height: 65,
@@ -84,9 +86,8 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
-                        icon,
-                        size: 22,
+                      ImageIcon(
+                        AssetImage(image),
                         color: ColorConstants.white,
                       ),
                       const SizedBox(
@@ -111,10 +112,9 @@ class _DashBoardScreenState extends State<DashBoardScreen>
             height: 65,
             width: MediaQuery.of(context).size.width * .2,
             alignment: Alignment.center,
-            child: Icon(
-              icon,
-              size: 22,
-              color: ColorConstants.white,
+            child: ImageIcon(
+              AssetImage(image),
+              color: ColorConstants.greyLight,
             ),
           );
   }
