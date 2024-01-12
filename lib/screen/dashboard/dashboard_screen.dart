@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tourist/screen/home/home_screen.dart';
 import 'package:tourist/utility/color.dart';
 
 class DashBoardScreen extends StatefulWidget {
@@ -12,6 +13,12 @@ class _DashBoardScreenState extends State<DashBoardScreen>
     with SingleTickerProviderStateMixin {
   int _pageIndex = 0;
   TabController? _tabController;
+  final _screens = [
+    const HomeScreen(),
+    const HomeScreen(),
+    const HomeScreen(),
+    const HomeScreen(),
+  ];
 
   @override
   void initState() {
@@ -44,6 +51,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
               ],
             ),
           ),
+          body: _screens[_pageIndex],
         ),
       ),
     );
@@ -63,13 +71,13 @@ class _DashBoardScreenState extends State<DashBoardScreen>
             child: Padding(
               padding: const EdgeInsets.only(top: 12, bottom: 12, left: 5),
               child: Material(
-                borderRadius: BorderRadius.circular(25),
+                borderRadius: BorderRadius.circular(10),
                 elevation: 3,
                 shadowColor: Colors.yellowAccent,
                 child: Container(
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
+                      borderRadius: BorderRadius.circular(10),
                       color: index == _pageIndex
                           ? ColorConstants.mainColor
                           : Colors.transparent),
