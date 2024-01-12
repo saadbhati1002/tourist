@@ -52,7 +52,9 @@ customAppBar(
       Padding(
         padding: const EdgeInsets.only(top: 10, right: 10),
         child: GestureDetector(
-          onTap: () {},
+          onTap: () {
+            key.currentState!.openEndDrawer();
+          },
           child: Image.asset(Images.menu),
         ),
       )

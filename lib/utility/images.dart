@@ -16,4 +16,5 @@ class Images {
   static const String network = "assets/images/network.png";
   static const String calender = "assets/images/calender.png";
   static const String notification = "assets/images/notification.png";
+  static const String government = "assets/images/government.png";
 }
