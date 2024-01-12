@@ -17,4 +17,8 @@ class Images {
   static const String calender = "assets/images/calender.png";
   static const String notification = "assets/images/notification.png";
   static const String government = "assets/images/government.png";
+  static const String profileBox = "assets/images/profileBox.png";
+  static const String edit = "assets/images/edit.png";
+  static const String qr = "assets/images/qr.png";
+  static const String visibility = "assets/images/visibility.png";
 }
