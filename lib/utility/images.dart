@@ -21,4 +21,5 @@ class Images {
   static const String edit = "assets/images/edit.png";
   static const String qr = "assets/images/qr.png";
   static const String visibility = "assets/images/visibility.png";
+  static const String download = "assets/images/download.png";
 }

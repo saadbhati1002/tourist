@@ -206,7 +206,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   customButtons(
                     Images.qr,
                     'Share Card',
-                    () {},
+                    () {
+                      orCodeBottomSheet();
+                    },
                   ),
                   // customButtons(
                   //   Images.visibility,
@@ -307,5 +309,117 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
     );
+  }
+
+  orCodeBottomSheet() {
+    return showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(15),
+              topRight: Radius.circular(15),
+            ),
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height * .6,
+              width: MediaQuery.of(context).size.width,
+              child: Stack(
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * .6,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.qr_code_2,
+                              size: 180,
+                              color: ColorConstants.black,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Text(
+                          'Thomas Brian Samuel',
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: ColorConstants.black,
+                              fontFamily: 'poppins',
+                              fontWeight: FontWeight.w500),
+                        ),
+                        Text(
+                          'FOUNDER & CEO',
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: ColorConstants.black,
+                              fontFamily: 'poppins',
+                              fontWeight: FontWeight.w500),
+                        ),
+                        Text(
+                          'Company Name',
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: ColorConstants.black,
+                              fontFamily: 'poppins',
+                              fontWeight: FontWeight.w500),
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width * .65,
+                          height: 35,
+                          decoration: BoxDecoration(
+                              color: ColorConstants.black,
+                              borderRadius: BorderRadius.circular(7)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                Images.download,
+                                color: ColorConstants.white,
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                'Download As Image',
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: ColorConstants.white,
+                                    fontFamily: 'poppins',
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15, right: 15),
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Icon(
+                          Icons.cancel_rounded,
+                          size: 30,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
   }
 }
