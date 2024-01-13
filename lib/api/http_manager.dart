@@ -38,16 +38,17 @@ class HTTPManager {
     BuildContext? context,
   }) async {
     var optionsMain = Options(
-        followRedirects: false,
-        validateStatus: (status) {
-          return status! < 500;
-        },
-        headers: {
-          // "Authorization": AppConstant.bearerToken != "null"
-          //     ? "Bearer ${AppConstant.bearerToken}"
-          //     : "",
-          "Content-Type": "application/json",
-        });
+      followRedirects: false,
+      validateStatus: (status) {
+        return status! < 500;
+      },
+      // headers: {
+      //   // "Authorization": AppConstant.bearerToken != "null"
+      //   //     ? "Bearer ${AppConstant.bearerToken}"
+      //   //     : "",
+      //   "Content-Type": "application/json",
+      // }
+    );
 
     Dio dio = Dio(baseOptions);
     var internet = await ViewUtils.isConnected();
@@ -55,7 +56,7 @@ class HTTPManager {
       try {
         final response = await dio.post(
           url!,
-          data: jsonEncode(data),
+          data: data,
           options: optionsMain,
         );
 
