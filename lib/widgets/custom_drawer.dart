@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tourist/screen/find_people/find_people_screen.dart';
+import 'package:tourist/screen/qr_code/qr_code_screen.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:tourist/utility/images.dart';
 
@@ -70,7 +71,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 ),
                 headingText(
                   'Share My QR Code',
-                  () {},
+                  () {
+                    Get.to(() => const QRCodeScreen());
+                  },
                 ),
                 const SizedBox(
                   height: 15,
