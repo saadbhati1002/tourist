@@ -5,4 +5,9 @@ class AuthRepository {
     final body = {'email': email};
     return await AuthNetwork.checkEmail(body);
   }
+
+  Future<dynamic> setPassword({String? email, String? password}) async {
+    final body = {'email': email, "password": password};
+    return await AuthNetwork.setPassword(body);
+  }
 }

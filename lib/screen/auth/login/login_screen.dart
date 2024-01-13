@@ -127,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
           await AuthRepository().checkEmail(email: email.text.trim());
       if (response.success == 'This email is registered but Password not Set') {
         Get.to(
-          () => const SetPasswordScreen(),
+          () => SetPasswordScreen(email: email.text.trim()),
         );
       }
     } catch (e) {

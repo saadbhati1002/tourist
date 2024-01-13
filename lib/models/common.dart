@@ -4,7 +4,7 @@ class Common {
   Common({this.success, this.error});
 
   Common.fromJson(Map<String, dynamic> json) {
-    success = json['success'];
+    success = json['success'] ?? json['Success'];
     error = json['error'];
   }
 
