@@ -120,7 +120,7 @@ Widget eventListing({BuildContext? context}) {
               ),
               AvatarStack(
                 height: 40,
-                width: MediaQuery.of(context).size.width * .35,
+                width: MediaQuery.of(context).size.width * .3,
                 infoWidgetBuilder: (surplus) {
                   return Container(
                     height: 40,

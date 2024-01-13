@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tourist/screen/event_detail/event_detail_screen.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:tourist/widgets/custom_app_bar.dart';
 import 'package:tourist/widgets/custom_drawer.dart';
@@ -179,7 +181,13 @@ class _EventListScreenState extends State<EventListScreen> {
               shrinkWrap: true,
               itemCount: 5,
               itemBuilder: (context, index) {
-                return eventListing(context: context);
+                return GestureDetector(
+                    onTap: () {
+                      Get.to(
+                        () => const EventDetailScreen(),
+                      );
+                    },
+                    child: eventListing(context: context));
               },
             ),
           ],

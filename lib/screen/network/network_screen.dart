@@ -65,8 +65,11 @@ class _NetworkScreenState extends State<NetworkScreen> {
               shrinkWrap: true,
               itemCount: 6,
               itemBuilder: (context, index) {
-                return UserListData(
-                  userType: userType[index],
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: UserListData(
+                    userType: userType[index],
+                  ),
                 );
               },
             ),

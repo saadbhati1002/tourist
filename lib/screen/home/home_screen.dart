@@ -113,8 +113,11 @@ class _HomeScreenState extends State<HomeScreen> {
               shrinkWrap: true,
               itemCount: userIndex,
               itemBuilder: (context, index) {
-                return UserListData(
-                  userType: userType[index],
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: UserListData(
+                    userType: userType[index],
+                  ),
                 );
               },
             ),
