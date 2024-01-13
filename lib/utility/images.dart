@@ -22,4 +22,7 @@ class Images {
   static const String qr = "assets/images/qr.png";
   static const String visibility = "assets/images/visibility.png";
   static const String download = "assets/images/download.png";
+  static const String chat = "assets/images/chat.png";
+  static const String save = "assets/images/save.png";
+  static const String star = "assets/images/star.png";
 }

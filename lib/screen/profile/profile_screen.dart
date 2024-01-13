@@ -6,7 +6,8 @@ import 'package:tourist/utility/images.dart';
 import 'package:tourist/widgets/app_bar_back.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+  final bool? isFromGuest;
+  const ProfileScreen({super.key, this.isFromGuest});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -191,33 +192,60 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const SizedBox(
               height: 20,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  customButtons(
-                    Images.edit,
-                    'Edit profile',
-                    () {
-                      Get.to(() => const EditProfileScreen());
-                    },
-                  ),
-                  customButtons(
-                    Images.qr,
-                    'Share Card',
-                    () {
-                      orCodeBottomSheet();
-                    },
-                  ),
-                  // customButtons(
-                  //   Images.visibility,
-                  //   'Visibility',
-                  //   () {},
-                  // ),
-                ],
+            if (widget.isFromGuest == true) ...[
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    customButtons(
+                      Images.star,
+                      'Favorite',
+                      () {
+                        Get.to(() => const EditProfileScreen());
+                      },
+                    ),
+                    customButtons(
+                      Images.save,
+                      'Save as contact',
+                      () {
+                        orCodeBottomSheet();
+                      },
+                    ),
+                    customButtons(
+                      Images.chat,
+                      'Chat',
+                      () {
+                        orCodeBottomSheet();
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ),
+            ] else ...[
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    customButtons(
+                      Images.edit,
+                      'Edit profile',
+                      () {
+                        Get.to(() => const EditProfileScreen());
+                      },
+                    ),
+                    customButtons(
+                      Images.qr,
+                      'Share Card',
+                      () {
+                        orCodeBottomSheet();
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
             const SizedBox(
               height: 20,
             ),
@@ -242,32 +270,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
       onTap: onTap!,
       child: Container(
         height: 35,
-        width: MediaQuery.of(context).size.width * .3,
         decoration: BoxDecoration(
           color: ColorConstants.mainColor,
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              image!,
-              color: ColorConstants.white,
-            ),
-            const SizedBox(
-              width: 7,
-            ),
-            Text(
-              title!,
-              style: TextStyle(
-                fontSize: 12,
-                fontFamily: 'poppins',
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                image!,
                 color: ColorConstants.white,
-                fontWeight: FontWeight.w600,
               ),
-            )
-          ],
+              const SizedBox(
+                width: 7,
+              ),
+              Text(
+                title!,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontFamily: 'poppins',
+                  color: ColorConstants.white,
+                  fontWeight: FontWeight.w600,
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
