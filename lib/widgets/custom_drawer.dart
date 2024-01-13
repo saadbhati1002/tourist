@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tourist/screen/find_people/find_people_screen.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:tourist/utility/images.dart';
 
@@ -75,7 +77,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 ),
                 headingText(
                   'Find People',
-                  () {},
+                  () {
+                    Get.to(() => const FindPeopleScreen());
+                  },
                 ),
                 const SizedBox(
                   height: 15,
@@ -140,30 +144,33 @@ class _CustomDrawerState extends State<CustomDrawer> {
     );
   }
 
-  Widget headingText(String? title, Function? onTap) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          width: MediaQuery.of(context).size.width,
-          height: 1.5,
-          color: ColorConstants.black,
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Text(
-            title!,
-            style: TextStyle(
-                fontSize: 14,
-                fontFamily: 'poppins',
-                color: ColorConstants.black,
-                fontWeight: FontWeight.w500),
+  Widget headingText(String? title, VoidCallback? onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: 1.5,
+            color: ColorConstants.black,
           ),
-        )
-      ],
+          const SizedBox(
+            height: 15,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Text(
+              title!,
+              style: TextStyle(
+                  fontSize: 14,
+                  fontFamily: 'poppins',
+                  color: ColorConstants.black,
+                  fontWeight: FontWeight.w500),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
