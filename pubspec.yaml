@@ -35,6 +35,8 @@ dependencies:
   fluttertoast: ^8.2.4
   avatar_stack: ^1.2.0
   html_editor_enhanced: ^2.5.1
+  dio: ^5.4.0
+  connectivity_plus: ^5.0.2
 
 
   # The following adds the Cupertino Icons font to your application.

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class AppConstant {
+  static const String baseUrl = '';
   static List roleType = ['Delegate', 'Speaker', 'Vendor', 'Media'];
   static List rolesSubRole = ['Answer 1', 'Answer 2', 'Answer 3', 'Answer 4'];
   static String? selectedRole;
