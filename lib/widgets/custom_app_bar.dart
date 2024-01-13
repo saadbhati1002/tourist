@@ -17,7 +17,7 @@ customAppBar(
         Get.to(() => const ProfileScreen());
       },
       child: Container(
-        margin: const EdgeInsets.only(top: 10),
+        margin: const EdgeInsets.only(top: 10, bottom: 10),
         height: 50,
         width: MediaQuery.of(context!).size.width * .6,
         decoration: BoxDecoration(

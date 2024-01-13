@@ -194,7 +194,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   customButtons(
                     Images.edit,
@@ -208,11 +208,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     'Share Card',
                     () {},
                   ),
-                  customButtons(
-                    Images.visibility,
-                    'Visibility',
-                    () {},
-                  ),
+                  // customButtons(
+                  //   Images.visibility,
+                  //   'Visibility',
+                  //   () {},
+                  // ),
                 ],
               ),
             ),

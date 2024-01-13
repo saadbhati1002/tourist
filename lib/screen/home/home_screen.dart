@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tourist/screen/find_people/find_people_screen.dart';
+import 'package:tourist/screen/note/note_screen.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:tourist/utility/images.dart';
 import 'package:tourist/widgets/custom_app_bar.dart';
@@ -86,7 +89,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   customActionButton(
                     "Quick Notes",
                     Images.notes,
-                    () {},
+                    () {
+                      Get.to(
+                        () => const QuickScreen(),
+                      );
+                    },
                   ),
                   customActionButton(
                     "Leader Board",
@@ -94,9 +101,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     () {},
                   ),
                   customActionButton(
-                    "Create A Meeting",
+                    "Guest List",
                     Images.meeting,
-                    () {},
+                    () {
+                      Get.to(
+                        () => const FindPeopleScreen(),
+                      );
+                    },
                   )
                 ],
               ),
@@ -181,27 +192,30 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget customActionButton(String? title, String? image, Function? onTap) {
-    return Container(
-      height: 120,
-      width: MediaQuery.of(context).size.width * .3,
-      decoration: BoxDecoration(
-          color: ColorConstants.mainColor,
-          borderRadius: BorderRadius.circular(10)),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(image!),
-          Text(
-            title!,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                fontFamily: "poppins",
-                color: ColorConstants.white),
-          )
-        ],
+  Widget customActionButton(String? title, String? image, VoidCallback? onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 120,
+        width: MediaQuery.of(context).size.width * .3,
+        decoration: BoxDecoration(
+            color: ColorConstants.mainColor,
+            borderRadius: BorderRadius.circular(10)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(image!),
+            Text(
+              title!,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: "poppins",
+                  color: ColorConstants.white),
+            )
+          ],
+        ),
       ),
     );
   }
