@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tourist/screen/event_list/event_list.dart';
 import 'package:tourist/screen/home/home_screen.dart';
 import 'package:tourist/screen/network/network_screen.dart';
+import 'package:tourist/screen/notification/notification_screen.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:tourist/utility/images.dart';
 
@@ -20,7 +21,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
     const HomeScreen(),
     const NetworkScreen(),
     const EventListScreen(),
-    const HomeScreen(),
+    const NotificationScreen(),
   ];
 
   @override

@@ -63,10 +63,11 @@ class _NetworkScreenState extends State<NetworkScreen> {
             ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: 6,
+              itemCount: 3,
               itemBuilder: (context, index) {
                 return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   child: UserListData(
                     userType: userType[index],
                   ),
@@ -74,8 +75,26 @@ class _NetworkScreenState extends State<NetworkScreen> {
               },
             ),
             const SizedBox(
-              height: 15,
-            )
+              height: 20,
+            ),
+            customHeadingText(title: 'All Participants'),
+            const SizedBox(
+              height: 10,
+            ),
+            ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: 6,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                  child: UserListData(
+                    userType: userType[index],
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),

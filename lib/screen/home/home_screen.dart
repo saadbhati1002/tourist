@@ -114,7 +114,8 @@ class _HomeScreenState extends State<HomeScreen> {
               itemCount: userIndex,
               itemBuilder: (context, index) {
                 return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   child: UserListData(
                     userType: userType[index],
                   ),
