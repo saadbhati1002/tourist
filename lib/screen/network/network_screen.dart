@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:tourist/widgets/common_text_field.dart';
 import 'package:tourist/widgets/custom_app_bar.dart';
+import 'package:tourist/widgets/custom_drawer.dart';
 import 'package:tourist/widgets/custom_user_list.dart';
 
 class NetworkScreen extends StatefulWidget {
@@ -28,6 +29,7 @@ class _NetworkScreenState extends State<NetworkScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      endDrawer: const CustomDrawer(),
       key: _key,
       appBar: customAppBar(_key, context: context, setState: setStateNow),
       body: SingleChildScrollView(

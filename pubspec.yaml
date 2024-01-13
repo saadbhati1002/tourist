@@ -33,6 +33,7 @@ dependencies:
     sdk: flutter
   get:
   fluttertoast: ^8.2.4
+  avatar_stack: ^1.2.0
 
 
   # The following adds the Cupertino Icons font to your application.

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tourist/screen/event_list/event_list.dart';
 import 'package:tourist/screen/home/home_screen.dart';
 import 'package:tourist/screen/network/network_screen.dart';
 import 'package:tourist/utility/color.dart';
@@ -18,7 +19,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
   final _screens = [
     const HomeScreen(),
     const NetworkScreen(),
-    const HomeScreen(),
+    const EventListScreen(),
     const HomeScreen(),
   ];
 

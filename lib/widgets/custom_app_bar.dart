@@ -62,7 +62,10 @@ customAppBar(
           onTap: () {
             key.currentState!.openEndDrawer();
           },
-          child: Image.asset(Images.menu),
+          child: Image.asset(
+            Images.menu,
+            color: ColorConstants.mainColor,
+          ),
         ),
       )
     ],
