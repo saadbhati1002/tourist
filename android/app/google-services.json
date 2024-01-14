@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "104570725171",
+    "project_id": "dubai-tourist",
+    "storage_bucket": "dubai-tourist.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:104570725171:android:daf15260471a4f2c40d446",
+        "android_client_info": {
+          "package_name": "com.tourist.vivah"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZchO94xzfYcTzUwIemiwADX_71Qrxn6k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tourist/api/repository/auth.dart';
 import 'package:tourist/models/common.dart';
+import 'package:tourist/screen/auth/password/password.dart';
 import 'package:tourist/screen/auth/password_set/set_password_screen.dart';
 import 'package:tourist/utility/constant.dart';
 import 'package:tourist/utility/images.dart';
@@ -23,84 +24,95 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       body: Stack(
         fit: StackFit.loose,
         children: [
           SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * .15,
-                ),
-                Container(
-                  alignment: Alignment.center,
-                  child: Image.asset(Images.dubai),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * .09,
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25),
-                  child: Text(
-                    "DUBAI WEDDING SYMPOSIUM DUBAI 2024",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w800),
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * .07,
+                        ),
+                        Container(
+                          height: MediaQuery.of(context).size.height * .26,
+                          alignment: Alignment.center,
+                          child: Image.asset(Images.logoName),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * .07,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 25),
+                          child: Text(
+                            "DUBAI WEDDING SYMPOSIUM DUBAI 2024",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w800),
+                          ),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * .1,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 25),
+                          child: Text(
+                            "Enter Your Registered Email Address",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 25),
+                          child: CustomTextFormField(
+                            controller: email,
+                            hintText: "Enter your email address",
+                            context: context,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 25,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 25),
+                          child: CommonButton(
+                            width: MediaQuery.of(context).size.width,
+                            onTap: () {
+                              checkEmail();
+                            },
+                            title: "Login",
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * .12,
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25),
-                  child: Text(
-                    "Enter Your Registered Email Address",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w600),
+                  Container(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 15),
+                      child: SizedBox(
+                        height: 65,
+                        width: 65,
+                        child: Image.asset(Images.vivah),
+                      ),
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25),
-                  child: CustomTextFormField(
-                    controller: email,
-                    hintText: "Enter your email address",
-                    context: context,
-                  ),
-                ),
-                const SizedBox(
-                  height: 25,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25),
-                  child: CommonButton(
-                    width: MediaQuery.of(context).size.width,
-                    onTap: () {
-                      checkEmail();
-                    },
-                    title: "Login",
-                  ),
-                )
-              ],
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 15),
-              child: SizedBox(
-                height: 65,
-                width: 65,
-                child: Image.asset(Images.vivah),
+                ],
               ),
             ),
           ),
@@ -120,21 +132,29 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
     try {
+      FocusScope.of(context).requestFocus(FocusNode());
       setState(() {
         isLoading = true;
       });
       Common response =
-          await AuthRepository().checkEmail(email: email.text.trim());
+          await AuthRepository().checkEmailApiCall(email: email.text.trim());
       if (response.success == 'This email is registered but Password not Set') {
         Get.to(
           () => SetPasswordScreen(email: email.text.trim()),
         );
+      } else if (response.success ==
+          'This email is registered and password is also set') {
+        Get.to(
+          () => PasswordScreen(email: email.text.trim()),
+        );
+      } else {
+        toastShow(message: "This email is not register with us.");
       }
     } catch (e) {
       debugPrint(e.toString());
     } finally {
       setState(() {
-        isLoading = true;
+        isLoading = false;
       });
     }
   }

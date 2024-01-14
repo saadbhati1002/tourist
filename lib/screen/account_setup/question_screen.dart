@@ -181,9 +181,10 @@ class _QuestionScreenState extends State<QuestionScreen> {
         toastShow(message: "Please select your role.");
         return;
       } else if (AppConstant.selectedRole != null) {
-        setState(() {
-          pageIndex = 2;
-        });
+        Get.to(() => const DashBoardScreen());
+        // setState(() {
+        //   // pageIndex = 2;
+        // });
       }
     } else if (pageIndex == 2) {
       if (AppConstant.selectedSubRole == null) {

@@ -77,7 +77,7 @@ class CustomTextFormField extends StatelessWidget {
         focusNode: focusNode,
         style: TextStyle(
           color: ColorConstants.black,
-          fontSize: 16,
+          fontSize: 14,
           fontFamily: "inter",
           fontWeight: FontWeight.w500,
         ),

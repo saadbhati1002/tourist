@@ -59,7 +59,7 @@ class HTTPManager {
           data: data,
           options: optionsMain,
         );
-
+        print(response.data);
         if (response.statusCode == 200 && response.statusCode == 422) {
           return response.data;
         } else {
@@ -68,6 +68,8 @@ class HTTPManager {
 
             navigation.Get.to(const LoginScreen());
           }
+          print(response.data);
+
           return response.data;
         }
       } on DioError catch (error) {
@@ -75,6 +77,7 @@ class HTTPManager {
           toastShow(message: "Your login expired please login again");
           navigation.Get.to(const LoginScreen());
         }
+        print(error);
       }
     } else {
       ViewUtils.checkInternetConnectionDialog();
