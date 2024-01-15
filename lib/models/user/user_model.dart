@@ -64,7 +64,7 @@ class UserData {
   String? venue5Year;
   String? venue5Pax;
   String? createdAt;
-  Null? updatedAt;
+  dynamic updatedAt;
   String? noOfLocationsInWedding;
   String? noOfDestinationWedding;
   String? venue1Name;
@@ -80,7 +80,7 @@ class UserData {
   String? tnc1Approval;
   String? tnc2Approval;
   String? tnc3Approval;
-
+  bool? isImageFromStorage;
   UserData(
       {id,
       deviceToken,
@@ -140,7 +140,8 @@ class UserData {
       venue5Month,
       tnc1Approval,
       tnc2Approval,
-      tnc3Approval});
+      tnc3Approval,
+      this.isImageFromStorage});
 
   UserData.fromJson(Map<String, dynamic> json) {
     id = json['id'];

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tourist/api/repository/auth.dart';
 import 'package:tourist/models/user/user_model.dart';
-import 'package:tourist/screen/auth/password_set/set_password_screen.dart';
 import 'package:tourist/screen/dashboard/dashboard_screen.dart';
 import 'package:tourist/utility/constant.dart';
 import 'package:tourist/utility/images.dart';
@@ -172,7 +171,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
       if (response.success != null) {
         toastShow(message: "User login successfully");
         AppConstant.userData = response.success;
-        AppConstant.userDetailSaved(jsonEncode(response));
+        AppConstant.userDetailSaved(jsonEncode(response.success));
         Get.to(() => const DashBoardScreen());
       } else {
         toastShow(message: "You entered wrong password");

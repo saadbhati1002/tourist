@@ -35,7 +35,7 @@ customAppBar(
               CustomImage(
                 height: 32,
                 width: 32,
-                imagePath: AppConstant.userData!.logo2!,
+                imagePath: AppConstant.userData!.logo3,
               ),
               const SizedBox(
                 width: 10,

@@ -28,10 +28,13 @@ class _SplashScreenState extends State<SplashScreen> {
   checkLogin() async {
     try {
       var response = await AppConstant.getUserDetail();
+      print(response);
       if (response != null && response != "null") {
-        UserRes responseUser = UserRes.fromJson(jsonDecode(response));
-        AppConstant.userData = responseUser.success;
+        UserData responseUser = UserData.fromJson(jsonDecode(response));
+        AppConstant.userData = responseUser;
         Get.to(() => const DashBoardScreen());
+      } else {
+        Get.to(() => const LoginScreen());
       }
     } catch (e) {
       Get.to(() => const LoginScreen());

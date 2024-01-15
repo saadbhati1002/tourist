@@ -220,7 +220,7 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
       if (response.success != null) {
         toastShow(message: "Password set successfully");
         AppConstant.userData = response.success;
-        AppConstant.userDetailSaved(jsonEncode(response));
+        AppConstant.userDetailSaved(jsonEncode(response.success));
         Get.to(() => const QuestionScreen());
       } else {
         toastShow(message: "You entered wrong password");

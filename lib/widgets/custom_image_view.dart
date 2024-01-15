@@ -7,6 +7,7 @@ class CustomImage extends StatelessWidget {
   final double? width;
   final double? height;
   final String? imagePath;
+
   const CustomImage({super.key, this.height, this.imagePath, this.width});
 
   @override
@@ -71,11 +72,11 @@ class CustomImage extends StatelessWidget {
             height: height,
             width: width,
             decoration: BoxDecoration(
-              color: ColorConstants.white,
-              borderRadius: const BorderRadius.all(
-                Radius.circular(8),
-              ),
-            ),
+                color: ColorConstants.white,
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(10),
+                ),
+                border: Border.all(width: 1, color: ColorConstants.greyLight)),
             child: const Icon(Icons.image),
           );
   }
