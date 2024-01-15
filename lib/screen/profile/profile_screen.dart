@@ -86,7 +86,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               CustomImage(
                                                 height: 90,
                                                 width: 90,
-                                                imagePath: userData!.logo2!,
+                                                imagePath: userData!.logo3!,
                                               ),
                                               Align(
                                                 alignment: Alignment.bottomLeft,
@@ -367,7 +367,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (userData!.middleName != null) {
       name = "$name ${userData!.middleName}";
     }
-    if (AppConstant.userData!.lastName != null) {
+    if (userData!.lastName != null) {
       name = "$name ${userData!.lastName}";
     }
     return name;

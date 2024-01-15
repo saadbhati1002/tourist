@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tourist/api/repository/auth.dart';
+import 'package:tourist/api/repository/auth/auth.dart';
 import 'package:tourist/models/common.dart';
 import 'package:tourist/models/user/user_model.dart';
 import 'package:tourist/screen/account_setup/question_screen.dart';

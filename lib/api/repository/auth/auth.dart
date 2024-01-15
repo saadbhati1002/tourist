@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:get/get.dart';
-import 'package:tourist/api/network/auth.dart';
+import 'package:tourist/api/network/auth/auth.dart';
 
 class AuthRepository {
   Future<dynamic> checkEmailApiCall({String? email}) async {
@@ -38,35 +38,35 @@ class AuthRepository {
       bool? isProfileUpdated,
       File? userImage}) async {
     var body;
-    // if (isProfileUpdated == true) {
-    String fileName = userImage!.path.split('/').last;
-    body = {
-      'email': email,
-      "first_name": firstName,
-      "middle_name": middleName,
-      "last_name": lastName,
-      "Company_Name": companyName,
-      "mobile": mobileNumber,
-      "Company_Profile": companyProfile,
-      "Personal_Bio": personalBio,
-      "country": country,
-      "job_title": jobTitle,
-      "logo3": await MultipartFile(userImage.path, filename: fileName)
-    };
-    // } else {
-    //   body = {
-    //     'email': email,
-    //     "first_name": firstName,
-    //     "middle_name": middleName,
-    //     "last_name": lastName,
-    //     "Company_Name": companyName,
-    //     "mobile": mobileNumber,
-    //     "Company_Profile": companyName,
-    //     "Personal_Bio": personalBio,
-    //     "country": country,
-    //     "job_title": jobTitle
-    //   };
-    // }
+    if (isProfileUpdated == true) {
+      String fileName = userImage!.path.split('/').last;
+      body = {
+        'email': email,
+        "first_name": firstName,
+        "middle_name": middleName,
+        "last_name": lastName,
+        "Company_Name": companyName,
+        "mobile": mobileNumber,
+        "Company_Profile": companyProfile,
+        "Personal_Bio": personalBio,
+        "country": country,
+        "job_title": jobTitle,
+        "logo3": await MultipartFile(userImage.path, filename: fileName)
+      };
+    } else {
+      body = {
+        'email': email,
+        "first_name": firstName,
+        "middle_name": middleName,
+        "last_name": lastName,
+        "Company_Name": companyName,
+        "mobile": mobileNumber,
+        "Company_Profile": companyName,
+        "Personal_Bio": personalBio,
+        "country": country,
+        "job_title": jobTitle
+      };
+    }
 
     return await AuthNetwork.updateProfile(body);
   }

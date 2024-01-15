@@ -122,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: userIndex,
+              itemCount: 0,
               itemBuilder: (context, index) {
                 return Padding(
                   padding:
@@ -136,32 +136,32 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(
               height: 5,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                InkWell(
-                  onTap: () {
-                    if (userIndex == 3) {
-                      setState(() {
-                        userIndex = 6;
-                      });
-                    } else {
-                      setState(() {
-                        userIndex = 3;
-                      });
-                    }
-                  },
-                  child: Text(
-                    userIndex == 3 ? "Load More" : "Show Less",
-                    style: const TextStyle(
-                        fontSize: 14,
-                        color: ColorConstants.greyLight,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'inter'),
-                  ),
-                )
-              ],
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     InkWell(
+            //       onTap: () {
+            //         if (userIndex == 3) {
+            //           setState(() {
+            //             userIndex = 6;
+            //           });
+            //         } else {
+            //           setState(() {
+            //             userIndex = 3;
+            //           });
+            //         }
+            //       },
+            //       child: Text(
+            //         userIndex == 3 ? "Load More" : "Show Less",
+            //         style: const TextStyle(
+            //             fontSize: 14,
+            //             color: ColorConstants.greyLight,
+            //             fontWeight: FontWeight.w600,
+            //             fontFamily: 'inter'),
+            //       ),
+            //     )
+            //   ],
+            // ),
             const SizedBox(
               height: 25,
             ),

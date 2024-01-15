@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tourist/api/repository/auth.dart';
+import 'package:tourist/api/repository/auth/auth.dart';
 import 'package:tourist/models/updateProfile/update_profile_model.dart';
 import 'package:tourist/screen/dashboard/dashboard_screen.dart';
 import 'package:tourist/utility/color.dart';

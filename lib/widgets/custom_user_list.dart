@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tourist/models/user/user_model.dart';
 import 'package:tourist/screen/profile/profile_screen.dart';
 import 'package:tourist/utility/color.dart';
-import 'package:tourist/utility/images.dart';
+import 'package:tourist/widgets/custom_image_view.dart';
 
 class UserListData extends StatefulWidget {
   final String? userType;
-  const UserListData({super.key, this.userType});
+  final UserData? userData;
+  const UserListData({super.key, this.userType, this.userData});
 
   @override
   State<UserListData> createState() => _UserListDataState();
@@ -33,13 +35,10 @@ class _UserListDataState extends State<UserListData> {
               width: 90,
               child: Stack(
                 children: [
-                  SizedBox(
+                  CustomImage(
                     height: 90,
                     width: 90,
-                    child: Image.asset(
-                      Images.userMain,
-                      fit: BoxFit.cover,
-                    ),
+                    imagePath: widget.userData!.logo3!,
                   ),
                   Align(
                     alignment: Alignment.bottomLeft,
@@ -86,17 +85,19 @@ class _UserListDataState extends State<UserListData> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Hugo Fabrazi',
-                    maxLines: 1,
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color: ColorConstants.black,
-                        fontFamily: "poppins"),
+                  SizedBox(
+                    child: Text(
+                      getUserName(),
+                      maxLines: 1,
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: ColorConstants.black,
+                          fontFamily: "poppins"),
+                    ),
                   ),
                   Text(
-                    'Founder & CEO',
+                    widget.userData!.jobTitle ?? '',
                     maxLines: 1,
                     style: TextStyle(
                         fontSize: 10,
@@ -105,7 +106,9 @@ class _UserListDataState extends State<UserListData> {
                         fontFamily: "poppins"),
                   ),
                   Text(
-                    'Company name, Country',
+                    widget.userData!.country != null
+                        ? '${widget.userData!.companyName ?? ''}, ${widget.userData!.country ?? ''}'
+                        : widget.userData!.companyName ?? '',
                     maxLines: 1,
                     style: TextStyle(
                         fontSize: 10,
@@ -151,5 +154,16 @@ class _UserListDataState extends State<UserListData> {
         ),
       ),
     );
+  }
+
+  getUserName() {
+    String name = widget.userData!.firstName!;
+    if (widget.userData!.middleName != null) {
+      name = "$name ${widget.userData!.middleName}";
+    }
+    if (widget.userData!.lastName != null) {
+      name = "$name ${widget.userData!.lastName}";
+    }
+    return name;
   }
 }
