@@ -87,6 +87,7 @@ class UserData {
   String? tnc2Approval;
   String? tnc3Approval;
   bool? isImageFromStorage;
+  dynamic userNote;
   UserData(
       {id,
       deviceToken,
@@ -147,7 +148,8 @@ class UserData {
       tnc1Approval,
       tnc2Approval,
       tnc3Approval,
-      this.isImageFromStorage});
+      this.isImageFromStorage,
+      this.userNote});
 
   UserData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
