@@ -46,7 +46,6 @@ class _FindPeopleScreenState extends State<FindPeopleScreen> {
       setState(() {
         searchedName = query;
       });
-      print(searchedName);
     });
   }
 
