@@ -10,6 +10,7 @@ import 'package:tourist/utility/images.dart';
 import 'package:tourist/widgets/app_bar_back.dart';
 import 'package:tourist/widgets/custom_image_view.dart';
 import 'package:tourist/widgets/show_progress_bar.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class ProfileScreen extends StatefulWidget {
   final bool? isFromGuest;
@@ -23,6 +24,14 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   UserData? userData;
   bool isLoading = false;
+  final vcardData = 'BEGIN:VCARD\n'
+      'VERSION:3.0\n'
+      'N:${AppConstant.userData!.firstName};${AppConstant.userData!.lastName};\n'
+      'TEL;TYPE=CELL:${AppConstant.userData!.mobile}\n'
+      'EMAIL:${AppConstant.userData!.email}\n'
+      'ORG:${AppConstant.userData!.companyName}\n'
+      'TITLE:${AppConstant.userData!.jobTitle}\n'
+      'END:VCARD';
   @override
   void initState() {
     if (widget.isFromGuest == true) {
@@ -71,7 +80,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     height: 20,
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: SizedBox(
                       height: MediaQuery.of(context).size.height * .3,
                       width: MediaQuery.of(context).size.width,
@@ -79,7 +88,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: [
                           SizedBox(
                             height: MediaQuery.of(context).size.height * .3,
-                            width: MediaQuery.of(context).size.width,
+                            width: MediaQuery.of(context).size.width * 1,
                             child: Image.asset(
                               Images.profileBox,
                               fit: BoxFit.fill,
@@ -328,7 +337,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         height: 35,
         decoration: BoxDecoration(
           color: ColorConstants.mainColor,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(5),
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -435,10 +444,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(
-                              Icons.qr_code_2,
-                              size: 180,
-                              color: ColorConstants.black,
+                            QrImage(
+                              data: vcardData,
+                              version: QrVersions.auto,
+                              size: 180.0,
+                              backgroundColor: Colors.white,
+                              foregroundColor: Colors.black,
+                              padding: const EdgeInsets.all(25.0),
                             ),
                           ],
                         ),

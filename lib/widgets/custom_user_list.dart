@@ -81,7 +81,7 @@ class _UserListDataState extends State<UserListData> {
               width: 15,
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width * .43,
+              width: MediaQuery.of(context).size.width * .47,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,7 +124,7 @@ class _UserListDataState extends State<UserListData> {
               height: 37,
               decoration: BoxDecoration(
                 color: ColorConstants.mainColor,
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(5),
               ),
               alignment: Alignment.center,
               child: Padding(
@@ -134,6 +134,7 @@ class _UserListDataState extends State<UserListData> {
                   children: [
                     Icon(
                       Icons.chat_outlined,
+                      size: 18,
                       color: ColorConstants.white,
                     ),
                     const SizedBox(

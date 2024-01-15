@@ -81,10 +81,17 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                 child: Container(
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: index == _pageIndex
-                          ? ColorConstants.mainColor
-                          : Colors.transparent),
+                    borderRadius: BorderRadius.circular(10),
+                    gradient: const LinearGradient(
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                      stops: [0.1, 0.4],
+                      colors: [
+                        ColorConstants.gradientColor,
+                        ColorConstants.mainColor,
+                      ],
+                    ),
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -102,7 +109,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                             fontSize: 14,
                             fontFamily: "poppins",
                             color: ColorConstants.white,
-                            fontWeight: FontWeight.w500),
+                            fontWeight: FontWeight.bold),
                       )
                     ],
                   ),

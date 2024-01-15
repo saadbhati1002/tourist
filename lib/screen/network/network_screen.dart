@@ -99,10 +99,10 @@ class _NetworkScreenState extends State<NetworkScreen> {
             const SizedBox(
               height: 25,
             ),
-            customHeadingText(title: 'Recommended Participants'),
-            const SizedBox(
-              height: 10,
-            ),
+            // customHeadingText(title: 'Recommended Participants'),
+            // const SizedBox(
+            //   height: 10,
+            // ),
             // ListView.builder(
             //   physics: const NeverScrollableScrollPhysics(),
             //   shrinkWrap: true,

@@ -131,19 +131,22 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 ),
               ],
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 14, right: 14, bottom: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Image.asset(Images.dubai),
-                    Image.asset(Images.government),
-                  ],
-                ),
-              ),
-            )
+            // Align(
+            //   alignment: Alignment.bottomCenter,
+            //   child: Padding(
+            //     padding: const EdgeInsets.only(left: 14, right: 14, bottom: 15),
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //       children: [
+            //         SizedBox(
+            //           height: MediaQuery.of(context).size.width * .2,
+            //           child: Image.asset(Images.logo),
+            //         ),
+            //         Image.asset(Images.government),
+            //       ],
+            //     ),
+            //   ),
+            // )
           ],
         ),
       ),

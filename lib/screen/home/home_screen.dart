@@ -43,9 +43,6 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const SizedBox(
-              height: 15,
-            ),
             SizedBox(
               width: MediaQuery.of(context).size.width * 1,
               child: Image.asset(

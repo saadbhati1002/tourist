@@ -12,6 +12,9 @@ customAppBar(
   Function? setState,
 }) {
   return AppBar(
+    elevation: 3,
+    toolbarHeight: 60,
+    titleSpacing: 0,
     backgroundColor: Colors.transparent,
     automaticallyImplyLeading: false,
     title: GestureDetector(
@@ -19,13 +22,22 @@ customAppBar(
         Get.to(() => const ProfileScreen());
       },
       child: Container(
-        margin: const EdgeInsets.only(top: 10, bottom: 10),
-        height: 50,
+        margin: const EdgeInsets.only(top: 9.5, bottom: 9.5, left: 9.5),
+        height: 47,
         width: MediaQuery.of(context!).size.width * .6,
         decoration: BoxDecoration(
-          color: ColorConstants.black,
+          gradient: const LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            stops: [0.1, 0.7],
+            colors: [
+              ColorConstants.gradientColor,
+              ColorConstants.mainColor,
+            ],
+          ),
           borderRadius: BorderRadius.circular(10),
         ),
+        alignment: Alignment.center,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Row(
@@ -59,7 +71,7 @@ customAppBar(
     ),
     actions: [
       Padding(
-        padding: const EdgeInsets.only(top: 10, right: 10),
+        padding: const EdgeInsets.only(top: 3, right: 10),
         child: GestureDetector(
           onTap: () {
             key.currentState!.openEndDrawer();
