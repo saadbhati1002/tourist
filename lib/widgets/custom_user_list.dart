@@ -19,8 +19,9 @@ class _UserListDataState extends State<UserListData> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(() => const ProfileScreen(
+        Get.to(() => ProfileScreen(
               isFromGuest: true,
+              id: widget.userData!.id.toString(),
             ));
       },
       child: SizedBox(

@@ -5,6 +5,7 @@ import 'package:tourist/api/repository/user/user.dart';
 import 'package:tourist/models/all_user/all_user_model.dart';
 import 'package:tourist/models/user/user_model.dart';
 import 'package:tourist/utility/color.dart';
+import 'package:tourist/utility/constant.dart';
 import 'package:tourist/widgets/app_bar_back.dart';
 import 'package:tourist/widgets/common_text_field.dart';
 import 'package:tourist/widgets/custom_user_list.dart';
@@ -104,19 +105,9 @@ class _FindPeopleScreenState extends State<FindPeopleScreen> {
                     shrinkWrap: true,
                     itemCount: userList.length,
                     itemBuilder: (context, index) {
-                      return searchedName == null
-                          ? Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 10),
-                              child: UserListData(
-                                userData: userList[index],
-                                userType: 'Delegate',
-                              ),
-                            )
-                          : getUserName(userList[index])
-                                  .toString()
-                                  .toLowerCase()
-                                  .contains(searchedName!.toLowerCase())
+                      return AppConstant.userData!.id == userList[index].id
+                          ? const SizedBox()
+                          : searchedName == null
                               ? Padding(
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 10, horizontal: 10),
@@ -125,7 +116,19 @@ class _FindPeopleScreenState extends State<FindPeopleScreen> {
                                     userType: 'Delegate',
                                   ),
                                 )
-                              : const SizedBox();
+                              : getUserName(userList[index])
+                                      .toString()
+                                      .toLowerCase()
+                                      .contains(searchedName!.toLowerCase())
+                                  ? Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 10, horizontal: 10),
+                                      child: UserListData(
+                                        userData: userList[index],
+                                        userType: 'Delegate',
+                                      ),
+                                    )
+                                  : const SizedBox();
                     },
                   )
                 : ListView.builder(

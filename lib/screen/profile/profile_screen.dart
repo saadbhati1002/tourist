@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tourist/api/repository/user/user.dart';
+import 'package:tourist/models/user/guest_user_model.dart';
 import 'package:tourist/models/user/user_model.dart';
 import 'package:tourist/screen/auth/edit_profile/edit_profile_screen.dart';
 import 'package:tourist/utility/color.dart';
@@ -7,10 +9,12 @@ import 'package:tourist/utility/constant.dart';
 import 'package:tourist/utility/images.dart';
 import 'package:tourist/widgets/app_bar_back.dart';
 import 'package:tourist/widgets/custom_image_view.dart';
+import 'package:tourist/widgets/show_progress_bar.dart';
 
 class ProfileScreen extends StatefulWidget {
   final bool? isFromGuest;
-  const ProfileScreen({super.key, this.isFromGuest});
+  final String? id;
+  const ProfileScreen({super.key, this.isFromGuest, this.id});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -18,15 +22,36 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   UserData? userData;
+  bool isLoading = false;
   @override
   void initState() {
     if (widget.isFromGuest == true) {
+      getUserDetails();
     } else {
       setState(() {
         userData = AppConstant.userData;
       });
     }
     super.initState();
+  }
+
+  getUserDetails() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      GuestDetailRes response =
+          await UserRepository().getUserDetailApiCall(userID: widget.id);
+      if (response.message == 'Success') {
+        userData = response.data;
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   @override
@@ -36,248 +61,262 @@ class _ProfileScreenState extends State<ProfileScreen> {
         context: context,
       ),
       body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height * .3,
-                width: MediaQuery.of(context).size.width,
-                child: Stack(
-                  children: [
-                    SizedBox(
+        child: isLoading
+            ? const ShowProgressBar()
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: SizedBox(
                       height: MediaQuery.of(context).size.height * .3,
                       width: MediaQuery.of(context).size.width,
-                      child: Image.asset(
-                        Images.profileBox,
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                    SizedBox(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 15),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
+                      child: Stack(
+                        children: [
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * .3,
+                            width: MediaQuery.of(context).size.width,
+                            child: Image.asset(
+                              Images.profileBox,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          SizedBox(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 15),
                               child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SizedBox(
-                                    height: 90,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                    child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
                                         SizedBox(
                                           height: 90,
-                                          width: 90,
-                                          child: Stack(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
-                                              CustomImage(
+                                              SizedBox(
                                                 height: 90,
                                                 width: 90,
-                                                imagePath: userData!.logo3!,
+                                                child: Stack(
+                                                  children: [
+                                                    CustomImage(
+                                                      height: 90,
+                                                      width: 90,
+                                                      imagePath:
+                                                          userData!.logo3!,
+                                                    ),
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.bottomLeft,
+                                                      child: Container(
+                                                        height: 15,
+                                                        width: 90,
+                                                        decoration:
+                                                            const BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .only(
+                                                                  bottomLeft: Radius
+                                                                      .circular(
+                                                                    10,
+                                                                  ),
+                                                                  bottomRight: Radius
+                                                                      .circular(
+                                                                          10),
+                                                                ),
+                                                                color: ColorConstants
+                                                                    .delegateColor),
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Text(
+                                                          'Delegate',
+                                                          style: TextStyle(
+                                                              fontSize: 10,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700,
+                                                              fontFamily:
+                                                                  'poppins',
+                                                              color:
+                                                                  ColorConstants
+                                                                      .white),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
-                                              Align(
-                                                alignment: Alignment.bottomLeft,
-                                                child: Container(
-                                                  height: 15,
-                                                  width: 90,
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius.only(
-                                                            bottomLeft:
-                                                                Radius.circular(
-                                                              10,
-                                                            ),
-                                                            bottomRight:
-                                                                Radius.circular(
-                                                                    10),
-                                                          ),
-                                                          color: ColorConstants
-                                                              .delegateColor),
-                                                  alignment: Alignment.center,
-                                                  child: Text(
-                                                    'Delegate',
-                                                    style: TextStyle(
-                                                        fontSize: 10,
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                        fontFamily: 'poppins',
-                                                        color: ColorConstants
-                                                            .white),
-                                                  ),
+                                              SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    .5,
+                                                child: Text(
+                                                  userData!.companyName ?? '',
+                                                  textAlign: TextAlign.right,
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      color:
+                                                          ColorConstants.white,
+                                                      fontFamily: 'poppins',
+                                                      fontWeight:
+                                                          FontWeight.w500),
                                                 ),
                                               ),
                                             ],
                                           ),
                                         ),
-                                        SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              .4,
-                                          child: Text(
-                                            userData!.companyName ?? '',
-                                            textAlign: TextAlign.right,
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                color: ColorConstants.white,
-                                                fontFamily: 'poppins',
-                                                fontWeight: FontWeight.w500),
-                                          ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(
+                                          userData!.username ?? getUserName(),
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: ColorConstants.white,
+                                              fontFamily: 'poppins',
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        Text(
+                                          userData!.jobTitle ?? '',
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              color: ColorConstants.white,
+                                              fontFamily: 'poppins',
+                                              fontWeight: FontWeight.w500),
                                         ),
                                       ],
                                     ),
                                   ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    userData!.username ?? getUserName(),
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        color: ColorConstants.white,
-                                        fontFamily: 'poppins',
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  Text(
-                                    userData!.jobTitle ?? '',
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        color: ColorConstants.white,
-                                        fontFamily: 'poppins',
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    userData!.mobile!,
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        color: ColorConstants.white,
-                                        fontFamily: 'poppins',
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        userData!.email ?? '',
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            color: ColorConstants.white,
-                                            fontFamily: 'poppins',
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                      Text(
-                                        userData!.country ?? '',
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            color: ColorConstants.white,
-                                            fontFamily: 'poppins',
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ],
+                                  SizedBox(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          userData!.mobile!,
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              color: ColorConstants.white,
+                                              fontFamily: 'poppins',
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              userData!.email ?? '',
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  color: ColorConstants.white,
+                                                  fontFamily: 'poppins',
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                            Text(
+                                              userData!.country ?? '',
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  color: ColorConstants.white,
+                                                  fontFamily: 'poppins',
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
                                   )
                                 ],
                               ),
-                            )
-                          ],
-                        ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  if (widget.isFromGuest == true) ...[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          customButtons(
+                            Images.star,
+                            'Favorite',
+                            () {
+                              Get.to(() => const EditProfileScreen());
+                            },
+                          ),
+                          customButtons(
+                            Images.save,
+                            'Save as contact',
+                            () {
+                              orCodeBottomSheet();
+                            },
+                          ),
+                          customButtons(
+                            Images.chat,
+                            'Chat',
+                            () {
+                              orCodeBottomSheet();
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ] else ...[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          customButtons(
+                            Images.edit,
+                            'Edit profile',
+                            () {
+                              Get.to(() => const EditProfileScreen());
+                            },
+                          ),
+                          customButtons(
+                            Images.qr,
+                            'Share Card',
+                            () {
+                              orCodeBottomSheet();
+                            },
+                          ),
+                        ],
                       ),
                     ),
                   ],
-                ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  customDataBox("Bio", userData!.personalBio ?? ''),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  customDataBox("Company Bio", userData!.companyProfile ?? ''),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                ],
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            if (widget.isFromGuest == true) ...[
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    customButtons(
-                      Images.star,
-                      'Favorite',
-                      () {
-                        Get.to(() => const EditProfileScreen());
-                      },
-                    ),
-                    customButtons(
-                      Images.save,
-                      'Save as contact',
-                      () {
-                        orCodeBottomSheet();
-                      },
-                    ),
-                    customButtons(
-                      Images.chat,
-                      'Chat',
-                      () {
-                        orCodeBottomSheet();
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ] else ...[
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    customButtons(
-                      Images.edit,
-                      'Edit profile',
-                      () {
-                        Get.to(() => const EditProfileScreen());
-                      },
-                    ),
-                    customButtons(
-                      Images.qr,
-                      'Share Card',
-                      () {
-                        orCodeBottomSheet();
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ],
-            const SizedBox(
-              height: 20,
-            ),
-            customDataBox("Bio", userData!.personalBio ?? ''),
-            const SizedBox(
-              height: 20,
-            ),
-            customDataBox("Company Bio", userData!.companyProfile ?? ''),
-            const SizedBox(
-              height: 20,
-            ),
-          ],
-        ),
       ),
     );
   }

@@ -1,20 +1,26 @@
 class UserRes {
   String? error;
+  String? message;
   UserData? success;
 
-  UserRes({success, this.error});
+  UserRes({success, this.error, this.message});
 
   UserRes.fromJson(Map<String, dynamic> json) {
     error = json["error"];
-    success =
-        json['Success'] != null ? UserData.fromJson(json['Success']) : null;
+    message = json["message"];
+    success = json['Success'] != null
+        ? UserData.fromJson(json['Success'])
+        : UserData.fromJson(json['data']);
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data["error"] = error;
+    data["message"] = message;
     if (success != null) {
       data['Success'] = success!.toJson();
+    } else {
+      data['data'] = success!.toJson();
     }
     return data;
   }
