@@ -3,7 +3,10 @@ import 'package:get/get.dart';
 import 'package:tourist/screen/find_people/find_people_screen.dart';
 import 'package:tourist/screen/qr_code/qr_code_screen.dart';
 import 'package:tourist/utility/color.dart';
+import 'package:tourist/utility/constant.dart';
 import 'package:tourist/utility/images.dart';
+import 'package:tourist/widgets/custom_app_bar.dart';
+import 'package:tourist/widgets/custom_image_view.dart';
 
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key});
@@ -41,10 +44,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          SizedBox(
+                          CustomImage(
                             height: 32,
                             width: 32,
-                            child: Image.asset(Images.user),
+                            imagePath: AppConstant.userData!.logo2!,
                           ),
                           const SizedBox(
                             width: 10,
@@ -52,7 +55,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           SizedBox(
                             width: MediaQuery.of(context).size.width * .5,
                             child: Text(
-                              'Thomas Brian Samuel',
+                              AppConstant.userData!.username ?? getUserName(),
                               maxLines: 1,
                               style: TextStyle(
                                   fontFamily: "poppins",

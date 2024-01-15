@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tourist/models/user/user_model.dart';
 import 'package:tourist/screen/auth/edit_profile/edit_profile_screen.dart';
 import 'package:tourist/utility/color.dart';
+import 'package:tourist/utility/constant.dart';
 import 'package:tourist/utility/images.dart';
 import 'package:tourist/widgets/app_bar_back.dart';
+import 'package:tourist/widgets/custom_image_view.dart';
 
 class ProfileScreen extends StatefulWidget {
   final bool? isFromGuest;
@@ -14,6 +17,18 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  UserData? userData;
+  @override
+  void initState() {
+    if (widget.isFromGuest == true) {
+    } else {
+      setState(() {
+        userData = AppConstant.userData;
+      });
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,13 +83,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           width: 90,
                                           child: Stack(
                                             children: [
-                                              SizedBox(
+                                              CustomImage(
                                                 height: 90,
                                                 width: 90,
-                                                child: Image.asset(
-                                                  Images.userMain,
-                                                  fit: BoxFit.cover,
-                                                ),
+                                                imagePath: userData!.logo2!,
                                               ),
                                               Align(
                                                 alignment: Alignment.bottomLeft,
@@ -111,13 +123,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             ],
                                           ),
                                         ),
-                                        Text(
-                                          'Company Name',
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color: ColorConstants.white,
-                                              fontFamily: 'poppins',
-                                              fontWeight: FontWeight.w500),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              .4,
+                                          child: Text(
+                                            userData!.companyName ?? '',
+                                            textAlign: TextAlign.right,
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                color: ColorConstants.white,
+                                                fontFamily: 'poppins',
+                                                fontWeight: FontWeight.w500),
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -126,7 +145,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     height: 10,
                                   ),
                                   Text(
-                                    'Thomas Brian Samuel',
+                                    userData!.username ?? getUserName(),
                                     style: TextStyle(
                                         fontSize: 14,
                                         color: ColorConstants.white,
@@ -134,7 +153,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         fontWeight: FontWeight.w500),
                                   ),
                                   Text(
-                                    'FOUNDER & CEO',
+                                    userData!.jobTitle ?? '',
                                     style: TextStyle(
                                         fontSize: 12,
                                         color: ColorConstants.white,
@@ -149,7 +168,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    '+971 503 489 009',
+                                    userData!.mobile!,
                                     style: TextStyle(
                                         fontSize: 12,
                                         color: ColorConstants.white,
@@ -161,7 +180,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        'email@gmail.com',
+                                        userData!.email ?? '',
                                         style: TextStyle(
                                             fontSize: 12,
                                             color: ColorConstants.white,
@@ -169,7 +188,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             fontWeight: FontWeight.w500),
                                       ),
                                       Text(
-                                        'United Arab Emirates',
+                                        userData!.country ?? '',
                                         style: TextStyle(
                                             fontSize: 12,
                                             color: ColorConstants.white,
@@ -249,13 +268,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const SizedBox(
               height: 20,
             ),
-            customDataBox("Bio",
-                "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi."),
+            customDataBox("Bio", userData!.personalBio ?? ''),
             const SizedBox(
               height: 20,
             ),
-            customDataBox("Company Bio",
-                "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi."),
+            customDataBox("Company Bio", userData!.companyProfile ?? ''),
             const SizedBox(
               height: 20,
             ),
@@ -310,35 +327,50 @@ class _ProfileScreenState extends State<ProfileScreen> {
         elevation: 2,
         shadowColor: ColorConstants.greyLight,
         borderRadius: BorderRadius.circular(10),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title!,
-                style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                    fontFamily: "poppins",
-                    color: ColorConstants.black),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Text(
-                data!,
-                style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: "poppins",
-                    color: ColorConstants.black),
-              ),
-            ],
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title!,
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      fontFamily: "poppins",
+                      color: ColorConstants.black),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Text(
+                  data!,
+                  style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: "poppins",
+                      color: ColorConstants.black),
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
+  }
+
+  getUserName() {
+    String name = userData!.firstName!;
+    if (userData!.middleName != null) {
+      name = "$name ${userData!.middleName}";
+    }
+    if (AppConstant.userData!.lastName != null) {
+      name = "$name ${userData!.lastName}";
+    }
+    return name;
   }
 
   orCodeBottomSheet() {

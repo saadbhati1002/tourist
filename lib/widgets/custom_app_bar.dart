@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tourist/screen/profile/profile_screen.dart';
 import 'package:tourist/utility/color.dart';
+import 'package:tourist/utility/constant.dart';
 import 'package:tourist/utility/images.dart';
+import 'package:tourist/widgets/custom_image_view.dart';
 
 customAppBar(
   key, {
@@ -30,10 +32,10 @@ customAppBar(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
+              CustomImage(
                 height: 32,
                 width: 32,
-                child: Image.asset(Images.user),
+                imagePath: AppConstant.userData!.logo2!,
               ),
               const SizedBox(
                 width: 10,
@@ -41,7 +43,7 @@ customAppBar(
               SizedBox(
                 width: MediaQuery.of(context).size.width * .43,
                 child: Text(
-                  'Thomas Brian Samuel',
+                  AppConstant.userData!.username ?? getUserName(),
                   maxLines: 1,
                   style: TextStyle(
                       fontFamily: "poppins",
@@ -70,4 +72,15 @@ customAppBar(
       )
     ],
   );
+}
+
+getUserName() {
+  String name = AppConstant.userData!.firstName!;
+  if (AppConstant.userData!.middleName != null) {
+    name = "$name ${AppConstant.userData!.middleName}";
+  }
+  if (AppConstant.userData!.lastName != null) {
+    name = "$name ${AppConstant.userData!.lastName}";
+  }
+  return name;
 }
