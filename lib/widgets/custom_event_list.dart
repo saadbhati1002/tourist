@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tourist/models/event/event_list.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:avatar_stack/avatar_stack.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 Widget eventListing(
     {BuildContext? context, EventData? eventData, VoidCallback? attendEvent}) {
@@ -83,24 +84,31 @@ Widget eventListing(
                 height: eventData.place != null ? 15 : 0,
               ),
               eventData.place != null
-                  ? Container(
-                      decoration: BoxDecoration(
-                        color: ColorConstants.black,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      // alignment: Alignment.center,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 5, horizontal: 10),
-                        child: Text(
-                          eventData.place ?? '',
-                          maxLines: 1,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontFamily: "inter",
-                              color: ColorConstants.white,
-                              fontWeight: FontWeight.w500),
+                  ? GestureDetector(
+                      onTap: () {
+                        if (eventData.mapLink != null) {
+                          launchUrl(Uri.parse(eventData.mapLink!));
+                        }
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: ColorConstants.black,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        // alignment: Alignment.center,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 10),
+                          child: Text(
+                            eventData.place ?? '',
+                            maxLines: 1,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 12,
+                                fontFamily: "inter",
+                                color: ColorConstants.white,
+                                fontWeight: FontWeight.w500),
+                          ),
                         ),
                       ),
                     )

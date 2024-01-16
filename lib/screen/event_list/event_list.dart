@@ -240,12 +240,22 @@ class _EventListScreenState extends State<EventListScreen> {
                             itemBuilder: (context, index) {
                               return selectedData == eventData[index].eventDate!
                                   ? GestureDetector(
-                                      onTap: () {
-                                        Get.to(
+                                      onTap: () async {
+                                        var response = await Get.to(
                                           () => EventDetailScreen(
                                             eventData: eventData[index],
                                           ),
                                         );
+                                        if (response != null) {
+                                          if (response == 1) {
+                                            eventData[index].isAttendingEvent =
+                                                true;
+                                          } else {
+                                            eventData[index].isAttendingEvent =
+                                                false;
+                                          }
+                                          setState(() {});
+                                        }
                                       },
                                       child: eventListing(
                                         context: context,
