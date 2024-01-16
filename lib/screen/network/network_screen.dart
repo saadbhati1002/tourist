@@ -63,9 +63,11 @@ class _NetworkScreenState extends State<NetworkScreen> {
     } catch (e) {
       debugPrint(e.toString());
     } finally {
-      setState(() {
-        isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
     }
   }
 

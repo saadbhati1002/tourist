@@ -4,7 +4,6 @@ import 'package:tourist/screen/find_people/find_people_screen.dart';
 import 'package:tourist/screen/qr_code/qr_code_screen.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:tourist/utility/constant.dart';
-import 'package:tourist/utility/images.dart';
 import 'package:tourist/widgets/custom_app_bar.dart';
 import 'package:tourist/widgets/custom_image_view.dart';
 
@@ -131,22 +130,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 ),
               ],
             ),
-            // Align(
-            //   alignment: Alignment.bottomCenter,
-            //   child: Padding(
-            //     padding: const EdgeInsets.only(left: 14, right: 14, bottom: 15),
-            //     child: Row(
-            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //       children: [
-            //         SizedBox(
-            //           height: MediaQuery.of(context).size.width * .2,
-            //           child: Image.asset(Images.logo),
-            //         ),
-            //         Image.asset(Images.government),
-            //       ],
-            //     ),
-            //   ),
-            // )
           ],
         ),
       ),

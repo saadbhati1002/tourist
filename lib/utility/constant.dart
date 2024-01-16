@@ -4,6 +4,7 @@ import 'package:tourist/models/user/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppConstant {
+  static const String appName = 'DWS 2024';
   static const String baseUrl = 'https://dubaiweddingsymposium.com/API/v1/';
   static List roleType = ['Delegate', 'Speaker', 'Vendor', 'Media'];
   static List rolesSubRole = ['Answer 1', 'Answer 2', 'Answer 3', 'Answer 4'];

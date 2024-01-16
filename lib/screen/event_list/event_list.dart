@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:skeletons/skeletons.dart';
+import 'package:tourist/api/repository/event/event.dart';
+import 'package:tourist/models/event/event_list.dart';
 import 'package:tourist/screen/event_detail/event_detail_screen.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:tourist/widgets/custom_app_bar.dart';
@@ -15,10 +18,36 @@ class EventListScreen extends StatefulWidget {
 
 class _EventListScreenState extends State<EventListScreen> {
   final GlobalKey<ScaffoldState> _key = GlobalKey();
-  int selectedData = 14;
+  List<EventData> eventData = [];
+  bool isLoading = false;
+  String selectedData = '16-02-2024';
   int selectedCalender = 0;
   setStateNow() {
     setState(() {});
+  }
+
+  @override
+  void initState() {
+    getEventData();
+    super.initState();
+  }
+
+  getEventData() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      EventRes response = await EventRepository().allEventListApiCall();
+      if (response.event!.isNotEmpty) {
+        eventData = response.event!;
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   @override
@@ -127,76 +156,151 @@ class _EventListScreenState extends State<EventListScreen> {
           ],
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 25,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                dateButton(
-                  '14 Feb',
-                  () {
-                    setState(() {
-                      selectedData = 14;
-                    });
-                  },
-                  14,
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                dateButton(
-                  '15 Feb',
-                  () {
-                    setState(() {
-                      selectedData = 15;
-                    });
-                  },
-                  15,
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                dateButton(
-                  '16 Feb',
-                  () {
-                    setState(() {
-                      selectedData = 16;
-                    });
-                  },
-                  16,
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 25,
-            ),
-            ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: 5,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                    onTap: () {
-                      Get.to(
-                        () => const EventDetailScreen(),
-                      );
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          isLoading
+              ? SizedBox(
+                  height: MediaQuery.of(context).size.height * .74,
+                  child: ListView.builder(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    itemCount: 5,
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return notificationSkeleton();
                     },
-                    child: eventListing(context: context));
-              },
-            ),
-          ],
-        ),
+                  ),
+                )
+              : Material(
+                  elevation: 5,
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          dateButton(
+                            '16 Feb',
+                            () {
+                              setState(() {
+                                selectedData = '16-02-2024';
+                              });
+                            },
+                            '16-02-2024',
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          dateButton(
+                            '17 Feb',
+                            () {
+                              setState(() {
+                                selectedData = '17-02-2024';
+                              });
+                            },
+                            '17-02-2024',
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          dateButton(
+                            '18 Feb',
+                            () {
+                              setState(() {
+                                selectedData = '18-02-2024';
+                              });
+                            },
+                            '18-02-2024',
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 25,
+                      ),
+                    ],
+                  ),
+                ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * .615,
+            child: selectedCalender == 0
+                ? const SizedBox()
+                : ListView.builder(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    padding: const EdgeInsets.only(top: 20),
+                    shrinkWrap: true,
+                    itemCount: eventData.length,
+                    itemBuilder: (context, index) {
+                      return selectedData == eventData[index].eventDate!
+                          ? GestureDetector(
+                              onTap: () {
+                                Get.to(
+                                  () => const EventDetailScreen(),
+                                );
+                              },
+                              child: eventListing(
+                                  context: context,
+                                  eventData: eventData[index]),
+                            )
+                          : const SizedBox();
+                    },
+                  ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget dateButton(String? title, VoidCallback? onTap, int? index) {
+  Widget notificationSkeleton() {
+    return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 5),
+        child: Material(
+          elevation: 2,
+          borderRadius: BorderRadius.circular(10),
+          shadowColor: ColorConstants.mainColor,
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(width: 0.9, color: ColorConstants.mainColor),
+            ),
+            padding:
+                const EdgeInsets.only(right: 10, left: 10, top: 10, bottom: 10),
+            child: SkeletonTheme(
+              themeMode: ThemeMode.light,
+              child: SkeletonItem(
+                  child: SizedBox(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * .8,
+                      child: SkeletonParagraph(
+                        style: SkeletonParagraphStyle(
+                            lines: 6,
+                            spacing: 10,
+                            lineStyle: SkeletonLineStyle(
+                              randomLength: false,
+                              // height: 10,
+                              borderRadius: BorderRadius.circular(8),
+                              minLength: MediaQuery.of(context).size.width / 6,
+                              maxLength: MediaQuery.of(context).size.width / 3,
+                            )),
+                      ),
+                    ),
+                  ],
+                ),
+              )),
+            ),
+          ),
+        ));
+  }
+
+  Widget dateButton(String? title, VoidCallback? onTap, String? index) {
     return GestureDetector(
       onTap: onTap,
       child: Container(

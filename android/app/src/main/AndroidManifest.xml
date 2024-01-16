@@ -2,7 +2,7 @@
     package="com.example.tourist">
    <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="tourist"
+        android:label="DWS 2024"
         android:name="${applicationName}"
         android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true"

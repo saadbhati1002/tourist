@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tourist/screen/splash/splash.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:tourist/utility/constant.dart';
 
 void main() async {
   HttpOverrides.global = MyHttpOverrides();
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       builder: FToastBuilder(),
-      title: 'Flutter Demo',
+      title: AppConstant.appName,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: "inter",

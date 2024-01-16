@@ -12,7 +12,7 @@ class AuthNetwork {
 
   static Future<dynamic> checkEmail(prams) async {
     final result = await httpManager.post(url: emailCheckUrl, data: prams);
-    print(result);
+
     Common loginRes = Common.fromJson(result);
     return loginRes;
   }
