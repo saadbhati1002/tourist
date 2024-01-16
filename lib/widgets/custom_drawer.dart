@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tourist/screen/find_people/find_people_screen.dart';
+import 'package:tourist/screen/profile/profile_screen.dart';
 import 'package:tourist/screen/qr_code/qr_code_screen.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:tourist/utility/constant.dart';
@@ -39,31 +40,36 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          CustomImage(
-                            height: 32,
-                            width: 32,
-                            imagePath: AppConstant.userData!.logo2!,
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * .5,
-                            child: Text(
-                              AppConstant.userData!.username ?? getUserName(),
-                              maxLines: 1,
-                              style: TextStyle(
-                                  fontFamily: "inter",
-                                  fontSize: 14,
-                                  color: ColorConstants.white,
-                                  fontWeight: FontWeight.w500),
+                      child: GestureDetector(
+                        onTap: () {
+                          Get.to(() => const ProfileScreen());
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            CustomImage(
+                              height: 32,
+                              width: 32,
+                              imagePath: AppConstant.userData!.logo2!,
                             ),
-                          ),
-                        ],
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * .49,
+                              child: Text(
+                                AppConstant.userData!.username ?? getUserName(),
+                                maxLines: 1,
+                                style: TextStyle(
+                                    fontFamily: "inter",
+                                    fontSize: 14,
+                                    color: ColorConstants.white,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

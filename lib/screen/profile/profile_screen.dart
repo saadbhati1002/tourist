@@ -1,5 +1,9 @@
+import 'dart:ui' as ui;
+import 'package:flutter/rendering.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:tourist/api/repository/user/user.dart';
 import 'package:tourist/models/user/guest_user_model.dart';
 import 'package:tourist/models/user/user_model.dart';
@@ -22,6 +26,8 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  GlobalKey _globalKey = GlobalKey();
+
   UserData? userData;
   bool isLoading = false;
   final vcardData = 'BEGIN:VCARD\n'
@@ -72,263 +78,291 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Navigator.pop(context);
         },
       ),
-      body: SingleChildScrollView(
-        child: isLoading
-            ? const ShowProgressBar()
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: SizedBox(
-                      height: MediaQuery.of(context).size.height * .3,
-                      width: MediaQuery.of(context).size.width,
-                      child: Stack(
-                        children: [
-                          SizedBox(
+      body: Stack(
+        children: [
+          qrImage(),
+          Container(
+            color: ColorConstants.white,
+            height: MediaQuery.of(context).size.height * 1,
+            width: MediaQuery.of(context).size.width * 1,
+            child: SingleChildScrollView(
+              child: isLoading
+                  ? const ShowProgressBar()
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: SizedBox(
                             height: MediaQuery.of(context).size.height * .3,
-                            width: MediaQuery.of(context).size.width * 1,
-                            child: Image.asset(
-                              Images.profileBox,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          SizedBox(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 15),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: Stack(
+                              children: [
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * .3,
+                                  width: MediaQuery.of(context).size.width * 1,
+                                  child: Image.asset(
+                                    Images.profileBox,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                                SizedBox(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15, vertical: 15),
                                     child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
                                         SizedBox(
-                                          height: 90,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                          child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
                                               SizedBox(
                                                 height: 90,
-                                                width: 90,
-                                                child: Stack(
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
                                                   children: [
-                                                    CustomImage(
+                                                    SizedBox(
                                                       height: 90,
                                                       width: 90,
-                                                      imagePath:
-                                                          userData!.logo3!,
+                                                      child: Stack(
+                                                        children: [
+                                                          CustomImage(
+                                                            height: 90,
+                                                            width: 90,
+                                                            imagePath: userData!
+                                                                .logo3!,
+                                                          ),
+                                                          Align(
+                                                            alignment: Alignment
+                                                                .bottomLeft,
+                                                            child: Container(
+                                                              height: 15,
+                                                              width: 90,
+                                                              decoration:
+                                                                  const BoxDecoration(
+                                                                      borderRadius:
+                                                                          BorderRadius
+                                                                              .only(
+                                                                        bottomLeft:
+                                                                            Radius.circular(
+                                                                          10,
+                                                                        ),
+                                                                        bottomRight:
+                                                                            Radius.circular(10),
+                                                                      ),
+                                                                      color: ColorConstants
+                                                                          .delegateColor),
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              child: Text(
+                                                                'Delegate',
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        10,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w700,
+                                                                    fontFamily:
+                                                                        'inter',
+                                                                    color: ColorConstants
+                                                                        .white),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
-                                                    Align(
-                                                      alignment:
-                                                          Alignment.bottomLeft,
-                                                      child: Container(
-                                                        height: 15,
-                                                        width: 90,
-                                                        decoration:
-                                                            const BoxDecoration(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .only(
-                                                                  bottomLeft: Radius
-                                                                      .circular(
-                                                                    10,
-                                                                  ),
-                                                                  bottomRight: Radius
-                                                                      .circular(
-                                                                          10),
-                                                                ),
-                                                                color: ColorConstants
-                                                                    .delegateColor),
-                                                        alignment:
-                                                            Alignment.center,
-                                                        child: Text(
-                                                          'Delegate',
-                                                          style: TextStyle(
-                                                              fontSize: 10,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w700,
-                                                              fontFamily:
-                                                                  'inter',
-                                                              color:
-                                                                  ColorConstants
-                                                                      .white),
-                                                        ),
+                                                    SizedBox(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              .5,
+                                                      child: Text(
+                                                        userData!.companyName ??
+                                                            '',
+                                                        textAlign:
+                                                            TextAlign.right,
+                                                        style: TextStyle(
+                                                            fontSize: 12,
+                                                            color:
+                                                                ColorConstants
+                                                                    .white,
+                                                            fontFamily: 'inter',
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w500),
                                                       ),
                                                     ),
                                                   ],
                                                 ),
                                               ),
-                                              SizedBox(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    .5,
-                                                child: Text(
-                                                  userData!.companyName ?? '',
-                                                  textAlign: TextAlign.right,
-                                                  style: TextStyle(
-                                                      fontSize: 12,
-                                                      color:
-                                                          ColorConstants.white,
-                                                      fontFamily: 'inter',
-                                                      fontWeight:
-                                                          FontWeight.w500),
-                                                ),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                userData!.username ??
+                                                    getUserName(),
+                                                style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: ColorConstants.white,
+                                                    fontFamily: 'inter',
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                              Text(
+                                                userData!.jobTitle ?? '',
+                                                style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: ColorConstants.white,
+                                                    fontFamily: 'inter',
+                                                    fontWeight:
+                                                        FontWeight.w500),
                                               ),
                                             ],
                                           ),
                                         ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                          userData!.username ?? getUserName(),
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              color: ColorConstants.white,
-                                              fontFamily: 'inter',
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                        Text(
-                                          userData!.jobTitle ?? '',
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color: ColorConstants.white,
-                                              fontFamily: 'inter',
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          userData!.mobile!,
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color: ColorConstants.white,
-                                              fontFamily: 'inter',
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              userData!.email ?? '',
-                                              style: TextStyle(
-                                                  fontSize: 12,
-                                                  color: ColorConstants.white,
-                                                  fontFamily: 'inter',
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                            Text(
-                                              userData!.country ?? '',
-                                              style: TextStyle(
-                                                  fontSize: 12,
-                                                  color: ColorConstants.white,
-                                                  fontFamily: 'inter',
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          ],
+                                        SizedBox(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                userData!.mobile!,
+                                                style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: ColorConstants.white,
+                                                    fontFamily: 'inter',
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    userData!.email ?? '',
+                                                    style: TextStyle(
+                                                        fontSize: 12,
+                                                        color: ColorConstants
+                                                            .white,
+                                                        fontFamily: 'inter',
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
+                                                  Text(
+                                                    userData!.country ?? '',
+                                                    style: TextStyle(
+                                                        fontSize: 12,
+                                                        color: ColorConstants
+                                                            .white,
+                                                        fontFamily: 'inter',
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          ),
                                         )
                                       ],
                                     ),
-                                  )
-                                ],
-                              ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        if (widget.isFromGuest == true) ...[
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                customButtons(
+                                  Images.star,
+                                  'Favorite',
+                                  () {
+                                    Get.to(() => const EditProfileScreen());
+                                  },
+                                ),
+                                customButtons(
+                                  Images.save,
+                                  'Save as contact',
+                                  () {
+                                    orCodeBottomSheet();
+                                  },
+                                ),
+                                customButtons(
+                                  Images.chat,
+                                  'Chat',
+                                  () {
+                                    orCodeBottomSheet();
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ] else ...[
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                customButtons(
+                                  Images.edit,
+                                  'Edit profile',
+                                  () {
+                                    Get.to(() => const EditProfileScreen());
+                                  },
+                                ),
+                                customButtons(
+                                  Images.qr,
+                                  'Share Card',
+                                  () {
+                                    orCodeBottomSheet();
+                                  },
+                                ),
+                              ],
                             ),
                           ),
                         ],
-                      ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        customDataBox("Bio", userData!.personalBio ?? ''),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        customDataBox(
+                            "Company Bio", userData!.companyProfile ?? ''),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                      ],
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  if (widget.isFromGuest == true) ...[
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          customButtons(
-                            Images.star,
-                            'Favorite',
-                            () {
-                              Get.to(() => const EditProfileScreen());
-                            },
-                          ),
-                          customButtons(
-                            Images.save,
-                            'Save as contact',
-                            () {
-                              orCodeBottomSheet();
-                            },
-                          ),
-                          customButtons(
-                            Images.chat,
-                            'Chat',
-                            () {
-                              orCodeBottomSheet();
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                  ] else ...[
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          customButtons(
-                            Images.edit,
-                            'Edit profile',
-                            () {
-                              Get.to(() => const EditProfileScreen());
-                            },
-                          ),
-                          customButtons(
-                            Images.qr,
-                            'Share Card',
-                            () {
-                              orCodeBottomSheet();
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  customDataBox("Bio", userData!.personalBio ?? ''),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  customDataBox("Company Bio", userData!.companyProfile ?? ''),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                ],
-              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -461,7 +495,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           height: 30,
                         ),
                         Text(
-                          'Thomas Brian Samuel',
+                          getUserName(),
                           style: TextStyle(
                               fontSize: 16,
                               color: ColorConstants.black,
@@ -469,7 +503,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               fontWeight: FontWeight.w500),
                         ),
                         Text(
-                          'FOUNDER & CEO',
+                          AppConstant.userData!.jobTitle!,
                           style: TextStyle(
                               fontSize: 14,
                               color: ColorConstants.black,
@@ -477,7 +511,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               fontWeight: FontWeight.w500),
                         ),
                         Text(
-                          'Company Name',
+                          AppConstant.userData!.companyName!,
                           style: TextStyle(
                               fontSize: 14,
                               color: ColorConstants.black,
@@ -487,31 +521,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         const SizedBox(
                           height: 30,
                         ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * .65,
-                          height: 35,
-                          decoration: BoxDecoration(
-                              color: ColorConstants.black,
-                              borderRadius: BorderRadius.circular(7)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                Images.download,
-                                color: ColorConstants.white,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                'Download As Image',
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: ColorConstants.white,
-                                    fontFamily: 'inter',
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ],
+                        GestureDetector(
+                          onTap: () {
+                            _saveLocalImage();
+                          },
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * .65,
+                            height: 35,
+                            decoration: BoxDecoration(
+                                color: ColorConstants.black,
+                                borderRadius: BorderRadius.circular(7)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  Images.download,
+                                  color: ColorConstants.white,
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  'Download As Image',
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color: ColorConstants.white,
+                                      fontFamily: 'inter',
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -537,5 +576,86 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           );
         });
+  }
+
+  Widget qrImage() {
+    return RepaintBoundary(
+      key: _globalKey,
+      child: Container(
+        color: Colors.white,
+        height: MediaQuery.of(context).size.height * 1,
+        width: MediaQuery.of(context).size.width * 1,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                QrImage(
+                  data: vcardData,
+                  version: QrVersions.auto,
+                  size: 300.0,
+                  backgroundColor: Colors.white,
+                  foregroundColor: Colors.black,
+                  padding: const EdgeInsets.all(25.0),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Text(
+              getUserName(),
+              style: TextStyle(
+                  fontSize: 16,
+                  color: ColorConstants.black,
+                  fontFamily: 'inter',
+                  fontWeight: FontWeight.w500),
+            ),
+            Text(
+              AppConstant.userData!.jobTitle!,
+              style: TextStyle(
+                  fontSize: 14,
+                  color: ColorConstants.black,
+                  fontFamily: 'inter',
+                  fontWeight: FontWeight.w500),
+            ),
+            Text(
+              AppConstant.userData!.companyName!,
+              style: TextStyle(
+                  fontSize: 14,
+                  color: ColorConstants.black,
+                  fontFamily: 'inter',
+                  fontWeight: FontWeight.w500),
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            SizedBox(
+              height: 200,
+              width: MediaQuery.of(context).size.width * .8,
+              child: Image.asset(Images.logoName),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _saveLocalImage() async {
+    RenderRepaintBoundary boundary =
+        _globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+    ui.Image image = await boundary.toImage();
+    ByteData? byteData =
+        await (image.toByteData(format: ui.ImageByteFormat.png));
+    if (byteData != null) {
+      final result =
+          await ImageGallerySaver.saveImage(byteData.buffer.asUint8List());
+
+      if (result["isSuccess"] == true) {
+        toastShow(message: "Image saved to gallery");
+      }
+    }
   }
 }

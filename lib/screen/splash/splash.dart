@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:tourist/models/user/user_model.dart';
 import 'package:tourist/screen/auth/login/login_screen.dart';
 import 'package:tourist/screen/dashboard/dashboard_screen.dart';
@@ -18,11 +19,23 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
+    _requestPermission();
     Future.delayed(const Duration(seconds: 2), () {
       checkLogin();
       // Get.to(() => const LoginScreen());
     });
     super.initState();
+  }
+
+  _requestPermission() async {
+    var status = await Permission.storage.request();
+    print(await Permission.storage.status);
+    if (await Permission.storage.isPermanentlyDenied) {
+      await openAppSettings();
+    }
+    if (await Permission.storage.isDenied) {
+      await openAppSettings();
+    }
   }
 
   checkLogin() async {
