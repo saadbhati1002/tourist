@@ -34,6 +34,9 @@ class _QuickScreenState extends State<QuickScreen> {
     return Scaffold(
       appBar: customAppBarBack(
         context: context,
+        onTap: () {
+          Navigator.pop(context);
+        },
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {

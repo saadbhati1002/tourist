@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tourist/utility/color.dart';
 
-customAppBarBack({
-  BuildContext? context,
-  Function? setState,
-}) {
+customAppBarBack(
+    {BuildContext? context, Function? setState, VoidCallback? onTap}) {
   return AppBar(
     backgroundColor: Colors.transparent,
     automaticallyImplyLeading: false,
@@ -15,9 +13,7 @@ customAppBarBack({
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           GestureDetector(
-            onTap: () {
-              Navigator.pop(context!);
-            },
+            onTap: onTap,
             child: Container(
               margin: const EdgeInsets.only(top: 10, left: 5),
               height: 23,

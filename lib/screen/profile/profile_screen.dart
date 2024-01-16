@@ -68,6 +68,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       appBar: customAppBarBack(
         context: context,
+        onTap: () {
+          Navigator.pop(context);
+        },
       ),
       body: SingleChildScrollView(
         child: isLoading

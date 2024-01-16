@@ -87,6 +87,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return Scaffold(
       appBar: customAppBarBack(
         context: context,
+        onTap: () {
+          Navigator.pop(context);
+        },
       ),
       body: Stack(
         children: [

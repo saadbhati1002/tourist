@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:skeletons/skeletons.dart';
 import 'package:tourist/api/repository/event/event.dart';
+import 'package:tourist/models/common.dart';
 import 'package:tourist/models/event/event_list.dart';
 import 'package:tourist/screen/event_detail/event_detail_screen.dart';
 import 'package:tourist/utility/color.dart';
+import 'package:tourist/utility/constant.dart';
 import 'package:tourist/widgets/custom_app_bar.dart';
 import 'package:tourist/widgets/custom_drawer.dart';
 import 'package:tourist/widgets/custom_event_list.dart';
+import 'package:tourist/widgets/show_progress_bar.dart';
 
 class EventListScreen extends StatefulWidget {
   const EventListScreen({super.key});
@@ -20,6 +23,7 @@ class _EventListScreenState extends State<EventListScreen> {
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   List<EventData> eventData = [];
   bool isLoading = false;
+  bool isAPiCalling = false;
   String selectedData = '16-02-2024';
   int selectedCalender = 0;
   setStateNow() {
@@ -156,99 +160,114 @@ class _EventListScreenState extends State<EventListScreen> {
           ],
         ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: Stack(
         children: [
-          Material(
-            elevation: 5,
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 25,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Material(
+                elevation: 5,
+                child: Column(
                   children: [
-                    dateButton(
-                      '16 Feb',
-                      () {
-                        setState(() {
-                          selectedData = '16-02-2024';
-                        });
-                      },
-                      '16-02-2024',
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        dateButton(
+                          '16 Feb',
+                          () {
+                            setState(() {
+                              selectedData = '16-02-2024';
+                            });
+                          },
+                          '16-02-2024',
+                        ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        dateButton(
+                          '17 Feb',
+                          () {
+                            setState(() {
+                              selectedData = '17-02-2024';
+                            });
+                          },
+                          '17-02-2024',
+                        ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        dateButton(
+                          '18 Feb',
+                          () {
+                            setState(() {
+                              selectedData = '18-02-2024';
+                            });
+                          },
+                          '18-02-2024',
+                        ),
+                      ],
                     ),
                     const SizedBox(
-                      width: 20,
-                    ),
-                    dateButton(
-                      '17 Feb',
-                      () {
-                        setState(() {
-                          selectedData = '17-02-2024';
-                        });
-                      },
-                      '17-02-2024',
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    dateButton(
-                      '18 Feb',
-                      () {
-                        setState(() {
-                          selectedData = '18-02-2024';
-                        });
-                      },
-                      '18-02-2024',
+                      height: 25,
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 25,
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * .615,
-            child: isLoading
-                ? ListView.builder(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
-                    itemCount: 5,
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return notificationSkeleton();
-                    },
-                  )
-                : selectedCalender == 0
-                    ? const SizedBox()
-                    : ListView.builder(
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        padding: const EdgeInsets.only(top: 20),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * .615,
+                child: isLoading
+                    ? ListView.builder(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 15),
+                        itemCount: 5,
+                        physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: eventData.length,
                         itemBuilder: (context, index) {
-                          return selectedData == eventData[index].eventDate!
-                              ? GestureDetector(
-                                  onTap: () {
-                                    Get.to(
-                                      () => EventDetailScreen(
-                                        eventData: eventData[index],
-                                      ),
-                                    );
-                                  },
-                                  child: eventListing(
-                                      context: context,
-                                      eventData: eventData[index]),
-                                )
-                              : const SizedBox();
+                          return notificationSkeleton();
                         },
-                      ),
+                      )
+                    : selectedCalender == 0
+                        ? const SizedBox()
+                        : ListView.builder(
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            padding: const EdgeInsets.only(top: 20),
+                            shrinkWrap: true,
+                            itemCount: eventData.length,
+                            itemBuilder: (context, index) {
+                              return selectedData == eventData[index].eventDate!
+                                  ? GestureDetector(
+                                      onTap: () {
+                                        Get.to(
+                                          () => EventDetailScreen(
+                                            eventData: eventData[index],
+                                          ),
+                                        );
+                                      },
+                                      child: eventListing(
+                                        context: context,
+                                        eventData: eventData[index],
+                                        attendEvent: () {
+                                          if (eventData[index]
+                                                  .isAttendingEvent ==
+                                              false) {
+                                            joinEvent(index);
+                                          } else {
+                                            leaveEvent(index);
+                                          }
+                                        },
+                                      ),
+                                    )
+                                  : const SizedBox();
+                            },
+                          ),
+              ),
+            ],
           ),
+          isAPiCalling ? const ShowProgressBar() : const SizedBox()
         ],
       ),
     );
@@ -328,5 +347,45 @@ class _EventListScreenState extends State<EventListScreen> {
         ),
       ),
     );
+  }
+
+  joinEvent(index) async {
+    try {
+      setState(() {
+        isAPiCalling = true;
+      });
+      Common response = await EventRepository()
+          .joinEventApiCall(eventID: eventData[index].id.toString());
+      if (response.message == 'JOIN EVENT inserted successfully') {
+        toastShow(message: "You are join to this successfully");
+        eventData[index].isAttendingEvent = true;
+      } else {}
+    } catch (e) {
+      debugPrint(e.toString());
+    } finally {
+      setState(() {
+        isAPiCalling = false;
+      });
+    }
+  }
+
+  leaveEvent(index) async {
+    try {
+      setState(() {
+        isAPiCalling = true;
+      });
+      Common response = await EventRepository()
+          .leaveEventApiCall(eventID: eventData[index].id.toString());
+      if (response.message == 'JOIN EVENT deleted successfully') {
+        toastShow(message: "You leaved this event successfully");
+        eventData[index].isAttendingEvent = false;
+      } else {}
+    } catch (e) {
+      debugPrint(e.toString());
+    } finally {
+      setState(() {
+        isAPiCalling = false;
+      });
+    }
   }
 }

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:tourist/models/event/event_list.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:avatar_stack/avatar_stack.dart';
-import 'package:tourist/utility/images.dart';
 
-Widget eventListing({BuildContext? context, EventData? eventData}) {
+Widget eventListing(
+    {BuildContext? context, EventData? eventData, VoidCallback? attendEvent}) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 7),
     child: Material(
@@ -119,7 +119,7 @@ Widget eventListing({BuildContext? context, EventData? eventData}) {
                         height: 32,
                         width: 40,
                         decoration: BoxDecoration(
-                          color: eventData.isAttendingEvent == true
+                          color: eventData.isSavedToMyCalender == true
                               ? ColorConstants.mainColor
                               : ColorConstants.greyLight,
                           borderRadius: BorderRadius.circular(5),
@@ -134,36 +134,39 @@ Widget eventListing({BuildContext? context, EventData? eventData}) {
                       const SizedBox(
                         width: 10,
                       ),
-                      Container(
-                        height: 32,
-                        decoration: BoxDecoration(
-                          color: eventData.isAttendingEvent == true
-                              ? ColorConstants.mainColor
-                              : ColorConstants.greyLight,
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        alignment: Alignment.center,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 12),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.check_circle,
-                                color: ColorConstants.white,
-                                size: 20,
-                              ),
-                              const SizedBox(
-                                width: 7,
-                              ),
-                              Text(
-                                'Attending',
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    fontFamily: 'inter',
-                                    fontWeight: FontWeight.w500,
-                                    color: ColorConstants.white),
-                              )
-                            ],
+                      GestureDetector(
+                        onTap: attendEvent,
+                        child: Container(
+                          height: 32,
+                          decoration: BoxDecoration(
+                            color: eventData.isAttendingEvent == true
+                                ? ColorConstants.mainColor
+                                : ColorConstants.greyLight,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          alignment: Alignment.center,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.check_circle,
+                                  color: ColorConstants.white,
+                                  size: 20,
+                                ),
+                                const SizedBox(
+                                  width: 7,
+                                ),
+                                Text(
+                                  'Attending',
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      fontFamily: 'inter',
+                                      fontWeight: FontWeight.w500,
+                                      color: ColorConstants.white),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ),

@@ -26,6 +26,7 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
     return Scaffold(
       appBar: customAppBarBack(
         context: context,
+        onTap:(){},
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,

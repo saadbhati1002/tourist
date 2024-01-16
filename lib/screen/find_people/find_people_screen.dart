@@ -72,6 +72,9 @@ class _FindPeopleScreenState extends State<FindPeopleScreen> {
     return Scaffold(
       appBar: customAppBarBack(
         context: context,
+        onTap: () {
+          Navigator.pop(context);
+        },
       ),
       body: SingleChildScrollView(
         child: Column(
