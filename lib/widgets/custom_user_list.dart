@@ -66,7 +66,7 @@ class _UserListDataState extends State<UserListData> {
                         style: TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.w700,
-                            fontFamily: 'poppins',
+                            fontFamily: 'inter',
                             color: widget.userType == "Delegate" ||
                                     widget.userType == "Media"
                                 ? ColorConstants.white
@@ -94,7 +94,7 @@ class _UserListDataState extends State<UserListData> {
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                           color: ColorConstants.black,
-                          fontFamily: "poppins"),
+                          fontFamily: "inter"),
                     ),
                   ),
                   Text(
@@ -104,7 +104,7 @@ class _UserListDataState extends State<UserListData> {
                         fontSize: 10,
                         fontWeight: FontWeight.w500,
                         color: ColorConstants.black,
-                        fontFamily: "poppins"),
+                        fontFamily: "inter"),
                   ),
                   Text(
                     widget.userData!.country != null
@@ -115,7 +115,7 @@ class _UserListDataState extends State<UserListData> {
                         fontSize: 10,
                         fontWeight: FontWeight.w500,
                         color: ColorConstants.black,
-                        fontFamily: "poppins"),
+                        fontFamily: "inter"),
                   ),
                 ],
               ),
@@ -146,7 +146,7 @@ class _UserListDataState extends State<UserListData> {
                           fontSize: 14,
                           color: ColorConstants.white,
                           fontWeight: FontWeight.w500,
-                          fontFamily: "poppins"),
+                          fontFamily: "inter"),
                     )
                   ],
                 ),

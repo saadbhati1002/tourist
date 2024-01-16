@@ -208,7 +208,7 @@ class _HomeScreenState extends State<HomeScreen> {
               style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
-                  fontFamily: "poppins",
+                  fontFamily: "inter",
                   color: ColorConstants.white),
             )
           ],
@@ -225,7 +225,7 @@ class _HomeScreenState extends State<HomeScreen> {
         style: TextStyle(
             color: ColorConstants.black,
             fontSize: 14,
-            fontFamily: 'poppins',
+            fontFamily: 'inter',
             fontWeight: FontWeight.w600),
       ),
     );

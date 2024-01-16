@@ -53,7 +53,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             child: Text(
               'Meeting/event name with description - Lorem ipsem for the dorem',
               style: TextStyle(
-                  fontFamily: "poppins",
+                  fontFamily: "inter",
                   fontWeight: FontWeight.w600,
                   fontSize: 14,
                   color: ColorConstants.black),
@@ -68,7 +68,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               'Lorem ipsum dolor sit amet consectetur. Aliquet commodo maecenas non vestibulum quis blandit neque quis placerat. Eu sit interdum et nibh et ut interdum. Mattis at nisl eu ipsum facilisi turpis laoreet. Pellentesque vel lorem tortor proin a diam rhoncus cursus tellus. Pellentesque vel lorem tortor proin a diam rhoncus cursus tellus.',
               maxLines: 3,
               style: TextStyle(
-                  fontFamily: "poppins",
+                  fontFamily: "inter",
                   fontWeight: FontWeight.w500,
                   fontSize: 12,
                   color: ColorConstants.black),
@@ -83,7 +83,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               '24.05.2024 | 12:25PM',
               maxLines: 3,
               style: TextStyle(
-                  fontFamily: "poppins",
+                  fontFamily: "inter",
                   fontWeight: FontWeight.w700,
                   fontSize: 12,
                   color: ColorConstants.greyLight),

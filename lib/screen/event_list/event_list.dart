@@ -100,7 +100,7 @@ class _EventListScreenState extends State<EventListScreen> {
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
-                        fontFamily: 'poppins',
+                        fontFamily: 'inter',
                         color: selectedCalender == 0
                             ? ColorConstants.white
                             : ColorConstants.black,
@@ -143,7 +143,7 @@ class _EventListScreenState extends State<EventListScreen> {
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
-                        fontFamily: 'poppins',
+                        fontFamily: 'inter',
                         color: selectedCalender == 1
                             ? ColorConstants.white
                             : ColorConstants.black,
@@ -160,94 +160,94 @@ class _EventListScreenState extends State<EventListScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          isLoading
-              ? SizedBox(
-                  height: MediaQuery.of(context).size.height * .74,
-                  child: ListView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
+          Material(
+            elevation: 5,
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 25,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    dateButton(
+                      '16 Feb',
+                      () {
+                        setState(() {
+                          selectedData = '16-02-2024';
+                        });
+                      },
+                      '16-02-2024',
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    dateButton(
+                      '17 Feb',
+                      () {
+                        setState(() {
+                          selectedData = '17-02-2024';
+                        });
+                      },
+                      '17-02-2024',
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    dateButton(
+                      '18 Feb',
+                      () {
+                        setState(() {
+                          selectedData = '18-02-2024';
+                        });
+                      },
+                      '18-02-2024',
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * .615,
+            child: isLoading
+                ? ListView.builder(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 15),
                     itemCount: 5,
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return notificationSkeleton();
                     },
-                  ),
-                )
-              : Material(
-                  elevation: 5,
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 25,
+                  )
+                : selectedCalender == 0
+                    ? const SizedBox()
+                    : ListView.builder(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        padding: const EdgeInsets.only(top: 20),
+                        shrinkWrap: true,
+                        itemCount: eventData.length,
+                        itemBuilder: (context, index) {
+                          return selectedData == eventData[index].eventDate!
+                              ? GestureDetector(
+                                  onTap: () {
+                                    Get.to(
+                                      () => EventDetailScreen(
+                                        eventData: eventData[index],
+                                      ),
+                                    );
+                                  },
+                                  child: eventListing(
+                                      context: context,
+                                      eventData: eventData[index]),
+                                )
+                              : const SizedBox();
+                        },
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          dateButton(
-                            '16 Feb',
-                            () {
-                              setState(() {
-                                selectedData = '16-02-2024';
-                              });
-                            },
-                            '16-02-2024',
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          dateButton(
-                            '17 Feb',
-                            () {
-                              setState(() {
-                                selectedData = '17-02-2024';
-                              });
-                            },
-                            '17-02-2024',
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          dateButton(
-                            '18 Feb',
-                            () {
-                              setState(() {
-                                selectedData = '18-02-2024';
-                              });
-                            },
-                            '18-02-2024',
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 25,
-                      ),
-                    ],
-                  ),
-                ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * .615,
-            child: selectedCalender == 0
-                ? const SizedBox()
-                : ListView.builder(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    padding: const EdgeInsets.only(top: 20),
-                    shrinkWrap: true,
-                    itemCount: eventData.length,
-                    itemBuilder: (context, index) {
-                      return selectedData == eventData[index].eventDate!
-                          ? GestureDetector(
-                              onTap: () {
-                                Get.to(
-                                  () => const EventDetailScreen(),
-                                );
-                              },
-                              child: eventListing(
-                                  context: context,
-                                  eventData: eventData[index]),
-                            )
-                          : const SizedBox();
-                    },
-                  ),
           ),
         ],
       ),
@@ -322,7 +322,7 @@ class _EventListScreenState extends State<EventListScreen> {
                     ? ColorConstants.white
                     : ColorConstants.black,
                 fontSize: 14,
-                fontFamily: 'poppins',
+                fontFamily: 'inter',
                 fontWeight: FontWeight.w800),
           ),
         ),

@@ -193,7 +193,7 @@ class _NetworkScreenState extends State<NetworkScreen> {
         style: const TextStyle(
             color: ColorConstants.greyLight,
             fontSize: 12,
-            fontFamily: 'poppins',
+            fontFamily: 'inter',
             fontWeight: FontWeight.w900),
       ),
     );

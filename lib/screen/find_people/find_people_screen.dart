@@ -154,7 +154,7 @@ class _FindPeopleScreenState extends State<FindPeopleScreen> {
         style: const TextStyle(
             color: ColorConstants.greyLight,
             fontSize: 12,
-            fontFamily: 'poppins',
+            fontFamily: 'inter',
             fontWeight: FontWeight.w900),
       ),
     );

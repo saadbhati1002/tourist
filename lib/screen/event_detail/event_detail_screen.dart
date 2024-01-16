@@ -1,24 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:tourist/models/event/event_list.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:tourist/widgets/app_bar_back.dart';
 import 'package:tourist/widgets/custom_user_list.dart';
 
 class EventDetailScreen extends StatefulWidget {
-  const EventDetailScreen({super.key});
+  final EventData? eventData;
+  const EventDetailScreen({super.key, this.eventData});
 
   @override
   State<EventDetailScreen> createState() => _EventDetailScreenState();
 }
 
 class _EventDetailScreenState extends State<EventDetailScreen> {
-  List userType = [
-    'Delegate',
-    'Vendor',
-    'Speaker',
-    'Delegate',
-    'Media',
-    'Vendor'
-  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,50 +30,80 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                 height: 25,
               ),
               Text(
-                'Meeting/event name with description - Lorem ipsem for the dorem',
+                widget.eventData!.title ?? '',
                 style: TextStyle(
                     fontSize: 18,
                     color: ColorConstants.black,
-                    fontFamily: 'poppins',
+                    fontFamily: 'inter',
                     fontWeight: FontWeight.w700),
               ),
               const SizedBox(
                 height: 20,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    '3:30PM - 5:30PM',
-                    style: TextStyle(
-                        fontSize: 14,
-                        color: ColorConstants.black,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'poppins'),
-                  ),
-                  Container(
-                    height: 25,
-                    decoration: BoxDecoration(
-                      color: ColorConstants.blueColor,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      child: Text(
-                        'Event Venue Name',
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontFamily: "poppins",
-                            color: ColorConstants.white,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                  ),
-                ],
+              Text(
+                widget.eventData!.eventTime ?? '',
+                style: TextStyle(
+                    fontSize: 14,
+                    color: ColorConstants.black,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: 'inter'),
               ),
+              SizedBox(
+                height: widget.eventData!.eventType != null ? 15 : 0,
+              ),
+              widget.eventData!.eventType != null
+                  ? Container(
+                      decoration: BoxDecoration(
+                        color: widget.eventData!.eventType == "Event"
+                            ? ColorConstants.blueColor
+                            : ColorConstants.eventBoxColor,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      // alignment: Alignment.center,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 6),
+                        child: Text(
+                          widget.eventData!.eventType ?? '',
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontFamily: "inter",
+                              color: widget.eventData!.eventType == "Event"
+                                  ? ColorConstants.white
+                                  : ColorConstants.black,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    )
+                  : const SizedBox(),
+              SizedBox(
+                height: widget.eventData!.place != null ? 15 : 0,
+              ),
+              widget.eventData!.place != null
+                  ? Container(
+                      decoration: BoxDecoration(
+                        color: ColorConstants.black,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      // alignment: Alignment.center,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 5, horizontal: 10),
+                        child: Text(
+                          widget.eventData!.place ?? '',
+                          maxLines: 1,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontFamily: "inter",
+                              color: ColorConstants.white,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    )
+                  : const SizedBox(),
               const SizedBox(
-                height: 20,
+                height: 15,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -88,8 +112,10 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                     height: 32,
                     width: 40,
                     decoration: BoxDecoration(
-                      color: ColorConstants.mainColor,
-                      borderRadius: BorderRadius.circular(10),
+                      color: widget.eventData!.isAttendingEvent == true
+                          ? ColorConstants.mainColor
+                          : ColorConstants.greyLight,
+                      borderRadius: BorderRadius.circular(5),
                     ),
                     alignment: Alignment.center,
                     child: Icon(
@@ -99,13 +125,15 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                     ),
                   ),
                   const SizedBox(
-                    width: 15,
+                    width: 10,
                   ),
                   Container(
                     height: 32,
                     decoration: BoxDecoration(
-                      color: ColorConstants.mainColor,
-                      borderRadius: BorderRadius.circular(10),
+                      color: widget.eventData!.isAttendingEvent == true
+                          ? ColorConstants.mainColor
+                          : ColorConstants.greyLight,
+                      borderRadius: BorderRadius.circular(5),
                     ),
                     alignment: Alignment.center,
                     child: Padding(
@@ -124,7 +152,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                             'Attending',
                             style: TextStyle(
                                 fontSize: 12,
-                                fontFamily: 'poppins',
+                                fontFamily: 'inter',
                                 fontWeight: FontWeight.w500,
                                 color: ColorConstants.white),
                           )
@@ -141,7 +169,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                 'About the event',
                 style: TextStyle(
                     fontSize: 12,
-                    fontFamily: 'poppins',
+                    fontFamily: 'inter',
                     fontWeight: FontWeight.w700,
                     color: ColorConstants.black),
               ),
@@ -149,10 +177,10 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                 height: 10,
               ),
               Text(
-                'Lorem ipsum dolor sit amet consectetur. Aliquet commodo maecenas non vestibulum quis blandit neque quis placerat. Eu sit interdum et nibh et ut interdum. \n\nMattis at nisl eu ipsum facilisi turpis laoreet. Pellentesque vel lorem tortor proin a diam rhoncus cursus tellus. Pellentesque vel lorem tortor proin a diam rhoncus cursus tellus.',
+                widget.eventData!.description ?? '',
                 style: TextStyle(
                     fontSize: 12,
-                    fontFamily: 'poppins',
+                    fontFamily: 'inter',
                     fontWeight: FontWeight.w500,
                     color: ColorConstants.black),
               ),
@@ -163,19 +191,19 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                 'Participants',
                 style: TextStyle(
                     fontSize: 12,
-                    fontFamily: 'poppins',
+                    fontFamily: 'inter',
                     fontWeight: FontWeight.w700,
                     color: ColorConstants.greyLight),
               ),
               ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: userType.length,
+                itemCount: 0,
                 itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
+                  return const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10),
                     child: UserListData(
-                      userType: userType[index],
+                      userType: 'D',
                     ),
                   );
                 },

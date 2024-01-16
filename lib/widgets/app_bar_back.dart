@@ -43,7 +43,7 @@ customAppBarBack({
               'Back',
               style: TextStyle(
                   fontSize: 14,
-                  fontFamily: 'poppins',
+                  fontFamily: 'inter',
                   fontWeight: FontWeight.w600),
             ),
           )

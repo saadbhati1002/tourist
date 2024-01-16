@@ -36,7 +36,7 @@ Widget eventListing({BuildContext? context, EventData? eventData}) {
                         fontSize: 20,
                         color: ColorConstants.black,
                         fontWeight: FontWeight.bold,
-                        fontFamily: 'poppins'),
+                        fontFamily: 'inter'),
                   ),
                 ),
               ),
@@ -48,8 +48,8 @@ Widget eventListing({BuildContext? context, EventData? eventData}) {
                 style: TextStyle(
                     fontSize: 14,
                     color: ColorConstants.black,
-                    fontFamily: 'poppins',
-                    fontWeight: FontWeight.w500),
+                    fontFamily: 'inter',
+                    fontWeight: FontWeight.w700),
               ),
               SizedBox(
                 height: eventData.eventType != null ? 15 : 0,
@@ -70,7 +70,7 @@ Widget eventListing({BuildContext? context, EventData? eventData}) {
                           eventData.eventType ?? '',
                           style: TextStyle(
                               fontSize: 12,
-                              fontFamily: "poppins",
+                              fontFamily: "inter",
                               color: eventData.eventType == "Event"
                                   ? ColorConstants.white
                                   : ColorConstants.black,
@@ -98,7 +98,7 @@ Widget eventListing({BuildContext? context, EventData? eventData}) {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               fontSize: 12,
-                              fontFamily: "poppins",
+                              fontFamily: "inter",
                               color: ColorConstants.white,
                               fontWeight: FontWeight.w500),
                         ),
@@ -159,7 +159,7 @@ Widget eventListing({BuildContext? context, EventData? eventData}) {
                                 'Attending',
                                 style: TextStyle(
                                     fontSize: 12,
-                                    fontFamily: 'poppins',
+                                    fontFamily: 'inter',
                                     fontWeight: FontWeight.w500,
                                     color: ColorConstants.white),
                               )

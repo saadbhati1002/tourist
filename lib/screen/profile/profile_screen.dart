@@ -158,7 +158,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                                   FontWeight
                                                                       .w700,
                                                               fontFamily:
-                                                                  'poppins',
+                                                                  'inter',
                                                               color:
                                                                   ColorConstants
                                                                       .white),
@@ -180,7 +180,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                       fontSize: 12,
                                                       color:
                                                           ColorConstants.white,
-                                                      fontFamily: 'poppins',
+                                                      fontFamily: 'inter',
                                                       fontWeight:
                                                           FontWeight.w500),
                                                 ),
@@ -196,7 +196,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           style: TextStyle(
                                               fontSize: 14,
                                               color: ColorConstants.white,
-                                              fontFamily: 'poppins',
+                                              fontFamily: 'inter',
                                               fontWeight: FontWeight.w500),
                                         ),
                                         Text(
@@ -204,7 +204,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           style: TextStyle(
                                               fontSize: 12,
                                               color: ColorConstants.white,
-                                              fontFamily: 'poppins',
+                                              fontFamily: 'inter',
                                               fontWeight: FontWeight.w500),
                                         ),
                                       ],
@@ -220,7 +220,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           style: TextStyle(
                                               fontSize: 12,
                                               color: ColorConstants.white,
-                                              fontFamily: 'poppins',
+                                              fontFamily: 'inter',
                                               fontWeight: FontWeight.w500),
                                         ),
                                         Row(
@@ -232,7 +232,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               style: TextStyle(
                                                   fontSize: 12,
                                                   color: ColorConstants.white,
-                                                  fontFamily: 'poppins',
+                                                  fontFamily: 'inter',
                                                   fontWeight: FontWeight.w500),
                                             ),
                                             Text(
@@ -240,7 +240,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               style: TextStyle(
                                                   fontSize: 12,
                                                   color: ColorConstants.white,
-                                                  fontFamily: 'poppins',
+                                                  fontFamily: 'inter',
                                                   fontWeight: FontWeight.w500),
                                             ),
                                           ],
@@ -356,7 +356,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 title!,
                 style: TextStyle(
                   fontSize: 12,
-                  fontFamily: 'poppins',
+                  fontFamily: 'inter',
                   color: ColorConstants.white,
                   fontWeight: FontWeight.w600,
                 ),
@@ -388,7 +388,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
-                      fontFamily: "poppins",
+                      fontFamily: "inter",
                       color: ColorConstants.black),
                 ),
                 const SizedBox(
@@ -399,7 +399,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
-                      fontFamily: "poppins",
+                      fontFamily: "inter",
                       color: ColorConstants.black),
                 ),
               ],
@@ -462,7 +462,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           style: TextStyle(
                               fontSize: 16,
                               color: ColorConstants.black,
-                              fontFamily: 'poppins',
+                              fontFamily: 'inter',
                               fontWeight: FontWeight.w500),
                         ),
                         Text(
@@ -470,7 +470,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           style: TextStyle(
                               fontSize: 14,
                               color: ColorConstants.black,
-                              fontFamily: 'poppins',
+                              fontFamily: 'inter',
                               fontWeight: FontWeight.w500),
                         ),
                         Text(
@@ -478,7 +478,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           style: TextStyle(
                               fontSize: 14,
                               color: ColorConstants.black,
-                              fontFamily: 'poppins',
+                              fontFamily: 'inter',
                               fontWeight: FontWeight.w500),
                         ),
                         const SizedBox(
@@ -505,7 +505,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 style: TextStyle(
                                     fontSize: 14,
                                     color: ColorConstants.white,
-                                    fontFamily: 'poppins',
+                                    fontFamily: 'inter',
                                     fontWeight: FontWeight.w500),
                               ),
                             ],

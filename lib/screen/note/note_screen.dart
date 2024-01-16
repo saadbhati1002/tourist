@@ -54,7 +54,7 @@ class _QuickScreenState extends State<QuickScreen> {
               fontSize: 16,
               fontWeight: FontWeight.bold,
               color: ColorConstants.white,
-              fontFamily: "poppins"),
+              fontFamily: "inter"),
         ),
       ),
       body: HtmlEditor(

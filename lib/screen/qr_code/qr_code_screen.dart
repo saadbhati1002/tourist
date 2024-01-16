@@ -52,7 +52,7 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
             style: TextStyle(
                 fontSize: 16,
                 color: ColorConstants.black,
-                fontFamily: 'poppins',
+                fontFamily: 'inter',
                 fontWeight: FontWeight.w500),
           ),
           Text(
@@ -60,7 +60,7 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
             style: TextStyle(
                 fontSize: 14,
                 color: ColorConstants.black,
-                fontFamily: 'poppins',
+                fontFamily: 'inter',
                 fontWeight: FontWeight.w500),
           ),
           Text(
@@ -68,7 +68,7 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
             style: TextStyle(
                 fontSize: 14,
                 color: ColorConstants.black,
-                fontFamily: 'poppins',
+                fontFamily: 'inter',
                 fontWeight: FontWeight.w500),
           ),
           const SizedBox(
@@ -95,7 +95,7 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
                   style: TextStyle(
                       fontSize: 14,
                       color: ColorConstants.white,
-                      fontFamily: 'poppins',
+                      fontFamily: 'inter',
                       fontWeight: FontWeight.w500),
                 ),
               ],

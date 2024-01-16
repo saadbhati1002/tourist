@@ -58,7 +58,7 @@ customAppBar(
                   AppConstant.userData!.username ?? getUserName(),
                   maxLines: 1,
                   style: TextStyle(
-                      fontFamily: "poppins",
+                      fontFamily: "inter",
                       fontSize: 14,
                       color: ColorConstants.white,
                       fontWeight: FontWeight.w500),

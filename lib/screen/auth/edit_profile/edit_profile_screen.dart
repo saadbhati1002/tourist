@@ -352,7 +352,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         style: TextStyle(
             fontSize: 14,
             color: ColorConstants.black,
-            fontFamily: 'poppins',
+            fontFamily: 'inter',
             fontWeight: FontWeight.w700),
       ),
     );
@@ -389,7 +389,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       style: TextStyle(
                         color: ColorConstants.black,
                         fontSize: 18,
-                        fontFamily: 'poppins',
+                        fontFamily: 'inter',
                         fontWeight: FontWeight.w500,
                       ),
                     ),

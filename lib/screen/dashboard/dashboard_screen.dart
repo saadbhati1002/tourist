@@ -107,7 +107,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                         maxLines: 1,
                         style: TextStyle(
                             fontSize: 14,
-                            fontFamily: "poppins",
+                            fontFamily: "inter",
                             color: ColorConstants.white,
                             fontWeight: FontWeight.bold),
                       )
