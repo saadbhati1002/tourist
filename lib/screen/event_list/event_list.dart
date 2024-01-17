@@ -297,13 +297,12 @@ class _EventListScreenState extends State<EventListScreen> {
                                             }
                                           },
                                           addToMyCalender: () {
-                                            print("saad");
                                             if (eventData[index]
                                                     .isSavedToMyCalender ==
                                                 false) {
                                               addEventToMyCalender(index);
                                             } else {
-                                              // leaveEvent(index);
+                                              removeEventFromMyCalender(index);
                                             }
                                           }),
                                     )
@@ -395,6 +394,7 @@ class _EventListScreenState extends State<EventListScreen> {
     );
   }
 
+//checking user is join the event or not
   checkUserJoinInEvent(index) {
     if (eventData[index].userList != null ||
         eventData[index].userList!.isNotEmpty) {
@@ -406,6 +406,7 @@ class _EventListScreenState extends State<EventListScreen> {
       }
     }
   }
+  //Join event api call
 
   joinEvent(index) async {
     try {
@@ -427,6 +428,7 @@ class _EventListScreenState extends State<EventListScreen> {
       });
     }
   }
+  //Leave event api call
 
   leaveEvent(index) async {
     try {
@@ -463,6 +465,28 @@ class _EventListScreenState extends State<EventListScreen> {
       if (response.message == 'Event added to favorites successfully') {
         toastShow(message: "Event added to your calender successfully");
         eventData[index].isSavedToMyCalender = true;
+      } else {}
+    } catch (e) {
+      debugPrint(e.toString());
+    } finally {
+      setState(() {
+        isAPiCalling = false;
+      });
+    }
+  }
+
+  //remove event from my calender api call
+  removeEventFromMyCalender(index) async {
+    try {
+      setState(() {
+        isAPiCalling = true;
+      });
+      Common response = await EventRepository()
+          .removeEventFromMyCalenderApiCall(
+              eventID: eventData[index].id.toString());
+      if (response.message == 'Event Remove to favorites successfully') {
+        toastShow(message: "Event removed from your calender successfully");
+        eventData[index].isSavedToMyCalender = false;
       } else {}
     } catch (e) {
       debugPrint(e.toString());

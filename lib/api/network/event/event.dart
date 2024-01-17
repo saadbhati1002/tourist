@@ -8,6 +8,8 @@ class EventNetwork {
   static const String joinEventUrl = "auth-api.php/JoinEvent";
   static const String addEventToMyCalenderUrl = "auth-api.php/AddFavorite";
   static const String leaveEventUrl = "auth-api.php/UnJoinEvent?event_id=";
+  static const String removeEventFromMyCalenderUrl =
+      "auth-api.php/RemoveFavorite";
   static Future<dynamic> getEventList() async {
     final result = await httpManager.post(
       url: eventListUrl,
@@ -33,6 +35,14 @@ class EventNetwork {
   static Future<dynamic> addEventToMyCalender(params) async {
     final result =
         await httpManager.post(url: addEventToMyCalenderUrl, data: params);
+    Common loginRes = Common.fromJson(result);
+    return loginRes;
+  }
+
+  static Future<dynamic> removeEventFromMyCalender(params) async {
+    final result =
+        await httpManager.post(url: removeEventFromMyCalenderUrl, data: params);
+    print(result);
     Common loginRes = Common.fromJson(result);
     return loginRes;
   }

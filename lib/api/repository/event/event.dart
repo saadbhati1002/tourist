@@ -25,4 +25,12 @@ class EventRepository {
     };
     return await EventNetwork.addEventToMyCalender(params);
   }
+
+  Future<dynamic> removeEventFromMyCalenderApiCall({String? eventID}) async {
+    final params = {
+      "event_id": eventID,
+      "user_id": AppConstant.userData!.id.toString()
+    };
+    return await EventNetwork.removeEventFromMyCalender(params);
+  }
 }
