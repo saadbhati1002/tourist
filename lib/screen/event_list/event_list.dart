@@ -377,7 +377,6 @@ class _EventListScreenState extends State<EventListScreen> {
         eventData[index].isAttendingEvent = true;
       }
     }
-    return eventData[index].isAttendingEvent;
   }
 
   joinEvent(index) async {

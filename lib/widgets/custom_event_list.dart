@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tourist/models/event/event_list.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:avatar_stack/avatar_stack.dart';
+import 'package:tourist/utility/images.dart';
+import 'package:tourist/widgets/custom_image_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 Widget eventListing(
@@ -183,28 +185,31 @@ Widget eventListing(
                       ),
                     ],
                   ),
-                  // AvatarStack(
-                  //   height: 40,
-                  //   width: MediaQuery.of(context).size.width * .3,
-                  //   infoWidgetBuilder: (surplus) {
-                  //     return Container(
-                  //       height: 40,
-                  //       alignment: Alignment.center,
-                  //       child: Text(
-                  //         '+ ${surplus - 1}',
-                  //         style: TextStyle(
-                  //             fontSize: 12,
-                  //             color: ColorConstants.black,
-                  //             fontWeight: FontWeight.w700),
-                  //         textAlign: TextAlign.center,
-                  //       ),
-                  //     );
-                  //   },
-                  //   avatars: [
-                  //     for (var n = 0; n < 7; n++)
-                  //       const AssetImage(Images.userMain),
-                  //   ],
-                  // ),
+                  AvatarStack(
+                    height: 40,
+                    width: MediaQuery.of(context).size.width * .3,
+                    infoWidgetBuilder: (surplus) {
+                      return Container(
+                        height: 40,
+                        alignment: Alignment.center,
+                        child: Text(
+                          '+ ${surplus - 1}',
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: ColorConstants.black,
+                              fontWeight: FontWeight.w700),
+                          textAlign: TextAlign.center,
+                        ),
+                      );
+                    },
+                    avatars: [
+                      for (var n = 0; n < eventData.userList!.length; n++)
+                        NetworkImage((eventData.userList![n].logo3 != null ||
+                                eventData.userList![n].logo3 != "")
+                            ? eventData.userList![n].logo3!
+                            : 'https://dubaiweddingsymposium.com/images/DWS.png')
+                    ],
+                  ),
                 ],
               )
             ],
