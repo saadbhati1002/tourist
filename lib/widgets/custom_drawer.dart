@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:tourist/screen/find_people/find_people_screen.dart';
 import 'package:tourist/screen/profile/profile_screen.dart';
@@ -20,63 +21,15 @@ class _CustomDrawerState extends State<CustomDrawer> {
   Widget build(BuildContext context) {
     return Drawer(
       backgroundColor: Colors.white,
-      child: SizedBox(
+      child: Container(
+        color: ColorConstants.white,
         height: MediaQuery.of(context).size.height * 1,
         child: Stack(
           children: [
             Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Container(
-                    margin: const EdgeInsets.only(top: 10),
-                    height: 50,
-                    width: MediaQuery.of(context).size.width * .66,
-                    decoration: BoxDecoration(
-                      color: ColorConstants.black,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: GestureDetector(
-                        onTap: () {
-                          Get.to(() => const ProfileScreen());
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            CustomImage(
-                              height: 32,
-                              width: 32,
-                              imagePath: AppConstant.userData!.logo2!,
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * .49,
-                              child: Text(
-                                AppConstant.userData!.username ?? getUserName(),
-                                maxLines: 1,
-                                style: TextStyle(
-                                    fontFamily: "inter",
-                                    fontSize: 14,
-                                    color: ColorConstants.white,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 25,
-                ),
                 headingText(
                   'Share My QR Code',
                   () {
@@ -136,6 +89,22 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 ),
               ],
             ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: Align(
+                alignment: Alignment.topRight,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: const FaIcon(
+                    FontAwesomeIcons.squareXmark,
+                    color: ColorConstants.mainColor,
+                    size: 35,
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),
@@ -150,8 +119,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
         children: [
           Container(
             width: MediaQuery.of(context).size.width,
-            height: 1.5,
-            color: ColorConstants.black,
+            height: 1,
+            color: ColorConstants.mainColor,
           ),
           const SizedBox(
             height: 15,

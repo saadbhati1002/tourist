@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:skeletons/skeletons.dart';
 import 'package:tourist/api/repository/event/event.dart';
@@ -65,99 +66,104 @@ class _EventListScreenState extends State<EventListScreen> {
         setState: setStateNow,
       ),
       bottomNavigationBar: SizedBox(
-        height: 55,
         width: MediaQuery.of(context).size.width,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  selectedCalender = 0;
-                });
-              },
-              child: Container(
-                width: MediaQuery.of(context).size.width * .43,
-                height: 37,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: selectedCalender == 0
-                      ? ColorConstants.mainColor
-                      : ColorConstants.greyLight,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.calendar_month_outlined,
-                      color: selectedCalender == 0
-                          ? ColorConstants.white
-                          : ColorConstants.black,
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      'My Calendar',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'inter',
+        child: Padding(
+          padding: const EdgeInsets.only(top: 6, bottom: 6),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    selectedCalender = 0;
+                  });
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width * .475,
+                  height: 42,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: selectedCalender == 0
+                        ? ColorConstants.mainColor
+                        : ColorConstants.greySimple,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      FaIcon(
+                        FontAwesomeIcons.calendarPlus,
                         color: selectedCalender == 0
                             ? ColorConstants.white
-                            : ColorConstants.black,
+                            : ColorConstants.greyDark,
                       ),
-                    ),
-                  ],
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'My Calendar',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'inter',
+                          color: selectedCalender == 0
+                              ? ColorConstants.white
+                              : ColorConstants.greyDark,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  selectedCalender = 1;
-                });
-              },
-              child: Container(
-                width: MediaQuery.of(context).size.width * .43,
-                height: 37,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: selectedCalender == 1
-                      ? ColorConstants.mainColor
-                      : ColorConstants.greyLight,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.calendar_today_rounded,
-                      color: selectedCalender == 1
-                          ? ColorConstants.white
-                          : ColorConstants.black,
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      'Event Schedule',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'inter',
+              const SizedBox(
+                width: 7,
+              ),
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    selectedCalender = 1;
+                  });
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width * .475,
+                  height: 42,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: selectedCalender == 1
+                        ? ColorConstants.mainColor
+                        : ColorConstants.greySimple,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      FaIcon(
+                        FontAwesomeIcons.listCheck,
                         color: selectedCalender == 1
                             ? ColorConstants.white
-                            : ColorConstants.black,
+                            : ColorConstants.greyDark,
                       ),
-                    ),
-                  ],
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Event Schedule',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'inter',
+                          color: selectedCalender == 1
+                              ? ColorConstants.white
+                              : ColorConstants.greyDark,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       body: Stack(
@@ -258,6 +264,8 @@ class _EventListScreenState extends State<EventListScreen> {
                                         }
                                       },
                                       child: eventListing(
+                                        isEventJoin:
+                                            checkUserJoinInEvent(index),
                                         context: context,
                                         eventData: eventData[index],
                                         attendEvent: () {
@@ -359,6 +367,19 @@ class _EventListScreenState extends State<EventListScreen> {
     );
   }
 
+  checkUserJoinInEvent(index) {
+    if (eventData[index].userList != null ||
+        eventData[index].userList!.isNotEmpty) {
+      var contain = eventData[index].userList!.where((element) =>
+          element.id.toString() == AppConstant.userData!.id.toString());
+
+      if (contain.isNotEmpty) {
+        eventData[index].isAttendingEvent = true;
+      }
+    }
+    return eventData[index].isAttendingEvent;
+  }
+
   joinEvent(index) async {
     try {
       setState(() {
@@ -369,6 +390,7 @@ class _EventListScreenState extends State<EventListScreen> {
       if (response.message == 'JOIN EVENT inserted successfully') {
         toastShow(message: "You are join to this successfully");
         eventData[index].isAttendingEvent = true;
+        eventData[index].userList!.add(AppConstant.userData!);
       } else {}
     } catch (e) {
       debugPrint(e.toString());
@@ -389,6 +411,8 @@ class _EventListScreenState extends State<EventListScreen> {
       if (response.message == 'JOIN EVENT deleted successfully') {
         toastShow(message: "You leaved this event successfully");
         eventData[index].isAttendingEvent = false;
+        eventData[index].userList!.removeWhere((element) =>
+            element.id.toString() == AppConstant.userData!.id.toString());
       } else {}
     } catch (e) {
       debugPrint(e.toString());

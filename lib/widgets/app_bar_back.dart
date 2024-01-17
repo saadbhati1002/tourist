@@ -20,7 +20,7 @@ customAppBarBack(
               width: 30,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(2),
+                borderRadius: BorderRadius.circular(5),
                 color: ColorConstants.black,
               ),
               child: Icon(

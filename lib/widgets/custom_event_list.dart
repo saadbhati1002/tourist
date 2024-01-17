@@ -5,7 +5,10 @@ import 'package:avatar_stack/avatar_stack.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 Widget eventListing(
-    {BuildContext? context, EventData? eventData, VoidCallback? attendEvent}) {
+    {BuildContext? context,
+    EventData? eventData,
+    VoidCallback? attendEvent,
+    bool? isEventJoin}) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 7),
     child: Material(

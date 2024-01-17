@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tourist/screen/event_list/event_list.dart';
 import 'package:tourist/screen/home/home_screen.dart';
 import 'package:tourist/screen/network/network_screen.dart';
 import 'package:tourist/screen/notification/notification_screen.dart';
 import 'package:tourist/utility/color.dart';
-import 'package:tourist/utility/images.dart';
 
 class DashBoardScreen extends StatefulWidget {
   const DashBoardScreen({super.key});
@@ -39,7 +39,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
           bottomNavigationBar: Material(
             color: ColorConstants.black,
             child: TabBar(
-              indicatorWeight: 0.1,
+              indicatorWeight: 0.01,
               controller: _tabController,
               onTap: (index) {
                 _setPage(index);
@@ -48,10 +48,46 @@ class _DashBoardScreenState extends State<DashBoardScreen>
               indicatorColor: Colors.black,
               isScrollable: true,
               tabs: [
-                _barItem(Images.home, 0, "Home"),
-                _barItem(Images.network, 1, "Network"),
-                _barItem(Images.calender, 2, "Schedule"),
-                _barItem(Images.notification, 3, "Notifications"),
+                _barItem(
+                    FaIcon(
+                      FontAwesomeIcons.houseUser,
+                      size: 22,
+                      color: _pageIndex == 0
+                          ? ColorConstants.white
+                          : ColorConstants.greyDark,
+                    ),
+                    0,
+                    "Home"),
+                _barItem(
+                    FaIcon(
+                      FontAwesomeIcons.circleNodes,
+                      size: 22,
+                      color: _pageIndex == 1
+                          ? ColorConstants.white
+                          : ColorConstants.greyDark,
+                    ),
+                    1,
+                    "Network"),
+                _barItem(
+                    FaIcon(
+                      FontAwesomeIcons.calendarDay,
+                      size: 22,
+                      color: _pageIndex == 2
+                          ? ColorConstants.white
+                          : ColorConstants.greyDark,
+                    ),
+                    2,
+                    "Schedule"),
+                _barItem(
+                    FaIcon(
+                      FontAwesomeIcons.solidBell,
+                      size: 22,
+                      color: _pageIndex == 3
+                          ? ColorConstants.white
+                          : ColorConstants.greyDark,
+                    ),
+                    3,
+                    "Notifications"),
               ],
             ),
           ),
@@ -67,7 +103,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
     });
   }
 
-  Widget _barItem(String image, int index, String? title) {
+  Widget _barItem(FaIcon? icon, int index, String? title) {
     return index == _pageIndex
         ? SizedBox(
             height: 65,
@@ -95,10 +131,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ImageIcon(
-                        AssetImage(image),
-                        color: ColorConstants.white,
-                      ),
+                      icon!,
                       const SizedBox(
                         width: 5,
                       ),
@@ -121,10 +154,6 @@ class _DashBoardScreenState extends State<DashBoardScreen>
             height: 65,
             width: MediaQuery.of(context).size.width * .2,
             alignment: Alignment.center,
-            child: ImageIcon(
-              AssetImage(image),
-              color: ColorConstants.greyLight,
-            ),
-          );
+            child: icon!);
   }
 }

@@ -64,9 +64,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     } catch (e) {
       debugPrint(e.toString());
     } finally {
-      setState(() {
-        isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
     }
   }
 
@@ -88,7 +90,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
             width: MediaQuery.of(context).size.width * 1,
             child: SingleChildScrollView(
               child: isLoading
-                  ? const ShowProgressBar()
+                  ? SizedBox(
+                      height: MediaQuery.of(context).size.height * .8,
+                      width: MediaQuery.of(context).size.width * 1,
+                      child: const ShowProgressBar())
                   : Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -315,15 +320,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       final newContact = Contact()
                                         ..name.first = 'John'
                                         ..name.last = 'Smith'
-                                        ..emails.first =
-                                            Email('test@test.gmail.com')
-                                        ..organizations.first = Organization(
-                                            company: "test",
-                                            title: "CEO",
-                                            officeLocation: "Sikar")
+                                        ..emails = [
+                                          Email('test@test.gmail.com')
+                                        ]
+                                        ..organizations = [
+                                          Organization(
+                                              company: "test",
+                                              title: "CEO",
+                                              officeLocation: "Sikar")
+                                        ]
                                         ..phones = [Phone('555-123-4567')];
                                       var response = await newContact.insert();
                                       print(response);
+                                      toastShow(
+                                          message:
+                                              "Contact Saved Successfully to your contact");
                                     }
                                   },
                                 ),
@@ -473,6 +484,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return name;
   }
 
+  getMainUserName() {
+    String name = AppConstant.userData!.firstName!;
+    if (AppConstant.userData!.middleName != null) {
+      name = "$name ${AppConstant.userData!.middleName}";
+    }
+    if (AppConstant.userData!.lastName != null) {
+      name = "$name ${AppConstant.userData!.lastName}";
+    }
+    return name;
+  }
+
   orCodeBottomSheet() {
     return showModalBottomSheet(
         context: context,
@@ -487,90 +509,93 @@ class _ProfileScreenState extends State<ProfileScreen> {
               width: MediaQuery.of(context).size.width,
               child: Stack(
                 children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * .6,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            QrImage(
-                              data: vcardData,
-                              version: QrVersions.auto,
-                              size: 180.0,
-                              backgroundColor: Colors.white,
-                              foregroundColor: Colors.black,
-                              padding: const EdgeInsets.all(25.0),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        Text(
-                          getUserName(),
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: ColorConstants.black,
-                              fontFamily: 'inter',
-                              fontWeight: FontWeight.w500),
-                        ),
-                        Text(
-                          AppConstant.userData!.jobTitle!,
-                          style: TextStyle(
-                              fontSize: 14,
-                              color: ColorConstants.black,
-                              fontFamily: 'inter',
-                              fontWeight: FontWeight.w500),
-                        ),
-                        Text(
-                          AppConstant.userData!.companyName!,
-                          style: TextStyle(
-                              fontSize: 14,
-                              color: ColorConstants.black,
-                              fontFamily: 'inter',
-                              fontWeight: FontWeight.w500),
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            _saveLocalImage();
-                          },
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * .65,
-                            height: 35,
-                            decoration: BoxDecoration(
-                                color: ColorConstants.black,
-                                borderRadius: BorderRadius.circular(7)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  Images.download,
-                                  color: ColorConstants.white,
+                  isLoading
+                      ? const SizedBox()
+                      : SizedBox(
+                          height: MediaQuery.of(context).size.height * .6,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  QrImage(
+                                    data: vcardData,
+                                    version: QrVersions.auto,
+                                    size: 180.0,
+                                    backgroundColor: Colors.white,
+                                    foregroundColor: Colors.black,
+                                    padding: const EdgeInsets.all(25.0),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              Text(
+                                getMainUserName(),
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: ColorConstants.black,
+                                    fontFamily: 'inter',
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              Text(
+                                AppConstant.userData!.jobTitle!,
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: ColorConstants.black,
+                                    fontFamily: 'inter',
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              Text(
+                                AppConstant.userData!.companyName!,
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: ColorConstants.black,
+                                    fontFamily: 'inter',
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  _saveLocalImage();
+                                },
+                                child: Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * .65,
+                                  height: 35,
+                                  decoration: BoxDecoration(
+                                      color: ColorConstants.black,
+                                      borderRadius: BorderRadius.circular(7)),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        Images.download,
+                                        color: ColorConstants.white,
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        'Download As Image',
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            color: ColorConstants.white,
+                                            fontFamily: 'inter',
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  'Download As Image',
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      color: ColorConstants.white,
-                                      fontFamily: 'inter',
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
                   Padding(
                     padding: const EdgeInsets.only(top: 15, right: 15),
                     child: Align(
@@ -621,7 +646,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               height: 20,
             ),
             Text(
-              getUserName(),
+              getMainUserName(),
               style: TextStyle(
                   fontSize: 16,
                   color: ColorConstants.black,

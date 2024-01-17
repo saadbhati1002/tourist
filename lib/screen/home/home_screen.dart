@@ -7,6 +7,7 @@ import 'package:tourist/utility/images.dart';
 import 'package:tourist/widgets/custom_app_bar.dart';
 import 'package:tourist/widgets/custom_drawer.dart';
 import 'package:tourist/widgets/custom_user_list.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -85,7 +86,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   customActionButton(
                     "Quick Notes",
-                    Images.notes,
+                    FaIcon(
+                      FontAwesomeIcons.solidClipboard,
+                      color: ColorConstants.white,
+                      size: 30,
+                    ),
                     () {
                       Get.to(
                         () => const QuickScreen(),
@@ -94,12 +99,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   customActionButton(
                     "Leader Board",
-                    Images.leaderboard,
+                    FaIcon(
+                      FontAwesomeIcons.trophy,
+                      color: ColorConstants.white,
+                      size: 30,
+                    ),
                     () {},
                   ),
                   customActionButton(
                     "Guest List",
-                    Images.meeting,
+                    FaIcon(
+                      FontAwesomeIcons.users,
+                      color: ColorConstants.white,
+                      size: 30,
+                    ),
                     () {
                       Get.to(
                         () => const FindPeopleScreen(),
@@ -189,7 +202,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget customActionButton(String? title, String? image, VoidCallback? onTap) {
+  Widget customActionButton(String? title, FaIcon? icon, VoidCallback? onTap) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -199,17 +212,23 @@ class _HomeScreenState extends State<HomeScreen> {
             color: ColorConstants.mainColor,
             borderRadius: BorderRadius.circular(10)),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Image.asset(image!),
-            Text(
-              title!,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: "inter",
-                  color: ColorConstants.white),
+            const SizedBox(
+              height: 20,
+            ),
+            icon!,
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: Text(
+                title!,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "inter",
+                    color: ColorConstants.white),
+              ),
             )
           ],
         ),

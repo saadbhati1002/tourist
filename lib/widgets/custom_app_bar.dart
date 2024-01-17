@@ -47,13 +47,14 @@ customAppBar(
               CustomImage(
                 height: 32,
                 width: 32,
+                isFromAppBar: true,
                 imagePath: AppConstant.userData!.logo3,
               ),
               const SizedBox(
                 width: 10,
               ),
               SizedBox(
-                width: MediaQuery.of(context).size.width * .43,
+                width: MediaQuery.of(context).size.width * .37,
                 child: Text(
                   AppConstant.userData!.username ?? getUserName(),
                   maxLines: 1,
@@ -61,7 +62,7 @@ customAppBar(
                       fontFamily: "inter",
                       fontSize: 14,
                       color: ColorConstants.white,
-                      fontWeight: FontWeight.w500),
+                      fontWeight: FontWeight.w700),
                 ),
               ),
             ],

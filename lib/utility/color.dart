@@ -14,4 +14,6 @@ class ColorConstants {
   static const Color blueColor = Color(0xFF314E71);
   static const Color blueDark = Color(0xFF0074FF);
   static const Color boxColorTime = Color(0xFFEFEFEF);
+  static const Color greySimple = Color(0xFFD9D9D9);
+  static const Color greyDark = Color(0xFFA2A2A2);
 }

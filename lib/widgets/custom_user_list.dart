@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:tourist/models/user/user_model.dart';
 import 'package:tourist/screen/profile/profile_screen.dart';
@@ -25,33 +26,33 @@ class _UserListDataState extends State<UserListData> {
             ));
       },
       child: SizedBox(
-        height: 90,
+        height: 70,
         width: MediaQuery.of(context).size.width * 1,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              height: 90,
-              width: 90,
+              height: 70,
+              width: 70,
               child: Stack(
                 children: [
                   CustomImage(
-                    height: 90,
-                    width: 90,
+                    height: 70,
+                    width: 70,
                     imagePath: widget.userData!.logo3!,
                   ),
                   Align(
                     alignment: Alignment.bottomLeft,
                     child: Container(
                       height: 15,
-                      width: 90,
+                      width: 70,
                       decoration: BoxDecoration(
                           borderRadius: const BorderRadius.only(
                             bottomLeft: Radius.circular(
-                              10,
+                              5,
                             ),
-                            bottomRight: Radius.circular(10),
+                            bottomRight: Radius.circular(5),
                           ),
                           color: widget.userType == "Delegate"
                               ? ColorConstants.delegateColor
@@ -78,10 +79,10 @@ class _UserListDataState extends State<UserListData> {
               ),
             ),
             const SizedBox(
-              width: 15,
+              width: 10,
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width * .47,
+              width: MediaQuery.of(context).size.width * .61,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,35 +121,26 @@ class _UserListDataState extends State<UserListData> {
                 ],
               ),
             ),
-            Container(
-              height: 37,
-              decoration: BoxDecoration(
-                color: ColorConstants.mainColor,
-                borderRadius: BorderRadius.circular(5),
-              ),
-              alignment: Alignment.center,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.chat_outlined,
-                      size: 18,
-                      color: ColorConstants.white,
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      "Chat",
-                      style: TextStyle(
-                          fontSize: 14,
-                          color: ColorConstants.white,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: "inter"),
-                    )
-                  ],
+            const SizedBox(
+              width: 7,
+            ),
+            Material(
+              borderRadius: BorderRadius.circular(5),
+              elevation: 1,
+              child: Container(
+                height: 37,
+                decoration: BoxDecoration(
+                  color: ColorConstants.white,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                alignment: Alignment.center,
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: FaIcon(
+                    FontAwesomeIcons.solidCommentDots,
+                    size: 25,
+                    color: ColorConstants.mainColor,
+                  ),
                 ),
               ),
             ),
