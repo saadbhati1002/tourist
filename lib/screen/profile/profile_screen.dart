@@ -15,6 +15,7 @@ import 'package:tourist/widgets/app_bar_back.dart';
 import 'package:tourist/widgets/custom_image_view.dart';
 import 'package:tourist/widgets/show_progress_bar.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
 
 class ProfileScreen extends StatefulWidget {
   final bool? isFromGuest;
@@ -308,8 +309,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 customButtons(
                                   Images.save,
                                   'Save as contact',
-                                  () {
-                                    orCodeBottomSheet();
+                                  () async {
+                                    if (await FlutterContacts
+                                        .requestPermission()) {
+                                      final newContact = Contact()
+                                        ..name.first = 'John'
+                                        ..name.last = 'Smith'
+                                        ..emails.first =
+                                            Email('test@test.gmail.com')
+                                        ..organizations.first = Organization(
+                                            company: "test",
+                                            title: "CEO",
+                                            officeLocation: "Sikar")
+                                        ..phones = [Phone('555-123-4567')];
+                                      var response = await newContact.insert();
+                                      print(response);
+                                    }
                                   },
                                 ),
                                 customButtons(
