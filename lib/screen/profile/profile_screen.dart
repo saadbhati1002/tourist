@@ -323,26 +323,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   Images.save,
                                   'Save as contact',
                                   () async {
-                                    if (await FlutterContacts
-                                        .requestPermission()) {
-                                      final newContact = Contact()
-                                        ..name.first = 'John'
-                                        ..name.last = 'Smith'
-                                        ..emails = [
-                                          Email('test@test.gmail.com')
-                                        ]
-                                        ..organizations = [
-                                          Organization(
-                                              company: "test",
-                                              title: "CEO",
-                                              officeLocation: "Sikar")
-                                        ]
-                                        ..phones = [Phone('555-123-4567')];
-                                      await newContact.insert();
+                                    try {
+                                      if (await FlutterContacts
+                                          .requestPermission()) {
+                                        final newContact = Contact()
+                                          ..name.first =
+                                              userData!.firstName ?? ''
+                                          ..name.last = userData!.lastName ?? ''
+                                          ..emails = [
+                                            Email(userData!.email ?? '')
+                                          ]
+                                          ..organizations = [
+                                            Organization(
+                                                company:
+                                                    userData!.companyName ?? '',
+                                                title: userData!.jobTitle ?? '',
+                                                officeLocation:
+                                                    userData!.country ?? '')
+                                          ]
+                                          ..phones = [
+                                            Phone(userData!.mobile ?? '')
+                                          ];
+                                        await newContact.insert();
 
-                                      toastShow(
-                                          message:
-                                              "Contact Saved Successfully to your contact");
+                                        toastShow(
+                                            message:
+                                                "Contact Saved Successfully to your contact");
+                                      }
+                                    } catch (e) {
+                                      toastShow(message: e.toString());
                                     }
                                   },
                                 ),

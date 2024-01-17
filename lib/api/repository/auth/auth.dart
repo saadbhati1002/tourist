@@ -1,6 +1,7 @@
 import 'dart:io';
 
-import 'package:get/get.dart';
+import 'package:dio/dio.dart';
+
 import 'package:tourist/api/network/auth/auth.dart';
 
 class AuthRepository {
@@ -37,10 +38,10 @@ class AuthRepository {
       String? jobTitle,
       bool? isProfileUpdated,
       File? userImage}) async {
-    var body;
+    FormData body;
     if (isProfileUpdated == true) {
       String fileName = userImage!.path.split('/').last;
-      body = {
+      body = FormData.fromMap({
         'email': email,
         "first_name": firstName,
         "middle_name": middleName,
@@ -51,10 +52,11 @@ class AuthRepository {
         "Personal_Bio": personalBio,
         "country": country,
         "job_title": jobTitle,
-        "logo3": await MultipartFile(userImage.path, filename: fileName)
-      };
+        "logo3":
+            await MultipartFile.fromFile(userImage.path, filename: fileName)
+      });
     } else {
-      body = {
+      body = FormData.fromMap({
         'email': email,
         "first_name": firstName,
         "middle_name": middleName,
@@ -65,7 +67,7 @@ class AuthRepository {
         "Personal_Bio": personalBio,
         "country": country,
         "job_title": jobTitle
-      };
+      });
     }
     return await AuthNetwork.updateProfile(body);
   }

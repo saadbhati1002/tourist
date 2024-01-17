@@ -26,7 +26,7 @@ class CustomImage extends StatelessWidget {
                   width: width,
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(
-                      Radius.circular(15),
+                      Radius.circular(5),
                     ),
                     image: DecorationImage(
                       image: imageProvider,
@@ -43,12 +43,19 @@ class CustomImage extends StatelessWidget {
                   child: Container(
                     height: height,
                     width: width,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10),
-                      ),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        color: ColorConstants.white,
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(5),
+                        ),
+                        border: Border.all(
+                            width: 1, color: ColorConstants.greyLight)),
+                    child: FaIcon(
+                      FontAwesomeIcons.solidUser,
+                      size: isFromAppBar == true ? 15 : 30,
+                      color: ColorConstants.greyLight,
                     ),
-                    child: const Icon(Icons.image),
                   ),
                 );
               },
@@ -60,12 +67,19 @@ class CustomImage extends StatelessWidget {
                   child: Container(
                     height: height,
                     width: width,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10),
-                      ),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        color: ColorConstants.white,
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(5),
+                        ),
+                        border: Border.all(
+                            width: 1, color: ColorConstants.greyLight)),
+                    child: FaIcon(
+                      FontAwesomeIcons.solidUser,
+                      size: isFromAppBar == true ? 15 : 30,
+                      color: ColorConstants.greyLight,
                     ),
-                    child: const Icon(Icons.image),
                   ),
                 );
               },
