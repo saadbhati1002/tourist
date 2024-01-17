@@ -33,4 +33,8 @@ class EventRepository {
     };
     return await EventNetwork.removeEventFromMyCalender(params);
   }
+
+  Future<dynamic> getMyCalenderEventApiCall() async {
+    return await EventNetwork.getMySavedEvents();
+  }
 }

@@ -2,12 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:tourist/screen/find_people/find_people_screen.dart';
-import 'package:tourist/screen/profile/profile_screen.dart';
 import 'package:tourist/screen/qr_code/qr_code_screen.dart';
 import 'package:tourist/utility/color.dart';
-import 'package:tourist/utility/constant.dart';
-import 'package:tourist/widgets/custom_app_bar.dart';
-import 'package:tourist/widgets/custom_image_view.dart';
 
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key});

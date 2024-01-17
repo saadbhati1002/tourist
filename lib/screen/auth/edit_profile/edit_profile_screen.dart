@@ -137,7 +137,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       child: CustomImage(
                                         height: 95,
                                         width: 95,
-                                        imagePath: AppConstant.userData!.logo2!,
+                                        imagePath: AppConstant.userData!.logo3!,
                                       ),
                                     ),
                                   ),

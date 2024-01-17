@@ -6,6 +6,8 @@ import 'package:tourist/utility/constant.dart';
 class EventNetwork {
   static const String eventListUrl = "auth-api.php/EventDetail";
   static const String joinEventUrl = "auth-api.php/JoinEvent";
+  static const String getMyCalenderEventUrl =
+      "auth-api.php/FavoriteList?user_id=";
   static const String addEventToMyCalenderUrl = "auth-api.php/AddFavorite";
   static const String leaveEventUrl = "auth-api.php/UnJoinEvent?event_id=";
   static const String removeEventFromMyCalenderUrl =
@@ -42,8 +44,15 @@ class EventNetwork {
   static Future<dynamic> removeEventFromMyCalender(params) async {
     final result =
         await httpManager.post(url: removeEventFromMyCalenderUrl, data: params);
-    print(result);
     Common loginRes = Common.fromJson(result);
+    return loginRes;
+  }
+
+  static Future<dynamic> getMySavedEvents() async {
+    final result = await httpManager.post(
+      url: "$getMyCalenderEventUrl${AppConstant.userData!.id}",
+    );
+    EventRes loginRes = EventRes.fromJson(result);
     return loginRes;
   }
 }

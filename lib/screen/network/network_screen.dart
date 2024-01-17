@@ -95,6 +95,7 @@ class _NetworkScreenState extends State<NetworkScreen> {
                   size: 30,
                   color: ColorConstants.black,
                 ),
+                onChanged: _onSearchChanged,
                 context: context,
               ),
             ),
@@ -140,7 +141,6 @@ class _NetworkScreenState extends State<NetworkScreen> {
                                       vertical: 10, horizontal: 10),
                                   child: UserListData(
                                     userData: userList[index],
-                                    
                                   ),
                                 )
                               : getUserName(userList[index])
@@ -152,7 +152,6 @@ class _NetworkScreenState extends State<NetworkScreen> {
                                           vertical: 10, horizontal: 10),
                                       child: UserListData(
                                         userData: userList[index],
-                                       
                                       ),
                                     )
                                   : const SizedBox();

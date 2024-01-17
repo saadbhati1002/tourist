@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart' as navigation;
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -8,12 +6,12 @@ import 'package:tourist/screen/auth/login/login_screen.dart';
 import 'package:tourist/utility/constant.dart';
 import 'package:tourist/utility/view_utlity.dart';
 
-Map<String, dynamic> dioErrorHandle(DioError error) {
+Map<String, dynamic> dioErrorHandle(DioException error) {
   switch (error.type) {
-    case DioErrorType.badResponse:
+    case DioExceptionType.badResponse:
       return error.response?.data;
-    case DioErrorType.sendTimeout:
-    case DioErrorType.receiveTimeout:
+    case DioExceptionType.sendTimeout:
+    case DioExceptionType.receiveTimeout:
       return {"success": false, "code": "request_time_out"};
 
     default:
@@ -59,7 +57,7 @@ class HTTPManager {
           data: data,
           options: optionsMain,
         );
-        print(response.data);
+
         if (response.statusCode == 200 && response.statusCode == 422) {
           return response.data;
         } else {
@@ -68,16 +66,14 @@ class HTTPManager {
 
             navigation.Get.to(const LoginScreen());
           }
-          print(response.data);
 
           return response.data;
         }
-      } on DioError catch (error) {
+      } on DioException catch (error) {
         if (error.message.toString().contains("401")) {
           toastShow(message: "Your login expired please login again");
           navigation.Get.to(const LoginScreen());
         }
-        print(error);
       }
     } else {
       ViewUtils.checkInternetConnectionDialog();
@@ -117,7 +113,7 @@ class HTTPManager {
           }
           return response.data;
         }
-      } on DioError catch (error) {
+      } on DioException catch (error) {
         return dioErrorHandle(error);
       }
     } else {
@@ -153,7 +149,7 @@ class HTTPManager {
           }
           return response.data;
         }
-      } on DioError catch (error) {
+      } on DioException catch (error) {
         if (error.message.toString().contains("401")) {
           toastShow(message: "Your login expired please login again");
 
@@ -188,7 +184,7 @@ class HTTPManager {
         );
 
         return response.data;
-      } on DioError catch (error) {
+      } on DioException catch (error) {
         if (error.message.toString().contains("401")) {
           toastShow(message: "Your login expired please login again");
 
@@ -225,7 +221,7 @@ class HTTPManager {
         } else {
           navigation.Get.to(const LoginScreen());
         }
-      } on DioError catch (error) {
+      } on DioException catch (error) {
         if (error.message.toString().contains("401")) {
           toastShow(message: "Your login expired please login again");
 
@@ -266,7 +262,7 @@ class HTTPManager {
         } else {
           navigation.Get.to(const LoginScreen());
         }
-      } on DioError catch (error) {
+      } on DioException catch (error) {
         if (error.message.toString().contains("401")) {
           toastShow(message: "Your login expired please login again");
 

@@ -28,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _requestPermission() async {
-    var status = await Permission.storage.request();
+    await Permission.storage.request();
     await Permission.contacts.request();
     if (await Permission.storage.isPermanentlyDenied) {
       await openAppSettings();

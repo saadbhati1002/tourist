@@ -23,6 +23,7 @@ class EventListScreen extends StatefulWidget {
 class _EventListScreenState extends State<EventListScreen> {
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   List<EventData> eventData = [];
+  List<EventData> myEventData = [];
   bool isLoading = false;
   bool isAPiCalling = false;
   String selectedData = '16-02-2024';
@@ -33,19 +34,61 @@ class _EventListScreenState extends State<EventListScreen> {
 
   @override
   void initState() {
-    getEventData();
+    getData();
+
     super.initState();
   }
 
+  getData() async {
+    // await getMyEvent();
+    await getEventData();
+  }
+
+  // getMyEvent() async {
+  //   try {
+  //     setState(() {
+  //       isLoading = true;
+  //     });
+  //     EventRes response = await EventRepository().getMyCalenderEventApiCall();
+  //     if (response.event!.isNotEmpty) {
+  //       myEventData = response.event!;
+  //     }
+  //     myEventData = response.event!;
+  //     for (int i = 0; i < myEventData.length; i++) {
+  //       myEventData[i].isSavedToMyCalender = true;
+  //     }
+  //     return myEventData;
+  //   } catch (e) {
+  //     debugPrint(e.toString());
+  //   } finally {
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //   }
+  // }
+
   getEventData() async {
+    eventData = [];
     try {
       setState(() {
         isLoading = true;
       });
-      EventRes response = await EventRepository().allEventListApiCall();
-      if (response.event!.isNotEmpty) {
+      if (selectedCalender == 0) {
+        EventRes response = await EventRepository().getMyCalenderEventApiCall();
         eventData = response.event!;
+        myEventData = response.event!;
+        for (int i = 0; i < eventData.length; i++) {
+          eventData[i].isSavedToMyCalender = true;
+        }
+      } else {
+        EventRes response = await EventRepository().allEventListApiCall();
+        eventData = response.event!;
+        if (response.event!.isNotEmpty) {
+          eventData = response.event!;
+        }
       }
+
+      return eventData;
     } catch (e) {
       debugPrint(e.toString());
     } finally {
@@ -75,9 +118,13 @@ class _EventListScreenState extends State<EventListScreen> {
             children: [
               GestureDetector(
                 onTap: () {
+                  if (selectedCalender == 0) {
+                    return;
+                  }
                   setState(() {
                     selectedCalender = 0;
                   });
+                  getData();
                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width * .475,
@@ -121,9 +168,13 @@ class _EventListScreenState extends State<EventListScreen> {
               ),
               GestureDetector(
                 onTap: () {
+                  if (selectedCalender == 1) {
+                    return;
+                  }
                   setState(() {
                     selectedCalender = 1;
                   });
+                  getData();
                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width * .475,
@@ -236,8 +287,96 @@ class _EventListScreenState extends State<EventListScreen> {
                           return notificationSkeleton();
                         },
                       )
-                    : selectedCalender == 0
-                        ? const SizedBox()
+                    :
+                    // : selectedCalender == 0
+                    //     ? myEventData.isEmpty
+                    //         ? const Center(
+                    //             child: Text("No saved event found"),
+                    //           )
+                    //         : ListView.builder(
+                    //             physics: const AlwaysScrollableScrollPhysics(),
+                    //             padding: const EdgeInsets.only(top: 20),
+                    //             shrinkWrap: true,
+                    //             itemCount: myEventData.length,
+                    //             itemBuilder: (context, index) {
+                    //               return selectedData ==
+                    //                       myEventData[index].eventDate!
+                    //                   ? GestureDetector(
+                    //                       onTap: () async {
+                    //                         var response = await Get.to(
+                    //                           () => EventDetailScreen(
+                    //                             eventData: myEventData[index],
+                    //                           ),
+                    //                         );
+                    //                         if (response != null) {
+                    //                           if (response == 1) {
+                    //                             if (myEventData[index]
+                    //                                     .isAttendingEvent ==
+                    //                                 false) {
+                    //                               myEventData[index]
+                    //                                   .isAttendingEvent = true;
+                    //                               myEventData[index]
+                    //                                   .userList!
+                    //                                   .add(AppConstant
+                    //                                       .userData!);
+                    //                             }
+                    //                           } else {
+                    //                             if (myEventData[index]
+                    //                                     .isAttendingEvent ==
+                    //                                 true) {
+                    //                               myEventData[index]
+                    //                                   .isAttendingEvent = false;
+                    //                               myEventData[index]
+                    //                                   .userList!
+                    //                                   .removeWhere(
+                    //                                     (element) =>
+                    //                                         element.id
+                    //                                             .toString() ==
+                    //                                         AppConstant
+                    //                                             .userData!.id
+                    //                                             .toString(),
+                    //                                   );
+                    //                             }
+                    //                           }
+                    //                           setState(() {});
+                    //                         }
+                    //                       },
+                    //                       child: eventListing(
+                    //                         isEventJoin:
+                    //                             checkUserJoinInEvent(index),
+                    //                         context: context,
+                    //                         eventData: myEventData[index],
+                    //                         attendEvent: () {
+                    //                           if (myEventData[index]
+                    //                                   .isAttendingEvent ==
+                    //                               false) {
+                    //                             joinEvent(index);
+                    //                           } else {
+                    //                             leaveEvent(index);
+                    //                           }
+                    //                         },
+                    //                         addToMyCalender: () {
+                    //                           if (myEventData[index]
+                    //                                   .isSavedToMyCalender ==
+                    //                               false) {
+                    //                             addEventToMyCalender(index);
+                    //                           } else {
+                    //                             removeEventFromMyCalender(
+                    //                                 index);
+                    //                           }
+                    //                         },
+                    //                       ),
+                    //                     )
+                    //                   : const SizedBox();
+                    //             },
+                    //           )
+                    //     :
+                    eventData.isEmpty
+                        ? Center(
+                            child: Text((selectedCalender == 0)
+                                ? "No saved event found"
+                                : "No event found"),
+                          )
                         : ListView.builder(
                             physics: const AlwaysScrollableScrollPhysics(),
                             padding: const EdgeInsets.only(top: 20),
@@ -487,6 +626,14 @@ class _EventListScreenState extends State<EventListScreen> {
       if (response.message == 'Event Remove to favorites successfully') {
         toastShow(message: "Event removed from your calender successfully");
         eventData[index].isSavedToMyCalender = false;
+        if (selectedCalender == 0) {
+          for (int i = 0; i < myEventData.length; i++) {
+            if (eventData[index] == myEventData[i]) {
+              myEventData.removeAt(i);
+            }
+          }
+          eventData.removeAt(index);
+        }
       } else {}
     } catch (e) {
       debugPrint(e.toString());
