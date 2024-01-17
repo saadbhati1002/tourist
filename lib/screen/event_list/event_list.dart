@@ -283,20 +283,29 @@ class _EventListScreenState extends State<EventListScreen> {
                                         }
                                       },
                                       child: eventListing(
-                                        isEventJoin:
-                                            checkUserJoinInEvent(index),
-                                        context: context,
-                                        eventData: eventData[index],
-                                        attendEvent: () {
-                                          if (eventData[index]
-                                                  .isAttendingEvent ==
-                                              false) {
-                                            joinEvent(index);
-                                          } else {
-                                            leaveEvent(index);
-                                          }
-                                        },
-                                      ),
+                                          isEventJoin:
+                                              checkUserJoinInEvent(index),
+                                          context: context,
+                                          eventData: eventData[index],
+                                          attendEvent: () {
+                                            if (eventData[index]
+                                                    .isAttendingEvent ==
+                                                false) {
+                                              joinEvent(index);
+                                            } else {
+                                              leaveEvent(index);
+                                            }
+                                          },
+                                          addToMyCalender: () {
+                                            print("saad");
+                                            if (eventData[index]
+                                                    .isSavedToMyCalender ==
+                                                false) {
+                                              addEventToMyCalender(index);
+                                            } else {
+                                              // leaveEvent(index);
+                                            }
+                                          }),
                                     )
                                   : const SizedBox();
                             },
@@ -433,6 +442,27 @@ class _EventListScreenState extends State<EventListScreen> {
               (element) =>
                   element.id.toString() == AppConstant.userData!.id.toString(),
             );
+      } else {}
+    } catch (e) {
+      debugPrint(e.toString());
+    } finally {
+      setState(() {
+        isAPiCalling = false;
+      });
+    }
+  }
+  //save event to my calender api integration
+
+  addEventToMyCalender(index) async {
+    try {
+      setState(() {
+        isAPiCalling = true;
+      });
+      Common response = await EventRepository()
+          .addEventToMyCalenderApiCall(eventID: eventData[index].id.toString());
+      if (response.message == 'Event added to favorites successfully') {
+        toastShow(message: "Event added to your calender successfully");
+        eventData[index].isSavedToMyCalender = true;
       } else {}
     } catch (e) {
       debugPrint(e.toString());

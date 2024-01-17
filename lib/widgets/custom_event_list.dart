@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:tourist/models/event/event_list.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:avatar_stack/avatar_stack.dart';
-import 'package:tourist/utility/images.dart';
-import 'package:tourist/widgets/custom_image_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 Widget eventListing(
     {BuildContext? context,
     EventData? eventData,
     VoidCallback? attendEvent,
+    VoidCallback? addToMyCalender,
     bool? isEventJoin}) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 7),
@@ -128,20 +127,23 @@ Widget eventListing(
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Container(
-                        height: 32,
-                        width: 40,
-                        decoration: BoxDecoration(
-                          color: eventData.isSavedToMyCalender == true
-                              ? ColorConstants.mainColor
-                              : ColorConstants.greyLight,
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        alignment: Alignment.center,
-                        child: Icon(
-                          Icons.calendar_month,
-                          color: ColorConstants.white,
-                          size: 20,
+                      GestureDetector(
+                        onTap: addToMyCalender,
+                        child: Container(
+                          height: 32,
+                          width: 40,
+                          decoration: BoxDecoration(
+                            color: eventData.isSavedToMyCalender == true
+                                ? ColorConstants.mainColor
+                                : ColorConstants.greyLight,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          alignment: Alignment.center,
+                          child: Icon(
+                            Icons.calendar_month,
+                            color: ColorConstants.white,
+                            size: 20,
+                          ),
                         ),
                       ),
                       const SizedBox(

@@ -17,4 +17,12 @@ class EventRepository {
   Future<dynamic> leaveEventApiCall({String? eventID}) async {
     return await EventNetwork.leaveEvent(eventID);
   }
+
+  Future<dynamic> addEventToMyCalenderApiCall({String? eventID}) async {
+    final params = {
+      "event_id": eventID,
+      "user_id": AppConstant.userData!.id.toString()
+    };
+    return await EventNetwork.addEventToMyCalender(params);
+  }
 }
