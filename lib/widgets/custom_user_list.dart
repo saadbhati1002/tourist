@@ -82,7 +82,7 @@ class _UserListDataState extends State<UserListData> {
               width: 10,
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width * .61,
+              width: MediaQuery.of(context).size.width * .6,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,

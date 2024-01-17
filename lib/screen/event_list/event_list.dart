@@ -256,9 +256,20 @@ class _EventListScreenState extends State<EventListScreen> {
                                           if (response == 1) {
                                             eventData[index].isAttendingEvent =
                                                 true;
+                                            eventData[index]
+                                                .userList!
+                                                .add(AppConstant.userData!);
                                           } else {
                                             eventData[index].isAttendingEvent =
                                                 false;
+                                            eventData[index]
+                                                .userList!
+                                                .removeWhere(
+                                                  (element) =>
+                                                      element.id.toString() ==
+                                                      AppConstant.userData!.id
+                                                          .toString(),
+                                                );
                                           }
                                           setState(() {});
                                         }
@@ -410,8 +421,10 @@ class _EventListScreenState extends State<EventListScreen> {
       if (response.message == 'JOIN EVENT deleted successfully') {
         toastShow(message: "You leaved this event successfully");
         eventData[index].isAttendingEvent = false;
-        eventData[index].userList!.removeWhere((element) =>
-            element.id.toString() == AppConstant.userData!.id.toString());
+        eventData[index].userList!.removeWhere(
+              (element) =>
+                  element.id.toString() == AppConstant.userData!.id.toString(),
+            );
       } else {}
     } catch (e) {
       debugPrint(e.toString());

@@ -45,7 +45,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
         body: Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -234,12 +234,13 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                     ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: 0,
+                      itemCount: widget.eventData!.userList!.length,
                       itemBuilder: (context, index) {
-                        return const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 10),
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
                           child: UserListData(
-                            userType: 'D',
+                            userData: widget.eventData!.userList![index],
+                            userType: "Delegate",
                           ),
                         );
                       },
@@ -265,6 +266,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
       if (response.message == 'JOIN EVENT inserted successfully') {
         toastShow(message: "You are join to this successfully");
         widget.eventData!.isAttendingEvent = true;
+        widget.eventData!.userList!.add(AppConstant.userData!);
       } else {}
     } catch (e) {
       debugPrint(e.toString());
@@ -285,6 +287,10 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
       if (response.message == 'JOIN EVENT deleted successfully') {
         toastShow(message: "You leaved this event successfully");
         widget.eventData!.isAttendingEvent = false;
+        widget.eventData!.userList!.removeWhere(
+          (element) =>
+              element.id.toString() == AppConstant.userData!.id.toString(),
+        );
       } else {}
     } catch (e) {
       debugPrint(e.toString());
