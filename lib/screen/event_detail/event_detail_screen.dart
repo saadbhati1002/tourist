@@ -35,9 +35,11 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
         appBar: customAppBarBack(
           context: context,
           onTap: () {
-            if (widget.eventData!.isAttendingEvent == true) {
+            if (widget.eventData!.isAttendingEvent == true ||
+                widget.eventData!.isSavedToMyCalender == true) {
               Navigator.pop(context, 1);
-            } else {
+            } else if (widget.eventData!.isAttendingEvent == false ||
+                widget.eventData!.isSavedToMyCalender == false) {
               Navigator.pop(context, 0);
             }
           },
@@ -134,20 +136,30 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Container(
-                          height: 32,
-                          width: 40,
-                          decoration: BoxDecoration(
-                            color: widget.eventData!.isSavedToMyCalender == true
-                                ? ColorConstants.mainColor
-                                : ColorConstants.greyLight,
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          alignment: Alignment.center,
-                          child: Icon(
-                            Icons.calendar_month,
-                            color: ColorConstants.white,
-                            size: 20,
+                        GestureDetector(
+                          onTap: () {
+                            if (widget.eventData!.isAttendingEvent == false) {
+                              addEventToMyCalender();
+                            } else {
+                              removeEventFromMyCalender();
+                            }
+                          },
+                          child: Container(
+                            height: 32,
+                            width: 40,
+                            decoration: BoxDecoration(
+                              color:
+                                  widget.eventData!.isSavedToMyCalender == true
+                                      ? ColorConstants.mainColor
+                                      : ColorConstants.greyLight,
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            alignment: Alignment.center,
+                            child: Icon(
+                              Icons.calendar_month,
+                              color: ColorConstants.white,
+                              size: 20,
+                            ),
                           ),
                         ),
                         const SizedBox(
@@ -290,6 +302,49 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
           (element) =>
               element.id.toString() == AppConstant.userData!.id.toString(),
         );
+      } else {}
+    } catch (e) {
+      debugPrint(e.toString());
+    } finally {
+      setState(() {
+        isAPiCalling = false;
+      });
+    }
+  }
+  //save event to my calender api integration
+
+  addEventToMyCalender() async {
+    try {
+      setState(() {
+        isAPiCalling = true;
+      });
+      Common response = await EventRepository().addEventToMyCalenderApiCall(
+          eventID: widget.eventData!.id.toString());
+      if (response.message == 'Event added to favorites successfully') {
+        toastShow(message: "Event added to your calender successfully");
+        widget.eventData!.isSavedToMyCalender = true;
+      } else {}
+    } catch (e) {
+      debugPrint(e.toString());
+    } finally {
+      setState(() {
+        isAPiCalling = false;
+      });
+    }
+  }
+
+  //remove event from my calender api call
+  removeEventFromMyCalender() async {
+    try {
+      setState(() {
+        isAPiCalling = true;
+      });
+      Common response = await EventRepository()
+          .removeEventFromMyCalenderApiCall(
+              eventID: widget.eventData!.id.toString());
+      if (response.message == 'Event Remove to favorites successfully') {
+        toastShow(message: "Event removed from your calender successfully");
+        widget.eventData!.isSavedToMyCalender = false;
       } else {}
     } catch (e) {
       debugPrint(e.toString());
