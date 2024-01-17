@@ -240,7 +240,6 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                           padding: const EdgeInsets.symmetric(vertical: 10),
                           child: UserListData(
                             userData: widget.eventData!.userList![index],
-                            userType: "Delegate",
                           ),
                         );
                       },

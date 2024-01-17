@@ -152,44 +152,52 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                             imagePath: userData!
                                                                 .logo3!,
                                                           ),
-                                                          Align(
-                                                            alignment: Alignment
-                                                                .bottomLeft,
-                                                            child: Container(
-                                                              height: 15,
-                                                              width: 90,
-                                                              decoration:
-                                                                  const BoxDecoration(
-                                                                      borderRadius:
-                                                                          BorderRadius
-                                                                              .only(
-                                                                        bottomLeft:
-                                                                            Radius.circular(
-                                                                          10,
+                                                          userData!.userType !=
+                                                                  null
+                                                              ? Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .bottomLeft,
+                                                                  child:
+                                                                      Container(
+                                                                    height: 15,
+                                                                    width: 90,
+                                                                    decoration: BoxDecoration(
+                                                                        borderRadius: const BorderRadius.only(
+                                                                          bottomLeft:
+                                                                              Radius.circular(
+                                                                            5,
+                                                                          ),
+                                                                          bottomRight:
+                                                                              Radius.circular(5),
                                                                         ),
-                                                                        bottomRight:
-                                                                            Radius.circular(10),
-                                                                      ),
-                                                                      color: ColorConstants
-                                                                          .delegateColor),
-                                                              alignment:
-                                                                  Alignment
-                                                                      .center,
-                                                              child: Text(
-                                                                'Delegate',
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        10,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w700,
-                                                                    fontFamily:
-                                                                        'inter',
-                                                                    color: ColorConstants
-                                                                        .white),
-                                                              ),
-                                                            ),
-                                                          ),
+                                                                        color: userData!.userType == "Delegate"
+                                                                            ? ColorConstants.delegateColor
+                                                                            : userData!.userType == 'Vendor'
+                                                                                ? ColorConstants.vendorColor
+                                                                                : userData!.userType == 'Media'
+                                                                                    ? ColorConstants.mediaColor
+                                                                                    : ColorConstants.speakerColor),
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .center,
+                                                                    child: Text(
+                                                                      userData!
+                                                                          .userType!,
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              10,
+                                                                          fontWeight: FontWeight
+                                                                              .w700,
+                                                                          fontFamily:
+                                                                              'inter',
+                                                                          color: userData!.userType == "Delegate" || userData!.userType == "Media"
+                                                                              ? ColorConstants.white
+                                                                              : ColorConstants.black),
+                                                                    ),
+                                                                  ),
+                                                                )
+                                                              : const SizedBox(),
                                                         ],
                                                       ),
                                                     ),
@@ -330,8 +338,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               officeLocation: "Sikar")
                                         ]
                                         ..phones = [Phone('555-123-4567')];
-                                      var response = await newContact.insert();
-                                      print(response);
+                                      await newContact.insert();
+
                                       toastShow(
                                           message:
                                               "Contact Saved Successfully to your contact");

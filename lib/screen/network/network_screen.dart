@@ -140,7 +140,7 @@ class _NetworkScreenState extends State<NetworkScreen> {
                                       vertical: 10, horizontal: 10),
                                   child: UserListData(
                                     userData: userList[index],
-                                    userType: 'Delegate',
+                                    
                                   ),
                                 )
                               : getUserName(userList[index])
@@ -152,7 +152,7 @@ class _NetworkScreenState extends State<NetworkScreen> {
                                           vertical: 10, horizontal: 10),
                                       child: UserListData(
                                         userData: userList[index],
-                                        userType: 'Delegate',
+                                       
                                       ),
                                     )
                                   : const SizedBox();

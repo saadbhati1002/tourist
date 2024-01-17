@@ -194,7 +194,7 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
           email: widget.email, password: password.text.trim());
 
       if (response.success == 'Password Set Successfully') {
-        userLogin();
+        await userLogin();
       } else {
         toastShow(message: "Password is already set");
       }

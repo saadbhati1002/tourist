@@ -4,12 +4,12 @@ import 'package:get/get.dart';
 import 'package:tourist/models/user/user_model.dart';
 import 'package:tourist/screen/profile/profile_screen.dart';
 import 'package:tourist/utility/color.dart';
+import 'package:tourist/utility/constant.dart';
 import 'package:tourist/widgets/custom_image_view.dart';
 
 class UserListData extends StatefulWidget {
-  final String? userType;
   final UserData? userData;
-  const UserListData({super.key, this.userType, this.userData});
+  const UserListData({super.key, this.userData});
 
   @override
   State<UserListData> createState() => _UserListDataState();
@@ -42,39 +42,42 @@ class _UserListDataState extends State<UserListData> {
                     width: 70,
                     imagePath: widget.userData!.logo3!,
                   ),
-                  Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Container(
-                      height: 15,
-                      width: 70,
-                      decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(
-                              5,
+                  widget.userData!.userType != null
+                      ? Align(
+                          alignment: Alignment.bottomLeft,
+                          child: Container(
+                            height: 15,
+                            width: 70,
+                            decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.only(
+                                  bottomLeft: Radius.circular(
+                                    5,
+                                  ),
+                                  bottomRight: Radius.circular(5),
+                                ),
+                                color: widget.userData!.userType == "Delegate"
+                                    ? ColorConstants.delegateColor
+                                    : widget.userData!.userType == 'Vendor'
+                                        ? ColorConstants.vendorColor
+                                        : widget.userData!.userType == 'Media'
+                                            ? ColorConstants.mediaColor
+                                            : ColorConstants.speakerColor),
+                            alignment: Alignment.center,
+                            child: Text(
+                              widget.userData!.userType!,
+                              style: TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: 'inter',
+                                  color: widget.userData!.userType ==
+                                              "Delegate" ||
+                                          widget.userData!.userType == "Media"
+                                      ? ColorConstants.white
+                                      : ColorConstants.black),
                             ),
-                            bottomRight: Radius.circular(5),
                           ),
-                          color: widget.userType == "Delegate"
-                              ? ColorConstants.delegateColor
-                              : widget.userType == 'Vendor'
-                                  ? ColorConstants.vendorColor
-                                  : widget.userType == 'Media'
-                                      ? ColorConstants.mediaColor
-                                      : ColorConstants.speakerColor),
-                      alignment: Alignment.center,
-                      child: Text(
-                        widget.userType!,
-                        style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w700,
-                            fontFamily: 'inter',
-                            color: widget.userType == "Delegate" ||
-                                    widget.userType == "Media"
-                                ? ColorConstants.white
-                                : ColorConstants.black),
-                      ),
-                    ),
-                  ),
+                        )
+                      : const SizedBox(),
                 ],
               ),
             ),
@@ -124,26 +127,28 @@ class _UserListDataState extends State<UserListData> {
             const SizedBox(
               width: 7,
             ),
-            Material(
-              borderRadius: BorderRadius.circular(5),
-              elevation: 1,
-              child: Container(
-                height: 37,
-                decoration: BoxDecoration(
-                  color: ColorConstants.white,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                alignment: Alignment.center,
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: FaIcon(
-                    FontAwesomeIcons.solidCommentDots,
-                    size: 25,
-                    color: ColorConstants.mainColor,
+            AppConstant.userData!.id == widget.userData!.id
+                ? const SizedBox()
+                : Material(
+                    borderRadius: BorderRadius.circular(5),
+                    elevation: 1,
+                    child: Container(
+                      height: 37,
+                      decoration: BoxDecoration(
+                        color: ColorConstants.white,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      alignment: Alignment.center,
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: FaIcon(
+                          FontAwesomeIcons.solidCommentDots,
+                          size: 25,
+                          color: ColorConstants.mainColor,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
           ],
         ),
       ),

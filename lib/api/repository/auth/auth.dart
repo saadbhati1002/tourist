@@ -67,6 +67,13 @@ class AuthRepository {
         "job_title": jobTitle
       };
     }
+    return await AuthNetwork.updateProfile(body);
+  }
+
+  Future<dynamic> updateUserTypeApiCall({
+    String? userType,
+  }) async {
+    var body = {"user_type": userType};
 
     return await AuthNetwork.updateProfile(body);
   }

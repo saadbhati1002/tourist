@@ -254,22 +254,30 @@ class _EventListScreenState extends State<EventListScreen> {
                                         );
                                         if (response != null) {
                                           if (response == 1) {
-                                            eventData[index].isAttendingEvent =
-                                                true;
-                                            eventData[index]
-                                                .userList!
-                                                .add(AppConstant.userData!);
+                                            if (eventData[index]
+                                                    .isAttendingEvent ==
+                                                false) {
+                                              eventData[index]
+                                                  .isAttendingEvent = true;
+                                              eventData[index]
+                                                  .userList!
+                                                  .add(AppConstant.userData!);
+                                            }
                                           } else {
-                                            eventData[index].isAttendingEvent =
-                                                false;
-                                            eventData[index]
-                                                .userList!
-                                                .removeWhere(
-                                                  (element) =>
-                                                      element.id.toString() ==
-                                                      AppConstant.userData!.id
-                                                          .toString(),
-                                                );
+                                            if (eventData[index]
+                                                    .isAttendingEvent ==
+                                                true) {
+                                              eventData[index]
+                                                  .isAttendingEvent = false;
+                                              eventData[index]
+                                                  .userList!
+                                                  .removeWhere(
+                                                    (element) =>
+                                                        element.id.toString() ==
+                                                        AppConstant.userData!.id
+                                                            .toString(),
+                                                  );
+                                            }
                                           }
                                           setState(() {});
                                         }

@@ -87,6 +87,7 @@ class UserData {
   String? tnc2Approval;
   String? tnc3Approval;
   bool? isImageFromStorage;
+  String? userType;
   dynamic userNote;
   UserData(
       {id,
@@ -149,7 +150,8 @@ class UserData {
       tnc2Approval,
       tnc3Approval,
       this.isImageFromStorage,
-      this.userNote});
+      this.userNote,
+      this.userType});
 
   UserData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -211,6 +213,7 @@ class UserData {
     tnc1Approval = json['tnc1_approval'];
     tnc2Approval = json['tnc2_approval'];
     tnc3Approval = json['tnc3_approval'];
+    userType = json['user_type'];
   }
 
   Map<String, dynamic> toJson() {
@@ -274,6 +277,7 @@ class UserData {
     data['tnc1_approval'] = tnc1Approval;
     data['tnc2_approval'] = tnc2Approval;
     data['tnc3_approval'] = tnc3Approval;
+    data['user_type'] = userType;
     return data;
   }
 }

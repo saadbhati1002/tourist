@@ -1,10 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tourist/api/repository/auth/auth.dart';
+import 'package:tourist/models/updateProfile/update_profile_model.dart';
 import 'package:tourist/screen/dashboard/dashboard_screen.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:tourist/utility/constant.dart';
 import 'package:tourist/utility/images.dart';
 import 'package:tourist/widgets/common_button.dart';
+import 'package:tourist/widgets/show_progress_bar.dart';
 
 class QuestionScreen extends StatefulWidget {
   const QuestionScreen({super.key});
@@ -14,6 +19,7 @@ class QuestionScreen extends StatefulWidget {
 }
 
 class _QuestionScreenState extends State<QuestionScreen> {
+  bool isLoading = false;
   int pageIndex = 1;
   @override
   Widget build(BuildContext context) {
@@ -106,7 +112,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
                 child: Image.asset(Images.vivah),
               ),
             ),
-          )
+          ),
+          isLoading ? const ShowProgressBar() : const SizedBox()
         ],
       ),
     );
@@ -181,7 +188,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
         toastShow(message: "Please select your role.");
         return;
       } else if (AppConstant.selectedRole != null) {
-        Get.to(() => const DashBoardScreen());
+        setUserType();
         // setState(() {
         //   // pageIndex = 2;
         // });
@@ -193,6 +200,30 @@ class _QuestionScreenState extends State<QuestionScreen> {
       } else {
         Get.to(() => const DashBoardScreen());
       }
+    }
+  }
+
+  setUserType() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      UpdateProfile response = await AuthRepository()
+          .updateUserTypeApiCall(userType: AppConstant.selectedRole);
+      if (response.message == 'Profile updated successfully') {
+        AppConstant.userData = response.data;
+
+        AppConstant.userDetailSaved(
+          jsonEncode(AppConstant.userData),
+        );
+        Get.to(() => const DashBoardScreen());
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 }

@@ -115,7 +115,6 @@ class _FindPeopleScreenState extends State<FindPeopleScreen> {
                                       vertical: 10, horizontal: 10),
                                   child: UserListData(
                                     userData: userList[index],
-                                    userType: 'Delegate',
                                   ),
                                 )
                               : getUserName(userList[index])
@@ -127,7 +126,6 @@ class _FindPeopleScreenState extends State<FindPeopleScreen> {
                                           vertical: 10, horizontal: 10),
                                       child: UserListData(
                                         userData: userList[index],
-                                        userType: 'Delegate',
                                       ),
                                     )
                                   : const SizedBox();
