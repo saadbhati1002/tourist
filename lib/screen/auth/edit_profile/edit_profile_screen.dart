@@ -393,7 +393,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Upload Encloser',
+                      'Upload Profile Image',
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         color: ColorConstants.black,
