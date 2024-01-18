@@ -52,6 +52,7 @@ class EventNetwork {
     final result = await httpManager.post(
       url: "$getMyCalenderEventUrl${AppConstant.userData!.id}",
     );
+    print(result);
     EventRes loginRes = EventRes.fromJson(result);
     return loginRes;
   }

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tourist/models/user/user_model.dart';
+import 'package:tourist/screen/account_setup/question_screen.dart';
+import 'package:tourist/screen/auth/edit_profile/edit_profile_screen.dart';
 import 'package:tourist/screen/auth/login/login_screen.dart';
 import 'package:tourist/screen/dashboard/dashboard_screen.dart';
 import 'package:tourist/utility/color.dart';
@@ -46,7 +48,15 @@ class _SplashScreenState extends State<SplashScreen> {
       if (response != null && response != "null") {
         UserData responseUser = UserData.fromJson(jsonDecode(response));
         AppConstant.userData = responseUser;
-        Get.to(() => const DashBoardScreen());
+        if (AppConstant.userData!.userType == null ||
+            AppConstant.userData!.userType == "") {
+          Get.to(() => const QuestionScreen());
+        } else if (AppConstant.userData!.logo3 == null ||
+            AppConstant.userData!.logo3 == "") {
+          Get.to(() => const EditProfileScreen());
+        } else {
+          Get.to(() => const DashBoardScreen());
+        }
       } else {
         Get.to(() => const LoginScreen());
       }

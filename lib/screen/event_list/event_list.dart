@@ -376,9 +376,37 @@ class _EventListScreenState extends State<EventListScreen> {
                       //     :
                       eventData.isEmpty
                           ? Center(
-                              child: Text((selectedCalender == 0)
-                                  ? "No saved event found"
-                                  : "No event found"),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    (selectedCalender == 0)
+                                        ? "No event saved to your calendar"
+                                        : "No event found",
+                                    style: const TextStyle(
+                                        fontSize: 18,
+                                        color: ColorConstants.greyLight,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15),
+                                    child: Text(
+                                      (selectedCalender == 0)
+                                          ? "Go to event calendar and start saving events to my calendar"
+                                          : "No event found",
+                                      style: const TextStyle(
+                                          fontSize: 12,
+                                          color: ColorConstants.greyLight,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             )
                           : ListView.builder(
                               physics: const AlwaysScrollableScrollPhysics(),

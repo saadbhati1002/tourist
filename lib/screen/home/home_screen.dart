@@ -48,9 +48,11 @@ class _HomeScreenState extends State<HomeScreen> {
       isBanner1Loading = true;
       isSponsorBannerLoading = true;
     });
-    await getBanner1();
-    await getBanner2();
-    await getSponsorBanner();
+    if (mounted) {
+      await getBanner1();
+      await getBanner2();
+      await getSponsorBanner();
+    }
   }
 
   getBanner1() async {
@@ -78,9 +80,11 @@ class _HomeScreenState extends State<HomeScreen> {
     } catch (e) {
       debugPrint(e.toString());
     } finally {
-      setState(() {
-        isBanner1Loading = false;
-      });
+      if (mounted) {
+        setState(() {
+          isBanner1Loading = false;
+        });
+      }
     }
     return banner2List;
   }

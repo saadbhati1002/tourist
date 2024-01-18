@@ -64,11 +64,14 @@ class EventData {
     sDate = json['s_date'];
     eventType = json['event_type'];
     mapLink = json['map_link'];
-    if (json['joined_users'].toString() != "[null]") {
-      userList = <UserData>[];
-      json['joined_users'].forEach((v) {
-        userList!.add(UserData.fromJson(v));
-      });
+    // if (json['joined_users'].toString() != "[null]") {
+    //   userList = <UserData>[];
+    //   json['joined_users'].forEach((v) {
+    //     userList!.add(UserData.fromJson(v));
+    //   });
+    // }
+    if (json['joined_users'] != null) {
+      userList!.add(UserData.fromJson(json['joined_users']));
     }
   }
 

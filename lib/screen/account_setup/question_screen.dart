@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tourist/api/repository/auth/auth.dart';
 import 'package:tourist/models/updateProfile/update_profile_model.dart';
+import 'package:tourist/screen/auth/edit_profile/edit_profile_screen.dart';
 import 'package:tourist/screen/dashboard/dashboard_screen.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:tourist/utility/constant.dart';
@@ -220,7 +221,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
         AppConstant.userDetailSaved(
           jsonEncode(AppConstant.userData),
         );
-        Get.to(() => const DashBoardScreen());
+        Get.to(() => const EditProfileScreen());
       }
     } catch (e) {
       debugPrint(e.toString());
