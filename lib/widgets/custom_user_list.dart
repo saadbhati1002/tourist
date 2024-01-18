@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:tourist/models/user/user_model.dart';
+import 'package:tourist/screen/chat/chat_screen.dart';
 import 'package:tourist/screen/profile/profile_screen.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:tourist/utility/constant.dart';
@@ -9,7 +10,8 @@ import 'package:tourist/widgets/custom_image_view.dart';
 
 class UserListData extends StatefulWidget {
   final UserData? userData;
-  const UserListData({super.key, this.userData});
+  final bool? isFromChat;
+  const UserListData({super.key, this.userData, this.isFromChat});
 
   @override
   State<UserListData> createState() => _UserListDataState();
@@ -85,7 +87,9 @@ class _UserListDataState extends State<UserListData> {
               width: 10,
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width * .6,
+              width: widget.isFromChat == true
+                  ? MediaQuery.of(context).size.width * .47
+                  : MediaQuery.of(context).size.width * .6,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,26 +133,71 @@ class _UserListDataState extends State<UserListData> {
             ),
             AppConstant.userData!.id == widget.userData!.id
                 ? const SizedBox()
-                : Material(
-                    borderRadius: BorderRadius.circular(5),
-                    elevation: 1,
-                    child: Container(
-                      height: 37,
-                      decoration: BoxDecoration(
-                        color: ColorConstants.white,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      alignment: Alignment.center,
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: FaIcon(
-                          FontAwesomeIcons.solidCommentDots,
-                          size: 25,
-                          color: ColorConstants.mainColor,
+                : widget.isFromChat == true
+                    ? GestureDetector(
+                        child: Material(
+                          borderRadius: BorderRadius.circular(5),
+                          elevation: 1,
+                          child: Container(
+                            height: 37,
+                            decoration: BoxDecoration(
+                              color: ColorConstants.mainColor,
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            alignment: Alignment.center,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: Row(
+                                children: [
+                                  FaIcon(
+                                    FontAwesomeIcons.star,
+                                    size: 20,
+                                    color: ColorConstants.white,
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    "Favorite",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: ColorConstants.white,
+                                        fontWeight: FontWeight.w500),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    : GestureDetector(
+                        onTap: () {
+                          Get.to(
+                            () => ChatScreen(userData: widget.userData),
+                          );
+                        },
+                        child: Material(
+                          borderRadius: BorderRadius.circular(5),
+                          elevation: 1,
+                          child: Container(
+                            height: 37,
+                            decoration: BoxDecoration(
+                              color: ColorConstants.white,
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            alignment: Alignment.center,
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              child: FaIcon(
+                                FontAwesomeIcons.solidCommentDots,
+                                size: 25,
+                                color: ColorConstants.mainColor,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
           ],
         ),
       ),

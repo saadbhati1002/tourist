@@ -72,6 +72,7 @@ class CustomTextFormField extends StatelessWidget {
       height: isMaxLine == true ? 180 : 45,
       child: TextField(
         onChanged: onChanged,
+        cursorColor: ColorConstants.mainColor,
         keyboardType: keyboardType,
         controller: controller,
         focusNode: focusNode,
