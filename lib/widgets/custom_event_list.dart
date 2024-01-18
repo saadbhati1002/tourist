@@ -30,8 +30,8 @@ Widget eventListing(
               Container(
                 height: 37,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: ColorConstants.boxColorTime),
+                    borderRadius: BorderRadius.circular(5),
+                    color: ColorConstants.mainColor),
                 alignment: Alignment.center,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -39,7 +39,7 @@ Widget eventListing(
                     eventData!.eventTime ?? '',
                     style: TextStyle(
                         fontSize: 20,
-                        color: ColorConstants.black,
+                        color: ColorConstants.white,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'inter'),
                   ),
@@ -59,64 +59,81 @@ Widget eventListing(
               SizedBox(
                 height: eventData.eventType != null ? 15 : 0,
               ),
-              eventData.eventType != null
-                  ? Container(
-                      decoration: BoxDecoration(
-                        color: eventData.eventType == "Event"
-                            ? ColorConstants.blueColor
-                            : ColorConstants.eventBoxColor,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      // alignment: Alignment.center,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 6),
-                        child: Text(
-                          eventData.eventType ?? '',
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontFamily: "inter",
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  eventData.eventType != null
+                      ? Expanded(
+                          flex: 4,
+                          child: Container(
+                            decoration: BoxDecoration(
                               color: eventData.eventType == "Event"
-                                  ? ColorConstants.white
-                                  : ColorConstants.black,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    )
-                  : const SizedBox(),
-              SizedBox(
-                height: eventData.place != null ? 15 : 0,
-              ),
-              eventData.place != null
-                  ? GestureDetector(
-                      onTap: () {
-                        if (eventData.mapLink != null) {
-                          launchUrl(Uri.parse(eventData.mapLink!));
-                        }
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: ColorConstants.black,
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        // alignment: Alignment.center,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 5, horizontal: 10),
-                          child: Text(
-                            eventData.place ?? '',
-                            maxLines: 1,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontFamily: "inter",
-                                color: ColorConstants.white,
-                                fontWeight: FontWeight.w500),
+                                  ? ColorConstants.blueColor
+                                  : ColorConstants.eventBoxColor,
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            // alignment: Alignment.center,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 6),
+                              child: Text(
+                                eventData.eventType ?? '',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontFamily: "inter",
+                                    color: eventData.eventType == "Event"
+                                        ? ColorConstants.white
+                                        : ColorConstants.black,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    )
-                  : const SizedBox(),
+                        )
+                      : const SizedBox(),
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  eventData.place != null
+                      ? Expanded(
+                          flex: 4,
+                          child: GestureDetector(
+                            onTap: () {
+                              if (eventData.mapLink != null) {
+                                launchUrl(Uri.parse(eventData.mapLink!));
+                              }
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: ColorConstants.black,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              // alignment: Alignment.center,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 5, horizontal: 10),
+                                child: Text(
+                                  eventData.place ?? "",
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      fontFamily: "inter",
+                                      color: ColorConstants.white,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      : const SizedBox(),
+                ],
+              ),
+
+              // SizedBox(
+              //   height: eventData.place != null ? 15 : 0,
+              // ),
               const SizedBox(
                 height: 15,
               ),

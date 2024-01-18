@@ -34,113 +34,117 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
       'END:VCARD';
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: customAppBarBack(
-        context: context,
-        onTap: () {
-          Navigator.pop(context);
-        },
-      ),
-      body: Stack(
-        children: [
-          qrImage(),
-          Container(
-            color: ColorConstants.white,
-            height: MediaQuery.of(context).size.height * 1,
-            width: MediaQuery.of(context).size.width * 1,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        QrImage(
-                          data: vcardData,
-                          version: QrVersions.auto,
-                          size: 300.0,
-                          backgroundColor: Colors.white,
-                          foregroundColor: Colors.black,
-                          padding: const EdgeInsets.all(25.0),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Text(
-                      getUserName(),
-                      style: TextStyle(
-                          fontSize: 16,
+    return SafeArea(
+      top: true,
+      child: Scaffold(
+        backgroundColor: ColorConstants.white,
+        appBar: customAppBarBack(
+          context: context,
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
+        body: Stack(
+          children: [
+            qrImage(),
+            Container(
+              color: ColorConstants.white,
+              height: MediaQuery.of(context).size.height * 1,
+              width: MediaQuery.of(context).size.width * 1,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          QrImage(
+                            data: vcardData,
+                            version: QrVersions.auto,
+                            size: 300.0,
+                            backgroundColor: Colors.white,
+                            foregroundColor: Colors.black,
+                            padding: const EdgeInsets.all(25.0),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Text(
+                        getUserName(),
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: ColorConstants.black,
+                            fontFamily: 'inter',
+                            fontWeight: FontWeight.w500),
+                      ),
+                      Text(
+                        AppConstant.userData!.jobTitle!,
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: ColorConstants.black,
+                            fontFamily: 'inter',
+                            fontWeight: FontWeight.w500),
+                      ),
+                      Text(
+                        AppConstant.userData!.companyName!,
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: ColorConstants.black,
+                            fontFamily: 'inter',
+                            fontWeight: FontWeight.w500),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      _saveLocalImage();
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * .65,
+                      height: 35,
+                      decoration: BoxDecoration(
                           color: ColorConstants.black,
-                          fontFamily: 'inter',
-                          fontWeight: FontWeight.w500),
-                    ),
-                    Text(
-                      AppConstant.userData!.jobTitle!,
-                      style: TextStyle(
-                          fontSize: 14,
-                          color: ColorConstants.black,
-                          fontFamily: 'inter',
-                          fontWeight: FontWeight.w500),
-                    ),
-                    Text(
-                      AppConstant.userData!.companyName!,
-                      style: TextStyle(
-                          fontSize: 14,
-                          color: ColorConstants.black,
-                          fontFamily: 'inter',
-                          fontWeight: FontWeight.w500),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    _saveLocalImage();
-                  },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * .65,
-                    height: 35,
-                    decoration: BoxDecoration(
-                        color: ColorConstants.black,
-                        borderRadius: BorderRadius.circular(7)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          Images.download,
-                          color: ColorConstants.white,
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          'Download As Image',
-                          style: TextStyle(
-                              fontSize: 14,
-                              color: ColorConstants.white,
-                              fontFamily: 'inter',
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ],
+                          borderRadius: BorderRadius.circular(7)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            Images.download,
+                            color: ColorConstants.white,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            'Download As Image',
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: ColorConstants.white,
+                                fontFamily: 'inter',
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 60,
-                ),
-              ],
+                  const SizedBox(
+                    height: 60,
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

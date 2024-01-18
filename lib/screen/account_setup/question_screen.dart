@@ -23,98 +23,102 @@ class _QuestionScreenState extends State<QuestionScreen> {
   int pageIndex = 1;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Stack(
-        fit: StackFit.loose,
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * .12,
-                ),
-                Container(
-                  alignment: Alignment.center,
-                  child: Image.asset(Images.dubai),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * .045,
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25),
-                  child: Text(
-                    "DUBAI WEDDING SYMPOSIUM DUBAI 2024",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w800),
+    return SafeArea(
+      top: true,
+      child: Scaffold(
+        backgroundColor: ColorConstants.white,
+        resizeToAvoidBottomInset: false,
+        body: Stack(
+          fit: StackFit.loose,
+          children: [
+            SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * .12,
                   ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * .08,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25),
-                  child: Text(
-                    pageIndex == 1
-                        ? "Whats your role?"
-                        : "Question if ${AppConstant.selectedRole}",
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w600),
+                  Container(
+                    alignment: Alignment.center,
+                    child: Image.asset(Images.dubai),
                   ),
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * .5,
-                  child: ListView.builder(
-                    itemCount: pageIndex == 1
-                        ? AppConstant.roleType.length
-                        : AppConstant.rolesSubRole.length,
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return optionBox(
-                          index: index,
-                          title: pageIndex == 1
-                              ? AppConstant.roleType[index]
-                              : AppConstant.rolesSubRole[index]);
-                    },
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * .045,
                   ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * .07,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25),
-                  child: CommonButton(
-                    width: MediaQuery.of(context).size.width,
-                    onTap: () {
-                      checkNavigation();
-                    },
-                    title: "Proceed",
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 25),
+                    child: Text(
+                      "DUBAI WEDDING SYMPOSIUM DUBAI 2024",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w800),
+                    ),
                   ),
-                )
-              ],
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 15),
-              child: SizedBox(
-                height: 65,
-                width: 65,
-                child: Image.asset(Images.vivah),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * .08,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
+                    child: Text(
+                      pageIndex == 1
+                          ? "Whats your role?"
+                          : "Question if ${AppConstant.selectedRole}",
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * .5,
+                    child: ListView.builder(
+                      itemCount: pageIndex == 1
+                          ? AppConstant.roleType.length
+                          : AppConstant.rolesSubRole.length,
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return optionBox(
+                            index: index,
+                            title: pageIndex == 1
+                                ? AppConstant.roleType[index]
+                                : AppConstant.rolesSubRole[index]);
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * .07,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
+                    child: CommonButton(
+                      width: MediaQuery.of(context).size.width,
+                      onTap: () {
+                        checkNavigation();
+                      },
+                      title: "Proceed",
+                    ),
+                  )
+                ],
               ),
             ),
-          ),
-          isLoading ? const ShowProgressBar() : const SizedBox()
-        ],
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 15),
+                child: SizedBox(
+                  height: 65,
+                  width: 65,
+                  child: Image.asset(Images.vivah),
+                ),
+              ),
+            ),
+            isLoading ? const ShowProgressBar() : const SizedBox()
+          ],
+        ),
       ),
     );
   }

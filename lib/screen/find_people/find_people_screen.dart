@@ -69,79 +69,83 @@ class _FindPeopleScreenState extends State<FindPeopleScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: customAppBarBack(
-        context: context,
-        onTap: () {
-          Navigator.pop(context);
-        },
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 15,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: CustomTextFormField(
-                // controller: email,
-                onChanged: _onSearchChanged,
-                hintText: "Search For Participants",
-                suffix: Icon(
-                  Icons.search,
-                  size: 30,
-                  color: ColorConstants.black,
-                ),
-                context: context,
+    return SafeArea(
+      top: true,
+      child: Scaffold(
+        backgroundColor: ColorConstants.white,
+        appBar: customAppBarBack(
+          context: context,
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 15,
               ),
-            ),
-            const SizedBox(
-              height: 25,
-            ),
-            !isLoading
-                ? ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: userList.length,
-                    itemBuilder: (context, index) {
-                      return AppConstant.userData!.id == userList[index].id
-                          ? const SizedBox()
-                          : searchedName == null
-                              ? Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 10, horizontal: 10),
-                                  child: UserListData(
-                                    userData: userList[index],
-                                  ),
-                                )
-                              : getUserName(userList[index])
-                                      .toString()
-                                      .toLowerCase()
-                                      .contains(searchedName!.toLowerCase())
-                                  ? Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 10, horizontal: 10),
-                                      child: UserListData(
-                                        userData: userList[index],
-                                      ),
-                                    )
-                                  : const SizedBox();
-                    },
-                  )
-                : ListView.builder(
-                    shrinkWrap: true,
-                    padding:
-                        const EdgeInsets.only(top: 15, left: 15, right: 15),
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 15,
-                    itemBuilder: (BuildContext context, int index) {
-                      return const UserSkeleton();
-                    },
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: CustomTextFormField(
+                  // controller: email,
+                  onChanged: _onSearchChanged,
+                  hintText: "Search For Participants",
+                  suffix: Icon(
+                    Icons.search,
+                    size: 30,
+                    color: ColorConstants.black,
                   ),
-          ],
+                  context: context,
+                ),
+              ),
+              const SizedBox(
+                height: 25,
+              ),
+              !isLoading
+                  ? ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: userList.length,
+                      itemBuilder: (context, index) {
+                        return AppConstant.userData!.id == userList[index].id
+                            ? const SizedBox()
+                            : searchedName == null
+                                ? Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10, horizontal: 10),
+                                    child: UserListData(
+                                      userData: userList[index],
+                                    ),
+                                  )
+                                : getUserName(userList[index])
+                                        .toString()
+                                        .toLowerCase()
+                                        .contains(searchedName!.toLowerCase())
+                                    ? Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 10, horizontal: 10),
+                                        child: UserListData(
+                                          userData: userList[index],
+                                        ),
+                                      )
+                                    : const SizedBox();
+                      },
+                    )
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      padding:
+                          const EdgeInsets.only(top: 15, left: 15, right: 15),
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: 15,
+                      itemBuilder: (BuildContext context, int index) {
+                        return const UserSkeleton();
+                      },
+                    ),
+            ],
+          ),
         ),
       ),
     );

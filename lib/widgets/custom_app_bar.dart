@@ -12,10 +12,10 @@ customAppBar(
   Function? setState,
 }) {
   return AppBar(
-    elevation: 3,
+    elevation: 0,
     toolbarHeight: 60,
     titleSpacing: 0,
-    backgroundColor: Colors.transparent,
+    backgroundColor: ColorConstants.white,
     automaticallyImplyLeading: false,
     title: GestureDetector(
       onTap: () {

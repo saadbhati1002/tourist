@@ -31,47 +31,51 @@ class _QuickScreenState extends State<QuickScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: customAppBarBack(
-        context: context,
-        onTap: () {
-          Navigator.pop(context);
-        },
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () async {
-          var txt = await controller.getText();
-
-          AppConstant.userData!.userNote = txt;
-          AppConstant.userDetailSaved(
-            jsonEncode(AppConstant.userData),
-          );
-          toastShow(message: "Note saved successfully to device");
-        },
-        isExtended: true,
-        backgroundColor: ColorConstants.mainColor,
-        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        label: Text(
-          'Save',
-          style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: ColorConstants.white,
-              fontFamily: "inter"),
+    return SafeArea(
+      top: true,
+      child: Scaffold(
+        backgroundColor: ColorConstants.white,
+        appBar: customAppBarBack(
+          context: context,
+          onTap: () {
+            Navigator.pop(context);
+          },
         ),
-      ),
-      body: HtmlEditor(
-        controller: controller, //required
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () async {
+            var txt = await controller.getText();
 
-        htmlEditorOptions: const HtmlEditorOptions(
-          hint: "Your text here...",
-          spellCheck: true,
-
-          //initalText: "text content initial, if any",
+            AppConstant.userData!.userNote = txt;
+            AppConstant.userDetailSaved(
+              jsonEncode(AppConstant.userData),
+            );
+            toastShow(message: "Note saved successfully to device");
+          },
+          isExtended: true,
+          backgroundColor: ColorConstants.mainColor,
+          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          label: Text(
+            'Save',
+            style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: ColorConstants.white,
+                fontFamily: "inter"),
+          ),
         ),
+        body: HtmlEditor(
+          controller: controller, //required
 
-        otherOptions: const OtherOptions(
-          height: 600,
+          htmlEditorOptions: const HtmlEditorOptions(
+            hint: "Your text here...",
+            spellCheck: true,
+
+            //initalText: "text content initial, if any",
+          ),
+
+          otherOptions: const OtherOptions(
+            height: 600,
+          ),
         ),
       ),
     );

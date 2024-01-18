@@ -100,359 +100,367 @@ class _EventListScreenState extends State<EventListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      endDrawer: const CustomDrawer(),
-      key: _key,
-      appBar: customAppBar(
-        _key,
-        context: context,
-        setState: setStateNow,
-      ),
-      bottomNavigationBar: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 6, bottom: 6),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  if (selectedCalender == 0) {
-                    return;
-                  }
-                  setState(() {
-                    selectedCalender = 0;
-                  });
-                  getData();
-                },
-                child: Container(
-                  width: MediaQuery.of(context).size.width * .475,
-                  height: 42,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: selectedCalender == 0
-                        ? ColorConstants.mainColor
-                        : ColorConstants.greySimple,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      FaIcon(
-                        FontAwesomeIcons.calendarPlus,
-                        color: selectedCalender == 0
-                            ? ColorConstants.white
-                            : ColorConstants.greyDark,
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        'My Calendar',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'inter',
+    return SafeArea(
+      top: true,
+      child: Scaffold(
+        backgroundColor: ColorConstants.white,
+        endDrawer: const CustomDrawer(),
+        key: _key,
+        appBar: customAppBar(
+          _key,
+          context: context,
+          setState: setStateNow,
+        ),
+        bottomNavigationBar: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 6, bottom: 6),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    if (selectedCalender == 0) {
+                      return;
+                    }
+                    setState(() {
+                      selectedCalender = 0;
+                    });
+                    getData();
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * .475,
+                    height: 42,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: selectedCalender == 0
+                          ? ColorConstants.mainColor
+                          : ColorConstants.greySimple,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        FaIcon(
+                          FontAwesomeIcons.calendarPlus,
                           color: selectedCalender == 0
                               ? ColorConstants.white
                               : ColorConstants.greyDark,
                         ),
-                      ),
-                    ],
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          'My Calendar',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'inter',
+                            color: selectedCalender == 0
+                                ? ColorConstants.white
+                                : ColorConstants.greyDark,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                width: 7,
-              ),
-              GestureDetector(
-                onTap: () {
-                  if (selectedCalender == 1) {
-                    return;
-                  }
-                  setState(() {
-                    selectedCalender = 1;
-                  });
-                  getData();
-                },
-                child: Container(
-                  width: MediaQuery.of(context).size.width * .475,
-                  height: 42,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: selectedCalender == 1
-                        ? ColorConstants.mainColor
-                        : ColorConstants.greySimple,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      FaIcon(
-                        FontAwesomeIcons.listCheck,
-                        color: selectedCalender == 1
-                            ? ColorConstants.white
-                            : ColorConstants.greyDark,
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        'Event Schedule',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'inter',
+                const SizedBox(
+                  width: 7,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    if (selectedCalender == 1) {
+                      return;
+                    }
+                    setState(() {
+                      selectedCalender = 1;
+                    });
+                    getData();
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * .475,
+                    height: 42,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: selectedCalender == 1
+                          ? ColorConstants.mainColor
+                          : ColorConstants.greySimple,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        FaIcon(
+                          FontAwesomeIcons.listCheck,
                           color: selectedCalender == 1
                               ? ColorConstants.white
                               : ColorConstants.greyDark,
                         ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          'Event Schedule',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'inter',
+                            color: selectedCalender == 1
+                                ? ColorConstants.white
+                                : ColorConstants.greyDark,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        body: Stack(
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Material(
+                  elevation: 5,
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          dateButton(
+                            '16 Feb',
+                            () {
+                              setState(() {
+                                selectedData = '16-02-2024';
+                              });
+                            },
+                            '16-02-2024',
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          dateButton(
+                            '17 Feb',
+                            () {
+                              setState(() {
+                                selectedData = '17-02-2024';
+                              });
+                            },
+                            '17-02-2024',
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          dateButton(
+                            '18 Feb',
+                            () {
+                              setState(() {
+                                selectedData = '18-02-2024';
+                              });
+                            },
+                            '18-02-2024',
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 25,
                       ),
                     ],
                   ),
                 ),
-              ),
-            ],
-          ),
-        ),
-      ),
-      body: Stack(
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Material(
-                elevation: 5,
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        dateButton(
-                          '16 Feb',
-                          () {
-                            setState(() {
-                              selectedData = '16-02-2024';
-                            });
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * .615,
+                  child: isLoading
+                      ? ListView.builder(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 15),
+                          itemCount: 5,
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return notificationSkeleton();
                           },
-                          '16-02-2024',
-                        ),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        dateButton(
-                          '17 Feb',
-                          () {
-                            setState(() {
-                              selectedData = '17-02-2024';
-                            });
-                          },
-                          '17-02-2024',
-                        ),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        dateButton(
-                          '18 Feb',
-                          () {
-                            setState(() {
-                              selectedData = '18-02-2024';
-                            });
-                          },
-                          '18-02-2024',
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 25,
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * .615,
-                child: isLoading
-                    ? ListView.builder(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 15),
-                        itemCount: 5,
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          return notificationSkeleton();
-                        },
-                      )
-                    :
-                    // : selectedCalender == 0
-                    //     ? myEventData.isEmpty
-                    //         ? const Center(
-                    //             child: Text("No saved event found"),
-                    //           )
-                    //         : ListView.builder(
-                    //             physics: const AlwaysScrollableScrollPhysics(),
-                    //             padding: const EdgeInsets.only(top: 20),
-                    //             shrinkWrap: true,
-                    //             itemCount: myEventData.length,
-                    //             itemBuilder: (context, index) {
-                    //               return selectedData ==
-                    //                       myEventData[index].eventDate!
-                    //                   ? GestureDetector(
-                    //                       onTap: () async {
-                    //                         var response = await Get.to(
-                    //                           () => EventDetailScreen(
-                    //                             eventData: myEventData[index],
-                    //                           ),
-                    //                         );
-                    //                         if (response != null) {
-                    //                           if (response == 1) {
-                    //                             if (myEventData[index]
-                    //                                     .isAttendingEvent ==
-                    //                                 false) {
-                    //                               myEventData[index]
-                    //                                   .isAttendingEvent = true;
-                    //                               myEventData[index]
-                    //                                   .userList!
-                    //                                   .add(AppConstant
-                    //                                       .userData!);
-                    //                             }
-                    //                           } else {
-                    //                             if (myEventData[index]
-                    //                                     .isAttendingEvent ==
-                    //                                 true) {
-                    //                               myEventData[index]
-                    //                                   .isAttendingEvent = false;
-                    //                               myEventData[index]
-                    //                                   .userList!
-                    //                                   .removeWhere(
-                    //                                     (element) =>
-                    //                                         element.id
-                    //                                             .toString() ==
-                    //                                         AppConstant
-                    //                                             .userData!.id
-                    //                                             .toString(),
-                    //                                   );
-                    //                             }
-                    //                           }
-                    //                           setState(() {});
-                    //                         }
-                    //                       },
-                    //                       child: eventListing(
-                    //                         isEventJoin:
-                    //                             checkUserJoinInEvent(index),
-                    //                         context: context,
-                    //                         eventData: myEventData[index],
-                    //                         attendEvent: () {
-                    //                           if (myEventData[index]
-                    //                                   .isAttendingEvent ==
-                    //                               false) {
-                    //                             joinEvent(index);
-                    //                           } else {
-                    //                             leaveEvent(index);
-                    //                           }
-                    //                         },
-                    //                         addToMyCalender: () {
-                    //                           if (myEventData[index]
-                    //                                   .isSavedToMyCalender ==
-                    //                               false) {
-                    //                             addEventToMyCalender(index);
-                    //                           } else {
-                    //                             removeEventFromMyCalender(
-                    //                                 index);
-                    //                           }
-                    //                         },
-                    //                       ),
-                    //                     )
-                    //                   : const SizedBox();
-                    //             },
-                    //           )
-                    //     :
-                    eventData.isEmpty
-                        ? Center(
-                            child: Text((selectedCalender == 0)
-                                ? "No saved event found"
-                                : "No event found"),
-                          )
-                        : ListView.builder(
-                            physics: const AlwaysScrollableScrollPhysics(),
-                            padding: const EdgeInsets.only(top: 20),
-                            shrinkWrap: true,
-                            itemCount: eventData.length,
-                            itemBuilder: (context, index) {
-                              return selectedData == eventData[index].eventDate!
-                                  ? GestureDetector(
-                                      onTap: () async {
-                                        var response = await Get.to(
-                                          () => EventDetailScreen(
-                                            eventData: eventData[index],
-                                          ),
-                                        );
-                                        if (response != null) {
-                                          if (response == 1) {
-                                            if (eventData[index]
-                                                    .isAttendingEvent ==
-                                                false) {
-                                              eventData[index]
-                                                  .isAttendingEvent = true;
-                                              eventData[index]
-                                                  .userList!
-                                                  .add(AppConstant.userData!);
+                        )
+                      :
+                      // : selectedCalender == 0
+                      //     ? myEventData.isEmpty
+                      //         ? const Center(
+                      //             child: Text("No saved event found"),
+                      //           )
+                      //         : ListView.builder(
+                      //             physics: const AlwaysScrollableScrollPhysics(),
+                      //             padding: const EdgeInsets.only(top: 20),
+                      //             shrinkWrap: true,
+                      //             itemCount: myEventData.length,
+                      //             itemBuilder: (context, index) {
+                      //               return selectedData ==
+                      //                       myEventData[index].eventDate!
+                      //                   ? GestureDetector(
+                      //                       onTap: () async {
+                      //                         var response = await Get.to(
+                      //                           () => EventDetailScreen(
+                      //                             eventData: myEventData[index],
+                      //                           ),
+                      //                         );
+                      //                         if (response != null) {
+                      //                           if (response == 1) {
+                      //                             if (myEventData[index]
+                      //                                     .isAttendingEvent ==
+                      //                                 false) {
+                      //                               myEventData[index]
+                      //                                   .isAttendingEvent = true;
+                      //                               myEventData[index]
+                      //                                   .userList!
+                      //                                   .add(AppConstant
+                      //                                       .userData!);
+                      //                             }
+                      //                           } else {
+                      //                             if (myEventData[index]
+                      //                                     .isAttendingEvent ==
+                      //                                 true) {
+                      //                               myEventData[index]
+                      //                                   .isAttendingEvent = false;
+                      //                               myEventData[index]
+                      //                                   .userList!
+                      //                                   .removeWhere(
+                      //                                     (element) =>
+                      //                                         element.id
+                      //                                             .toString() ==
+                      //                                         AppConstant
+                      //                                             .userData!.id
+                      //                                             .toString(),
+                      //                                   );
+                      //                             }
+                      //                           }
+                      //                           setState(() {});
+                      //                         }
+                      //                       },
+                      //                       child: eventListing(
+                      //                         isEventJoin:
+                      //                             checkUserJoinInEvent(index),
+                      //                         context: context,
+                      //                         eventData: myEventData[index],
+                      //                         attendEvent: () {
+                      //                           if (myEventData[index]
+                      //                                   .isAttendingEvent ==
+                      //                               false) {
+                      //                             joinEvent(index);
+                      //                           } else {
+                      //                             leaveEvent(index);
+                      //                           }
+                      //                         },
+                      //                         addToMyCalender: () {
+                      //                           if (myEventData[index]
+                      //                                   .isSavedToMyCalender ==
+                      //                               false) {
+                      //                             addEventToMyCalender(index);
+                      //                           } else {
+                      //                             removeEventFromMyCalender(
+                      //                                 index);
+                      //                           }
+                      //                         },
+                      //                       ),
+                      //                     )
+                      //                   : const SizedBox();
+                      //             },
+                      //           )
+                      //     :
+                      eventData.isEmpty
+                          ? Center(
+                              child: Text((selectedCalender == 0)
+                                  ? "No saved event found"
+                                  : "No event found"),
+                            )
+                          : ListView.builder(
+                              physics: const AlwaysScrollableScrollPhysics(),
+                              padding: const EdgeInsets.only(top: 20),
+                              shrinkWrap: true,
+                              itemCount: eventData.length,
+                              itemBuilder: (context, index) {
+                                return selectedData ==
+                                        eventData[index].eventDate!
+                                    ? GestureDetector(
+                                        onTap: () async {
+                                          var response = await Get.to(
+                                            () => EventDetailScreen(
+                                              eventData: eventData[index],
+                                            ),
+                                          );
+                                          if (response != null) {
+                                            if (response == 1) {
+                                              if (eventData[index]
+                                                      .isAttendingEvent ==
+                                                  false) {
+                                                eventData[index]
+                                                    .isAttendingEvent = true;
+                                                eventData[index]
+                                                    .userList!
+                                                    .add(AppConstant.userData!);
+                                              }
+                                            } else {
+                                              if (eventData[index]
+                                                      .isAttendingEvent ==
+                                                  true) {
+                                                eventData[index]
+                                                    .isAttendingEvent = false;
+                                                eventData[index]
+                                                    .userList!
+                                                    .removeWhere(
+                                                      (element) =>
+                                                          element.id
+                                                              .toString() ==
+                                                          AppConstant
+                                                              .userData!.id
+                                                              .toString(),
+                                                    );
+                                              }
                                             }
-                                          } else {
-                                            if (eventData[index]
-                                                    .isAttendingEvent ==
-                                                true) {
-                                              eventData[index]
-                                                  .isAttendingEvent = false;
-                                              eventData[index]
-                                                  .userList!
-                                                  .removeWhere(
-                                                    (element) =>
-                                                        element.id.toString() ==
-                                                        AppConstant.userData!.id
-                                                            .toString(),
-                                                  );
-                                            }
+                                            setState(() {});
                                           }
-                                          setState(() {});
-                                        }
-                                      },
-                                      child: eventListing(
-                                          isEventJoin:
-                                              checkUserJoinInEvent(index),
-                                          context: context,
-                                          eventData: eventData[index],
-                                          attendEvent: () {
-                                            if (eventData[index]
-                                                    .isAttendingEvent ==
-                                                false) {
-                                              joinEvent(index);
-                                            } else {
-                                              leaveEvent(index);
-                                            }
-                                          },
-                                          addToMyCalender: () {
-                                            if (eventData[index]
-                                                    .isSavedToMyCalender ==
-                                                false) {
-                                              addEventToMyCalender(index);
-                                            } else {
-                                              removeEventFromMyCalender(index);
-                                            }
-                                          }),
-                                    )
-                                  : const SizedBox();
-                            },
-                          ),
-              ),
-            ],
-          ),
-          isAPiCalling ? const ShowProgressBar() : const SizedBox()
-        ],
+                                        },
+                                        child: eventListing(
+                                            isEventJoin:
+                                                checkUserJoinInEvent(index),
+                                            context: context,
+                                            eventData: eventData[index],
+                                            attendEvent: () {
+                                              if (eventData[index]
+                                                      .isAttendingEvent ==
+                                                  false) {
+                                                joinEvent(index);
+                                              } else {
+                                                leaveEvent(index);
+                                              }
+                                            },
+                                            addToMyCalender: () {
+                                              if (eventData[index]
+                                                      .isSavedToMyCalender ==
+                                                  false) {
+                                                addEventToMyCalender(index);
+                                              } else {
+                                                removeEventFromMyCalender(
+                                                    index);
+                                              }
+                                            }),
+                                      )
+                                    : const SizedBox();
+                              },
+                            ),
+                ),
+              ],
+            ),
+            isAPiCalling ? const ShowProgressBar() : const SizedBox()
+          ],
+        ),
       ),
     );
   }

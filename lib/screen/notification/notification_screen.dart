@@ -34,7 +34,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       });
       NotificationRes response =
           await NotificationRepository().getNotificationApiCall();
-      if (response.data!.isNotEmpty) {
+      if (response.data != null) {
         notificationList = response.data!;
       }
     } catch (e) {
@@ -48,36 +48,40 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      endDrawer: const CustomDrawer(),
-      key: _key,
-      appBar: customAppBar(_key, context: context, setState: setStateNow),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 30,
-            ),
-            isLoading
-                ? ListView.builder(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 15),
-                    itemCount: 5,
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return notificationSkeleton();
-                    },
-                  )
-                : ListView.builder(
-                    itemCount: notificationList.length,
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return notificationWidget(index);
-                    },
-                  ),
-          ],
+    return SafeArea(
+      top: true,
+      child: Scaffold(
+        backgroundColor: ColorConstants.white,
+        endDrawer: const CustomDrawer(),
+        key: _key,
+        appBar: customAppBar(_key, context: context, setState: setStateNow),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 30,
+              ),
+              isLoading
+                  ? ListView.builder(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 15),
+                      itemCount: 5,
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return notificationSkeleton();
+                      },
+                    )
+                  : ListView.builder(
+                      itemCount: notificationList.length,
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return notificationWidget(index);
+                      },
+                    ),
+            ],
+          ),
         ),
       ),
     );

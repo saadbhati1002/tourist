@@ -73,101 +73,105 @@ class _NetworkScreenState extends State<NetworkScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      endDrawer: const CustomDrawer(),
-      key: _key,
-      appBar: customAppBar(_key, context: context, setState: setStateNow),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 15,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: CustomTextFormField(
-                // controller: email,
-                hintText: "Search For Participants",
-                suffix: Icon(
-                  Icons.search,
-                  size: 30,
-                  color: ColorConstants.black,
-                ),
-                onChanged: _onSearchChanged,
-                context: context,
+    return SafeArea(
+      top: true,
+      child: Scaffold(
+        backgroundColor: ColorConstants.white,
+        endDrawer: const CustomDrawer(),
+        key: _key,
+        appBar: customAppBar(_key, context: context, setState: setStateNow),
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 15,
               ),
-            ),
-            const SizedBox(
-              height: 25,
-            ),
-            // customHeadingText(title: 'Recommended Participants'),
-            // const SizedBox(
-            //   height: 10,
-            // ),
-            // ListView.builder(
-            //   physics: const NeverScrollableScrollPhysics(),
-            //   shrinkWrap: true,
-            //   itemCount: 3,
-            //   itemBuilder: (context, index) {
-            //     return Padding(
-            //       padding:
-            //           const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            //       child: UserListData(
-            //         userType: userType[index],
-            //       ),
-            //     );
-            //   },
-            // ),
-            const SizedBox(
-              height: 20,
-            ),
-            customHeadingText(title: 'All Participants'),
-            const SizedBox(
-              height: 10,
-            ),
-            !isLoading
-                ? ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: userList.length,
-                    itemBuilder: (context, index) {
-                      return AppConstant.userData!.id == userList[index].id
-                          ? const SizedBox()
-                          : searchedName == null
-                              ? Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 10, horizontal: 10),
-                                  child: UserListData(
-                                    userData: userList[index],
-                                  ),
-                                )
-                              : getUserName(userList[index])
-                                      .toString()
-                                      .toLowerCase()
-                                      .contains(searchedName!.toLowerCase())
-                                  ? Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 10, horizontal: 10),
-                                      child: UserListData(
-                                        userData: userList[index],
-                                      ),
-                                    )
-                                  : const SizedBox();
-                    },
-                  )
-                : ListView.builder(
-                    shrinkWrap: true,
-                    padding:
-                        const EdgeInsets.only(top: 15, left: 15, right: 15),
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 15,
-                    itemBuilder: (BuildContext context, int index) {
-                      return const UserSkeleton();
-                    },
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: CustomTextFormField(
+                  // controller: email,
+                  hintText: "Search For Participants",
+                  suffix: Icon(
+                    Icons.search,
+                    size: 30,
+                    color: ColorConstants.black,
                   ),
-          ],
+                  onChanged: _onSearchChanged,
+                  context: context,
+                ),
+              ),
+              const SizedBox(
+                height: 25,
+              ),
+              // customHeadingText(title: 'Recommended Participants'),
+              // const SizedBox(
+              //   height: 10,
+              // ),
+              // ListView.builder(
+              //   physics: const NeverScrollableScrollPhysics(),
+              //   shrinkWrap: true,
+              //   itemCount: 3,
+              //   itemBuilder: (context, index) {
+              //     return Padding(
+              //       padding:
+              //           const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              //       child: UserListData(
+              //         userType: userType[index],
+              //       ),
+              //     );
+              //   },
+              // ),
+              const SizedBox(
+                height: 20,
+              ),
+              customHeadingText(title: 'All Participants'),
+              const SizedBox(
+                height: 10,
+              ),
+              !isLoading
+                  ? ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: userList.length,
+                      itemBuilder: (context, index) {
+                        return AppConstant.userData!.id == userList[index].id
+                            ? const SizedBox()
+                            : searchedName == null
+                                ? Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10, horizontal: 10),
+                                    child: UserListData(
+                                      userData: userList[index],
+                                    ),
+                                  )
+                                : getUserName(userList[index])
+                                        .toString()
+                                        .toLowerCase()
+                                        .contains(searchedName!.toLowerCase())
+                                    ? Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 10, horizontal: 10),
+                                        child: UserListData(
+                                          userData: userList[index],
+                                        ),
+                                      )
+                                    : const SizedBox();
+                      },
+                    )
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      padding:
+                          const EdgeInsets.only(top: 15, left: 15, right: 15),
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: 15,
+                      itemBuilder: (BuildContext context, int index) {
+                        return const UserSkeleton();
+                      },
+                    ),
+            ],
+          ),
         ),
       ),
     );

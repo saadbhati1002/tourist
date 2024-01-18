@@ -33,9 +33,11 @@ class _DashBoardScreenState extends State<DashBoardScreen>
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      top: true,
       child: DefaultTabController(
         length: 4,
         child: Scaffold(
+          backgroundColor: ColorConstants.white,
           bottomNavigationBar: Material(
             color: ColorConstants.black,
             child: TabBar(

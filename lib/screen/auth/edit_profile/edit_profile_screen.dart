@@ -84,265 +84,271 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: customAppBarBack(
-        context: context,
-        onTap: () {
-          Navigator.pop(context);
-        },
-      ),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 30,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        imagePickerPopUp();
-                      },
-                      child: SizedBox(
-                        height: 105,
-                        width: 105,
-                        child: Stack(
-                          children: [
-                            imageSelected != null
-                                ? SizedBox(
-                                    height: 105,
-                                    width: 105,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 10, right: 10),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(10),
-                                        child: Image.file(
-                                          imageSelected!,
-                                          fit: BoxFit.cover,
+    return SafeArea(
+      top: true,
+      child: Scaffold(
+        backgroundColor: ColorConstants.white,
+        appBar: customAppBarBack(
+          context: context,
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
+        body: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          imagePickerPopUp();
+                        },
+                        child: SizedBox(
+                          height: 105,
+                          width: 105,
+                          child: Stack(
+                            children: [
+                              imageSelected != null
+                                  ? SizedBox(
+                                      height: 105,
+                                      width: 105,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 10, right: 10),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          child: Image.file(
+                                            imageSelected!,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  : SizedBox(
+                                      height: 105,
+                                      width: 105,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 10, right: 10),
+                                        child: CustomImage(
+                                          height: 95,
+                                          width: 95,
+                                          imagePath:
+                                              AppConstant.userData!.logo3!,
                                         ),
                                       ),
                                     ),
-                                  )
-                                : SizedBox(
-                                    height: 105,
-                                    width: 105,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 10, right: 10),
-                                      child: CustomImage(
-                                        height: 95,
-                                        width: 95,
-                                        imagePath: AppConstant.userData!.logo3!,
-                                      ),
-                                    ),
+                              Align(
+                                alignment: Alignment.topRight,
+                                child: Container(
+                                  height: 25,
+                                  width: 25,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: ColorConstants.black),
+                                  child: Image.asset(
+                                    Images.edit,
                                   ),
-                            Align(
-                              alignment: Alignment.topRight,
-                              child: Container(
-                                height: 25,
-                                width: 25,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: ColorConstants.black),
-                                child: Image.asset(
-                                  Images.edit,
                                 ),
-                              ),
-                            )
-                          ],
+                              )
+                            ],
+                          ),
                         ),
                       ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  commonTextStyle('First Name'),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: CustomTextFormField(
+                      controller: firstName,
+                      hintText: "Enter your first name",
+                      context: context,
                     ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                commonTextStyle('First Name'),
-                const SizedBox(
-                  height: 5,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: CustomTextFormField(
-                    controller: firstName,
-                    hintText: "Enter your first name",
-                    context: context,
                   ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                commonTextStyle('Middle Name'),
-                const SizedBox(
-                  height: 5,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: CustomTextFormField(
-                    controller: middleName,
-                    hintText: "Enter your middle name",
-                    context: context,
+                  const SizedBox(
+                    height: 15,
                   ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                commonTextStyle('Last Name'),
-                const SizedBox(
-                  height: 5,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: CustomTextFormField(
-                    controller: lastName,
-                    hintText: "Enter your Last name",
-                    context: context,
+                  commonTextStyle('Middle Name'),
+                  const SizedBox(
+                    height: 5,
                   ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                commonTextStyle('Designation'),
-                const SizedBox(
-                  height: 5,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: CustomTextFormField(
-                    controller: designation,
-                    hintText: "Enter your designation",
-                    context: context,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: CustomTextFormField(
+                      controller: middleName,
+                      hintText: "Enter your middle name",
+                      context: context,
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                commonTextStyle('Company Name'),
-                const SizedBox(
-                  height: 5,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: CustomTextFormField(
-                    controller: companyName,
-                    hintText: "Enter your company name",
-                    context: context,
+                  const SizedBox(
+                    height: 15,
                   ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                commonTextStyle('Email'),
-                const SizedBox(
-                  height: 5,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: CustomTextFormField(
-                    controller: email,
-                    hintText: "Enter your email",
-                    context: context,
+                  commonTextStyle('Last Name'),
+                  const SizedBox(
+                    height: 5,
                   ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                commonTextStyle('Phone Number'),
-                const SizedBox(
-                  height: 5,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: CustomTextFormField(
-                    controller: phoneNumber,
-                    hintText: "Enter your phone number",
-                    context: context,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: CustomTextFormField(
+                      controller: lastName,
+                      hintText: "Enter your Last name",
+                      context: context,
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                commonTextStyle('Country'),
-                const SizedBox(
-                  height: 5,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: CustomTextFormField(
-                    controller: country,
-                    hintText: "Enter your country",
-                    context: context,
+                  const SizedBox(
+                    height: 15,
                   ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                commonTextStyle('Personal Bio'),
-                const SizedBox(
-                  height: 5,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: CustomTextFormField(
-                    isMaxLine: true,
-                    controller: personalBio,
-                    hintText: "Enter your personal bio",
-                    context: context,
+                  commonTextStyle('Designation'),
+                  const SizedBox(
+                    height: 5,
                   ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                commonTextStyle('Company Bio'),
-                const SizedBox(
-                  height: 5,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: CustomTextFormField(
-                    controller: companyBio,
-                    isMaxLine: true,
-                    hintText: "Enter your company bio",
-                    context: context,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: CustomTextFormField(
+                      controller: designation,
+                      hintText: "Enter your designation",
+                      context: context,
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25),
-                  child: CommonButton(
-                    width: MediaQuery.of(context).size.width,
-                    onTap: () {
-                      if (AppConstant.userData!.logo3 != null &&
-                          AppConstant.userData!.logo3 != '') {
-                        updateProfile(false);
-                      } else {
-                        if (imageSelected == null) {
-                          toastShow(message: 'Please select your image');
-                          return;
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  commonTextStyle('Company Name'),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: CustomTextFormField(
+                      controller: companyName,
+                      hintText: "Enter your company name",
+                      context: context,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  commonTextStyle('Email'),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: CustomTextFormField(
+                      controller: email,
+                      hintText: "Enter your email",
+                      context: context,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  commonTextStyle('Phone Number'),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: CustomTextFormField(
+                      controller: phoneNumber,
+                      hintText: "Enter your phone number",
+                      context: context,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  commonTextStyle('Country'),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: CustomTextFormField(
+                      controller: country,
+                      hintText: "Enter your country",
+                      context: context,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  commonTextStyle('Personal Bio'),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: CustomTextFormField(
+                      isMaxLine: true,
+                      controller: personalBio,
+                      hintText: "Enter your personal bio",
+                      context: context,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  commonTextStyle('Company Bio'),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: CustomTextFormField(
+                      controller: companyBio,
+                      isMaxLine: true,
+                      hintText: "Enter your company bio",
+                      context: context,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
+                    child: CommonButton(
+                      width: MediaQuery.of(context).size.width,
+                      onTap: () {
+                        if (AppConstant.userData!.logo3 != null &&
+                            AppConstant.userData!.logo3 != '') {
+                          updateProfile(false);
+                        } else {
+                          if (imageSelected == null) {
+                            toastShow(message: 'Please select your image');
+                            return;
+                          }
+                          updateProfile(true);
                         }
-                        updateProfile(true);
-                      }
-                    },
-                    title: "Update",
+                      },
+                      title: "Update",
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-              ],
+                  const SizedBox(
+                    height: 30,
+                  ),
+                ],
+              ),
             ),
-          ),
-          isLoading ? const ShowProgressBar() : const SizedBox()
-        ],
+            isLoading ? const ShowProgressBar() : const SizedBox()
+          ],
+        ),
       ),
     );
   }

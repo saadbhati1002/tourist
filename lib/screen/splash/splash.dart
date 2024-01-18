@@ -6,6 +6,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:tourist/models/user/user_model.dart';
 import 'package:tourist/screen/auth/login/login_screen.dart';
 import 'package:tourist/screen/dashboard/dashboard_screen.dart';
+import 'package:tourist/utility/color.dart';
 import 'package:tourist/utility/constant.dart';
 import 'package:tourist/utility/images.dart';
 
@@ -56,12 +57,16 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: SizedBox(
-          height: 200,
-          width: MediaQuery.of(context).size.width * .8,
-          child: Image.asset(Images.logoName),
+    return SafeArea(
+      top: true,
+      child: Scaffold(
+        backgroundColor: ColorConstants.white,
+        body: Center(
+          child: SizedBox(
+            height: 200,
+            width: MediaQuery.of(context).size.width * .8,
+            child: Image.asset(Images.logoName),
+          ),
         ),
       ),
     );
