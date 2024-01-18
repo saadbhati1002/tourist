@@ -185,7 +185,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       ),
                     ),
                     const SizedBox(
-                      height: 7,
+                      height: 13,
                     ),
                     Text(
                       'Do you want to logout from this app?',

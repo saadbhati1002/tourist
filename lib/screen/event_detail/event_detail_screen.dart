@@ -17,7 +17,7 @@ class EventDetailScreen extends StatefulWidget {
 }
 
 class _EventDetailScreenState extends State<EventDetailScreen> {
-  Future<bool> willPOpScope() {
+  Future<bool> willPopScope() {
     if (widget.eventData!.isAttendingEvent == true &&
         widget.eventData!.isSavedToMyCalender == true) {
       Navigator.pop(context, 1);
@@ -38,7 +38,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: willPOpScope,
+      onWillPop: willPopScope,
       child: SafeArea(
         top: true,
         child: Scaffold(

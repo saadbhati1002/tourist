@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tourist/screen/event_list/event_list.dart';
@@ -30,70 +32,78 @@ class _DashBoardScreenState extends State<DashBoardScreen>
     super.initState();
   }
 
+  Future<bool> willPopScope() {
+    appClosePopUP();
+    return Future.value(true);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      top: true,
-      child: DefaultTabController(
-        length: 4,
-        child: Scaffold(
-          backgroundColor: ColorConstants.white,
-          bottomNavigationBar: Material(
-            color: ColorConstants.black,
-            child: TabBar(
-              indicatorWeight: 0.01,
-              controller: _tabController,
-              onTap: (index) {
-                _setPage(index);
-              },
-              labelPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-              indicatorColor: Colors.black,
-              isScrollable: true,
-              tabs: [
-                _barItem(
-                    FaIcon(
-                      FontAwesomeIcons.houseUser,
-                      size: 22,
-                      color: _pageIndex == 0
-                          ? ColorConstants.white
-                          : ColorConstants.greyDark,
-                    ),
-                    0,
-                    "Home"),
-                _barItem(
-                    FaIcon(
-                      FontAwesomeIcons.circleNodes,
-                      size: 22,
-                      color: _pageIndex == 1
-                          ? ColorConstants.white
-                          : ColorConstants.greyDark,
-                    ),
-                    1,
-                    "Network"),
-                _barItem(
-                    FaIcon(
-                      FontAwesomeIcons.calendarDay,
-                      size: 22,
-                      color: _pageIndex == 2
-                          ? ColorConstants.white
-                          : ColorConstants.greyDark,
-                    ),
-                    2,
-                    "Schedule"),
-                _barItem(
-                    FaIcon(
-                      FontAwesomeIcons.solidBell,
-                      size: 22,
-                      color: _pageIndex == 3
-                          ? ColorConstants.white
-                          : ColorConstants.greyDark,
-                    ),
-                    3,
-                    "Notifications"),
-              ],
+    return WillPopScope(
+      onWillPop: willPopScope,
+      child: SafeArea(
+        top: true,
+        child: DefaultTabController(
+          length: 4,
+          child: Scaffold(
+            backgroundColor: ColorConstants.white,
+            bottomNavigationBar: Material(
+              color: ColorConstants.black,
+              child: TabBar(
+                indicatorWeight: 0.01,
+                controller: _tabController,
+                onTap: (index) {
+                  _setPage(index);
+                },
+                labelPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+                indicatorColor: Colors.black,
+                isScrollable: true,
+                tabs: [
+                  _barItem(
+                      FaIcon(
+                        FontAwesomeIcons.houseUser,
+                        size: 22,
+                        color: _pageIndex == 0
+                            ? ColorConstants.white
+                            : ColorConstants.greyDark,
+                      ),
+                      0,
+                      "Home"),
+                  _barItem(
+                      FaIcon(
+                        FontAwesomeIcons.circleNodes,
+                        size: 22,
+                        color: _pageIndex == 1
+                            ? ColorConstants.white
+                            : ColorConstants.greyDark,
+                      ),
+                      1,
+                      "Network"),
+                  _barItem(
+                      FaIcon(
+                        FontAwesomeIcons.calendarDay,
+                        size: 22,
+                        color: _pageIndex == 2
+                            ? ColorConstants.white
+                            : ColorConstants.greyDark,
+                      ),
+                      2,
+                      "Schedule"),
+                  _barItem(
+                      FaIcon(
+                        FontAwesomeIcons.solidBell,
+                        size: 22,
+                        color: _pageIndex == 3
+                            ? ColorConstants.white
+                            : ColorConstants.greyDark,
+                      ),
+                      3,
+                      "Notifications"),
+                ],
+              ),
             ),
+            body: _screens[_pageIndex],
           ),
-          body: _screens[_pageIndex],
         ),
       ),
     );
@@ -157,5 +167,125 @@ class _DashBoardScreenState extends State<DashBoardScreen>
             width: MediaQuery.of(context).size.width * .2,
             alignment: Alignment.center,
             child: icon!);
+  }
+
+  void appClosePopUP() async {
+    return showDialog(
+      context: context,
+      builder: (_) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              shape: const RoundedRectangleBorder(
+                  side: BorderSide(color: ColorConstants.greyLight),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15.0),
+                  )),
+              elevation: 0,
+              backgroundColor: ColorConstants.white,
+              actionsPadding: const EdgeInsets.symmetric(vertical: 0),
+              title: Container(
+                alignment: Alignment.topLeft,
+                decoration: BoxDecoration(
+                    color: ColorConstants.white,
+                    borderRadius: BorderRadius.circular(15)),
+                // height: MediaQuery.of(context).size.height * .25,
+                width: MediaQuery.of(context).size.width * .7,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Are you sure?',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: ColorConstants.black,
+                        fontSize: 18,
+                        fontFamily: 'inter',
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 13,
+                    ),
+                    Text(
+                      'Do you want to close this app?',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: ColorConstants.black,
+                        fontSize: 14,
+                        fontFamily: 'inter',
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: ColorConstants.mainColor,
+                                borderRadius: BorderRadius.circular(8)),
+                            height: 35,
+                            // width: MediaQuery.of(context).size.width * .2,
+                            alignment: Alignment.center,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15),
+                              child: Text(
+                                'No',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16,
+                                    color: ColorConstants.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            exit(0);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: ColorConstants.mainColor,
+                                borderRadius: BorderRadius.circular(8)),
+                            height: 35,
+                            // width: MediaQuery.of(context).size.width * .2,
+                            alignment: Alignment.center,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15),
+                              child: Text(
+                                'Yes',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16,
+                                    color: ColorConstants.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 }
