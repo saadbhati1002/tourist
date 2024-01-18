@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:skeletons/skeletons.dart';
 import 'package:tourist/api/repository/notification/notification.dart';
 import 'package:tourist/models/notification/notification_model.dart';
+import 'package:tourist/screen/notification_detail/notification_detail_screen.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:tourist/widgets/custom_app_bar.dart';
 import 'package:tourist/widgets/custom_drawer.dart';
@@ -92,7 +94,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: GestureDetector(
         onTap: () {
-          notificationDetail(notificationList[index]);
+          Get.to(NotificationDetailScreen(
+              notificationData: notificationList[index]));
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -196,82 +199,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
           ),
         ),
       ),
-    );
-  }
-
-  notificationDetail(Data? notificationData) {
-    return showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height * .65,
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10, top: 0),
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Icon(
-                          Icons.cancel,
-                          size: 24,
-                          color: ColorConstants.black,
-                        ),
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    notificationData!.title ?? '',
-                    style: TextStyle(
-                        fontFamily: "inter",
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14,
-                        color: ColorConstants.black),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Text(
-                    '${notificationData.createdDate} | ${notificationData.createdTime}',
-                    maxLines: 3,
-                    style: const TextStyle(
-                        fontFamily: "inter",
-                        fontWeight: FontWeight.w700,
-                        fontSize: 12,
-                        color: ColorConstants.greyLight),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Text(
-                    notificationData.description ?? '',
-                    style: TextStyle(
-                        fontFamily: "inter",
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12,
-                        color: ColorConstants.black),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
     );
   }
 }

@@ -206,7 +206,7 @@ Widget eventListing(
                         ),
                         AvatarStack(
                           height: 40,
-                          width: MediaQuery.of(context).size.width * .3,
+                          width: MediaQuery.of(context).size.width * .27,
                           infoWidgetBuilder: (surplus) {
                             return Container(
                               height: 40,
@@ -224,7 +224,7 @@ Widget eventListing(
                           avatars: [
                             for (var n = 0; n < eventData.userList!.length; n++)
                               NetworkImage((eventData.userList![n].logo3 !=
-                                          null ||
+                                          null &&
                                       eventData.userList![n].logo3 != "")
                                   ? eventData.userList![n].logo3!
                                   : 'https://dubaiweddingsymposium.com/images/DWS.png')

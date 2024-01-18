@@ -441,7 +441,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           borderRadius: BorderRadius.circular(5),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -451,7 +451,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 color: ColorConstants.white,
               ),
               const SizedBox(
-                width: 7,
+                width: 5,
               ),
               Text(
                 title!,
