@@ -85,6 +85,7 @@ class _EventListScreenState extends State<EventListScreen> {
         eventData = response.event!;
         if (response.event!.isNotEmpty) {
           eventData = response.event!;
+          checkForSavedEvents();
         }
       }
 
@@ -96,6 +97,17 @@ class _EventListScreenState extends State<EventListScreen> {
         isLoading = false;
       });
     }
+  }
+
+  checkForSavedEvents() {
+    for (int i = 0; i < myEventData.length; i++) {
+      for (int j = 0; j < eventData.length; j++) {
+        if (myEventData[i].id == eventData[j].id) {
+          eventData[j].isSavedToMyCalender = true;
+        }
+      }
+    }
+    setState(() {});
   }
 
   @override
@@ -124,6 +136,7 @@ class _EventListScreenState extends State<EventListScreen> {
                     if (selectedCalender == 0) {
                       return;
                     }
+                    AppConstant.isMyEvent = true;
                     setState(() {
                       selectedCalender = 0;
                     });
@@ -174,6 +187,8 @@ class _EventListScreenState extends State<EventListScreen> {
                     if (selectedCalender == 1) {
                       return;
                     }
+                    AppConstant.isMyEvent = false;
+
                     setState(() {
                       selectedCalender = 1;
                     });
@@ -456,6 +471,9 @@ class _EventListScreenState extends State<EventListScreen> {
                                           }
                                         },
                                         child: eventListing(
+                                            isMyEvent: selectedCalender == 0
+                                                ? true
+                                                : false,
                                             isEventJoin:
                                                 checkUserJoinInEvent(index),
                                             context: context,

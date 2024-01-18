@@ -10,6 +10,7 @@ class AppConstant {
   static List rolesSubRole = ['Answer 1', 'Answer 2', 'Answer 3', 'Answer 4'];
   static String? selectedRole;
   static String? selectedSubRole;
+  static bool isMyEvent = true;
   static UserData? userData;
   static userDetailSaved(String userDetail) async {
     final pref = await SharedPreferences.getInstance();
