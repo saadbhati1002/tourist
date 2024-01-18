@@ -39,33 +39,16 @@ class _EventListScreenState extends State<EventListScreen> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    AppConstant.isMyEvent = true;
+    super.dispose();
+  }
+
   getData() async {
     // await getMyEvent();
     await getEventData();
   }
-
-  // getMyEvent() async {
-  //   try {
-  //     setState(() {
-  //       isLoading = true;
-  //     });
-  //     EventRes response = await EventRepository().getMyCalenderEventApiCall();
-  //     if (response.event!.isNotEmpty) {
-  //       myEventData = response.event!;
-  //     }
-  //     myEventData = response.event!;
-  //     for (int i = 0; i < myEventData.length; i++) {
-  //       myEventData[i].isSavedToMyCalender = true;
-  //     }
-  //     return myEventData;
-  //   } catch (e) {
-  //     debugPrint(e.toString());
-  //   } finally {
-  //     setState(() {
-  //       isLoading = false;
-  //     });
-  //   }
-  // }
 
   getEventData() async {
     eventData = [];
@@ -305,91 +288,7 @@ class _EventListScreenState extends State<EventListScreen> {
                             return notificationSkeleton();
                           },
                         )
-                      :
-                      // : selectedCalender == 0
-                      //     ? myEventData.isEmpty
-                      //         ? const Center(
-                      //             child: Text("No saved event found"),
-                      //           )
-                      //         : ListView.builder(
-                      //             physics: const AlwaysScrollableScrollPhysics(),
-                      //             padding: const EdgeInsets.only(top: 20),
-                      //             shrinkWrap: true,
-                      //             itemCount: myEventData.length,
-                      //             itemBuilder: (context, index) {
-                      //               return selectedData ==
-                      //                       myEventData[index].eventDate!
-                      //                   ? GestureDetector(
-                      //                       onTap: () async {
-                      //                         var response = await Get.to(
-                      //                           () => EventDetailScreen(
-                      //                             eventData: myEventData[index],
-                      //                           ),
-                      //                         );
-                      //                         if (response != null) {
-                      //                           if (response == 1) {
-                      //                             if (myEventData[index]
-                      //                                     .isAttendingEvent ==
-                      //                                 false) {
-                      //                               myEventData[index]
-                      //                                   .isAttendingEvent = true;
-                      //                               myEventData[index]
-                      //                                   .userList!
-                      //                                   .add(AppConstant
-                      //                                       .userData!);
-                      //                             }
-                      //                           } else {
-                      //                             if (myEventData[index]
-                      //                                     .isAttendingEvent ==
-                      //                                 true) {
-                      //                               myEventData[index]
-                      //                                   .isAttendingEvent = false;
-                      //                               myEventData[index]
-                      //                                   .userList!
-                      //                                   .removeWhere(
-                      //                                     (element) =>
-                      //                                         element.id
-                      //                                             .toString() ==
-                      //                                         AppConstant
-                      //                                             .userData!.id
-                      //                                             .toString(),
-                      //                                   );
-                      //                             }
-                      //                           }
-                      //                           setState(() {});
-                      //                         }
-                      //                       },
-                      //                       child: eventListing(
-                      //                         isEventJoin:
-                      //                             checkUserJoinInEvent(index),
-                      //                         context: context,
-                      //                         eventData: myEventData[index],
-                      //                         attendEvent: () {
-                      //                           if (myEventData[index]
-                      //                                   .isAttendingEvent ==
-                      //                               false) {
-                      //                             joinEvent(index);
-                      //                           } else {
-                      //                             leaveEvent(index);
-                      //                           }
-                      //                         },
-                      //                         addToMyCalender: () {
-                      //                           if (myEventData[index]
-                      //                                   .isSavedToMyCalender ==
-                      //                               false) {
-                      //                             addEventToMyCalender(index);
-                      //                           } else {
-                      //                             removeEventFromMyCalender(
-                      //                                 index);
-                      //                           }
-                      //                         },
-                      //                       ),
-                      //                     )
-                      //                   : const SizedBox();
-                      //             },
-                      //           )
-                      //     :
-                      eventData.isEmpty
+                      : eventData.isEmpty
                           ? Center(
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -438,37 +337,7 @@ class _EventListScreenState extends State<EventListScreen> {
                                               eventData: eventData[index],
                                             ),
                                           );
-                                          if (response != null) {
-                                            if (response == 1) {
-                                              if (eventData[index]
-                                                      .isAttendingEvent ==
-                                                  false) {
-                                                eventData[index]
-                                                    .isAttendingEvent = true;
-                                                eventData[index]
-                                                    .userList!
-                                                    .add(AppConstant.userData!);
-                                              }
-                                            } else {
-                                              if (eventData[index]
-                                                      .isAttendingEvent ==
-                                                  true) {
-                                                eventData[index]
-                                                    .isAttendingEvent = false;
-                                                eventData[index]
-                                                    .userList!
-                                                    .removeWhere(
-                                                      (element) =>
-                                                          element.id
-                                                              .toString() ==
-                                                          AppConstant
-                                                              .userData!.id
-                                                              .toString(),
-                                                    );
-                                              }
-                                            }
-                                            setState(() {});
-                                          }
+                                          checkIsAnyEventLaved(response, index);
                                         },
                                         child: eventListing(
                                             isMyEvent: selectedCalender == 0
@@ -695,6 +564,73 @@ class _EventListScreenState extends State<EventListScreen> {
       setState(() {
         isAPiCalling = false;
       });
+    }
+  }
+
+  //checking if any any event leaved or not
+  checkIsAnyEventLaved(response, index) {
+    print(response);
+    if (response != null) {
+      if (response == 1) {
+        if (eventData[index].isAttendingEvent == false) {
+          eventData[index].isAttendingEvent = true;
+          eventData[index].userList!.add(AppConstant.userData!);
+        }
+        if (eventData[index].isSavedToMyCalender == false) {
+          eventData[index].isAttendingEvent = true;
+          eventData[index].userList!.add(AppConstant.userData!);
+          myEventData.add(eventData[index]);
+        }
+      } else if (response == 0) {
+        if (eventData[index].isAttendingEvent == true) {
+          eventData[index].isAttendingEvent = false;
+          eventData[index].userList!.removeWhere(
+                (element) =>
+                    element.id.toString() ==
+                    AppConstant.userData!.id.toString(),
+              );
+        }
+        if (eventData[index].isSavedToMyCalender == true) {
+          eventData[index].isAttendingEvent = false;
+          eventData[index].userList!.removeWhere(
+                (element) =>
+                    element.id.toString() ==
+                    AppConstant.userData!.id.toString(),
+              );
+          myEventData
+              .removeWhere((element) => element.id == eventData[index].id);
+        }
+      } else if (response == 2) {
+        if (eventData[index].isAttendingEvent == false) {
+          eventData[index].isAttendingEvent = true;
+          eventData[index].userList!.add(AppConstant.userData!);
+        }
+        if (eventData[index].isSavedToMyCalender == true) {
+          eventData[index].isAttendingEvent = false;
+          eventData[index].userList!.removeWhere(
+                (element) =>
+                    element.id.toString() ==
+                    AppConstant.userData!.id.toString(),
+              );
+          myEventData
+              .removeWhere((element) => element.id == eventData[index].id);
+        }
+      } else if (response == 3) {
+        if (eventData[index].isAttendingEvent == true) {
+          eventData[index].isAttendingEvent = false;
+          eventData[index].userList!.removeWhere(
+                (element) =>
+                    element.id.toString() ==
+                    AppConstant.userData!.id.toString(),
+              );
+        }
+        if (eventData[index].isSavedToMyCalender == false) {
+          eventData[index].isAttendingEvent = true;
+          eventData[index].userList!.add(AppConstant.userData!);
+          myEventData.add(eventData[index]);
+        }
+      }
+      setState(() {});
     }
   }
 }

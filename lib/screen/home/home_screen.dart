@@ -64,9 +64,11 @@ class _HomeScreenState extends State<HomeScreen> {
     } catch (e) {
       debugPrint(e.toString());
     } finally {
-      setState(() {
-        isBanner1Loading = false;
-      });
+      if (mounted) {
+        setState(() {
+          isBanner1Loading = false;
+        });
+      }
     }
     return banner1List;
   }
@@ -98,9 +100,11 @@ class _HomeScreenState extends State<HomeScreen> {
     } catch (e) {
       debugPrint(e.toString());
     } finally {
-      setState(() {
-        isSponsorBannerLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          isSponsorBannerLoading = false;
+        });
+      }
     }
     return sponsorBannerList;
   }

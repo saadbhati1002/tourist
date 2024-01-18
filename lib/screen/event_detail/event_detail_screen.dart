@@ -18,10 +18,18 @@ class EventDetailScreen extends StatefulWidget {
 
 class _EventDetailScreenState extends State<EventDetailScreen> {
   Future<bool> willPOpScope() {
-    if (widget.eventData!.isAttendingEvent == true) {
+    if (widget.eventData!.isAttendingEvent == true &&
+        widget.eventData!.isSavedToMyCalender == true) {
       Navigator.pop(context, 1);
-    } else {
+    } else if (widget.eventData!.isAttendingEvent == false &&
+        widget.eventData!.isSavedToMyCalender == false) {
       Navigator.pop(context, 0);
+    } else if (widget.eventData!.isAttendingEvent == true &&
+        widget.eventData!.isSavedToMyCalender == false) {
+      Navigator.pop(context, 2);
+    } else if (widget.eventData!.isAttendingEvent == false &&
+        widget.eventData!.isSavedToMyCalender == true) {
+      Navigator.pop(context, 3);
     }
     return Future.value(true);
   }
@@ -38,12 +46,18 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
           appBar: customAppBarBack(
             context: context,
             onTap: () {
-              if (widget.eventData!.isAttendingEvent == true ||
+              if (widget.eventData!.isAttendingEvent == true &&
                   widget.eventData!.isSavedToMyCalender == true) {
                 Navigator.pop(context, 1);
-              } else if (widget.eventData!.isAttendingEvent == false ||
+              } else if (widget.eventData!.isAttendingEvent == false &&
                   widget.eventData!.isSavedToMyCalender == false) {
                 Navigator.pop(context, 0);
+              } else if (widget.eventData!.isAttendingEvent == true &&
+                  widget.eventData!.isSavedToMyCalender == false) {
+                Navigator.pop(context, 2);
+              } else if (widget.eventData!.isAttendingEvent == false &&
+                  widget.eventData!.isSavedToMyCalender == true) {
+                Navigator.pop(context, 3);
               }
             },
           ),
@@ -141,7 +155,8 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              if (widget.eventData!.isAttendingEvent == false) {
+                              if (widget.eventData!.isSavedToMyCalender ==
+                                  false) {
                                 addEventToMyCalender();
                               } else {
                                 removeEventFromMyCalender();
