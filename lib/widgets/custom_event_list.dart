@@ -135,33 +135,44 @@ Widget eventListing(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        AvatarStack(
-                          
-                          height: 40,
-                          width: MediaQuery.of(context).size.width * .22,
-                          infoWidgetBuilder: (surplus) {
-                            return Container(
-                              height: 40,
-                              alignment: Alignment.center,
-                              child: Text(
-                                ' ${eventData.userList!.length}',
+                        eventData.userList!.isEmpty
+                            ? Text(
+                                ' ${eventData.userList!.length} participants',
                                 style: TextStyle(
                                     fontSize: 12,
                                     color: ColorConstants.black,
                                     fontWeight: FontWeight.w700),
                                 textAlign: TextAlign.center,
+                              )
+                            : AvatarStack(
+                                height: 40,
+                                width: MediaQuery.of(context).size.width * .25,
+                                infoWidgetBuilder: (surplus) {
+                                  return Container(
+                                    height: 40,
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      ' ${eventData.userList!.length} participants',
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          color: ColorConstants.black,
+                                          fontWeight: FontWeight.w700),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  );
+                                },
+                                avatars: [
+                                  for (var n = 0;
+                                      n < eventData.userList!.length;
+                                      n++)
+                                    NetworkImage((eventData
+                                                    .userList![n].logo3 !=
+                                                null &&
+                                            eventData.userList![n].logo3 != "")
+                                        ? eventData.userList![n].logo3!
+                                        : 'https://dubaiweddingsymposium.com/images/DWS.png')
+                                ],
                               ),
-                            );
-                          },
-                          avatars: [
-                            for (var n = 0; n < eventData.userList!.length; n++)
-                              NetworkImage((eventData.userList![n].logo3 !=
-                                          null &&
-                                      eventData.userList![n].logo3 != "")
-                                  ? eventData.userList![n].logo3!
-                                  : 'https://dubaiweddingsymposium.com/images/DWS.png')
-                          ],
-                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [

@@ -68,7 +68,7 @@ class _ChatScreenState extends State<ChatScreen> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: UserListData(
               onProfileTap: () {
                 Get.to(
@@ -108,7 +108,9 @@ class _ChatScreenState extends State<ChatScreen> {
                     physics: const BouncingScrollPhysics(),
                     reverse: true,
                     itemBuilder: (context, index) {
-                      return chatBoxWidget(index);
+                      int itemCount = chatHistory.length;
+                      int reversedIndex = itemCount - 1 - index;
+                      return chatBoxWidget(reversedIndex);
                     },
                   ),
           ),
@@ -301,11 +303,11 @@ class _ChatScreenState extends State<ChatScreen> {
       Common response = await MessageRepository().sendMessageMessageApiCall(
           message: messageText.text.toString(),
           receiverID: widget.userData!.id.toString());
-      if (response.message == "Message send seccessfully") {
+      if (response.message == "Message send successfully") {
         chatHistory.insert(
-          0,
+          chatHistory.length,
           ChatHistory(
-            id: "0",
+            id: '0',
             message: messageText.text.trim(),
             senderId: AppConstant.userData!.id,
             receiverId: widget.userData!.id,

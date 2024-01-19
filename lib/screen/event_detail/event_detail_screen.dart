@@ -13,7 +13,8 @@ import 'package:tourist/widgets/show_progress_bar.dart';
 
 class EventDetailScreen extends StatefulWidget {
   final EventData? eventData;
-  const EventDetailScreen({super.key, this.eventData});
+  final String? eventDate;
+  const EventDetailScreen({super.key, this.eventData, this.eventDate});
 
   @override
   State<EventDetailScreen> createState() => _EventDetailScreenState();

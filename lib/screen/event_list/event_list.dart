@@ -224,55 +224,61 @@ class _EventListScreenState extends State<EventListScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Material(
-                  elevation: 5,
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 25,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 1),
+                  child: Material(
+                    elevation: 2,
+                    child: Container(
+                      color: ColorConstants.white,
+                      child: Column(
                         children: [
-                          dateButton(
-                            '16 Feb',
-                            () {
-                              setState(() {
-                                selectedData = '16-02-2024';
-                              });
-                            },
-                            '16-02-2024',
+                          const SizedBox(
+                            height: 25,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              dateButton(
+                                '16 Feb',
+                                () {
+                                  setState(() {
+                                    selectedData = '16-02-2024';
+                                  });
+                                },
+                                '16-02-2024',
+                              ),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              dateButton(
+                                '17 Feb',
+                                () {
+                                  setState(() {
+                                    selectedData = '17-02-2024';
+                                  });
+                                },
+                                '17-02-2024',
+                              ),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              dateButton(
+                                '18 Feb',
+                                () {
+                                  setState(() {
+                                    selectedData = '18-02-2024';
+                                  });
+                                },
+                                '18-02-2024',
+                              ),
+                            ],
                           ),
                           const SizedBox(
-                            width: 20,
-                          ),
-                          dateButton(
-                            '17 Feb',
-                            () {
-                              setState(() {
-                                selectedData = '17-02-2024';
-                              });
-                            },
-                            '17-02-2024',
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          dateButton(
-                            '18 Feb',
-                            () {
-                              setState(() {
-                                selectedData = '18-02-2024';
-                              });
-                            },
-                            '18-02-2024',
+                            height: 25,
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 25,
-                      ),
-                    ],
+                    ),
                   ),
                 ),
                 SizedBox(

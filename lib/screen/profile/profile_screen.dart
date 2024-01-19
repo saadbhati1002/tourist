@@ -565,7 +565,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               topLeft: Radius.circular(15),
               topRight: Radius.circular(15),
             ),
-            child: SizedBox(
+            child: Container(
+              color: ColorConstants.white,
               height: MediaQuery.of(context).size.height * .6,
               width: MediaQuery.of(context).size.width,
               child: Stack(
