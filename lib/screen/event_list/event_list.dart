@@ -575,7 +575,6 @@ class _EventListScreenState extends State<EventListScreen> {
 
   //checking if any any event leaved or not
   checkIsAnyEventLaved(response, index) {
-    print(response);
     if (response != null) {
       if (response == 1) {
         if (eventData[index].isAttendingEvent == false) {

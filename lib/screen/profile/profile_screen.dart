@@ -8,6 +8,7 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:tourist/api/repository/auth/auth.dart';
 import 'package:tourist/api/repository/user/user.dart';
 import 'package:tourist/models/common.dart';
+import 'package:tourist/models/favorite/favorite_model.dart';
 import 'package:tourist/models/user/guest_user_model.dart';
 import 'package:tourist/models/user/user_model.dart';
 import 'package:tourist/screen/auth/edit_profile/edit_profile_screen.dart';
@@ -46,13 +47,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     if (widget.isFromGuest == true) {
-      getUserDetails();
+      getData();
     } else {
       setState(() {
         userData = AppConstant.userData;
       });
     }
     super.initState();
+  }
+
+  getData() async {
+    setState(() {
+      isLoading = true;
+    });
+    await getUserDetails();
+    await getFavoriteUserList();
   }
 
   getUserDetails() async {
@@ -71,6 +80,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
       if (mounted) {
         setState(() {
           isLoading = false;
+        });
+      }
+    }
+  }
+
+  getFavoriteUserList() async {
+    FavoriteRes response = await AuthRepository().favoriteUsersListApiCall();
+    if (response.data != null) {
+      var checked = response.data!.where((element) =>
+          element.joinedUsers!.id.toString() == userData!.id.toString());
+      if (checked.isNotEmpty) {
+        setState(() {
+          userData!.isUserFavorite = true;
         });
       }
     }
@@ -341,6 +363,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     'Favorite',
                                     () {
                                       if (userData!.isUserFavorite == true) {
+                                        removeUserFromFavorite();
                                       } else {
                                         saveToFavorite();
                                       }
@@ -814,11 +837,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
       });
       Common response = await AuthRepository()
           .addFavoriteUsersApiCall(favoriteUserID: userData!.id);
-      if (response.message == 'User saved to favourite successfully') {
+      if (response.message == 'User saved to favorite successfully') {
         setState(() {
           userData!.isUserFavorite = true;
         });
         toastShow(message: "User saved to favorite successfully");
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    } finally {
+      setState(() {
+        isApiLoading = false;
+      });
+    }
+  }
+
+  removeUserFromFavorite() async {
+    try {
+      setState(() {
+        isApiLoading = true;
+      });
+      Common response = await AuthRepository()
+          .removeFavoriteUsersApiCall(favoriteUserID: userData!.id);
+      if (response.message == 'User saved to favorite successfully') {
+        setState(() {
+          userData!.isUserFavorite = false;
+        });
+        toastShow(message: "User removed from favorite list");
       }
     } catch (e) {
       debugPrint(e.toString());

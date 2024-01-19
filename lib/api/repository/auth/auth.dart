@@ -86,9 +86,18 @@ class AuthRepository {
   }) async {
     var body = {
       "user_id": AppConstant.userData!.id.toString(),
-      "favourite_user_id": favoriteUserID
+      "favorite_user_id": favoriteUserID
     };
-
     return await AuthNetwork.addUserToFavorite(body);
+  }
+
+  Future<dynamic> removeFavoriteUsersApiCall({
+    String? favoriteUserID,
+  }) async {
+    return await AuthNetwork.removeUserToFavorite(favoriteUserID);
+  }
+
+  Future<dynamic> favoriteUsersListApiCall() async {
+    return await AuthNetwork.favoriteUserList();
   }
 }
