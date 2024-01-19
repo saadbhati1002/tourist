@@ -11,6 +11,7 @@ import 'package:tourist/utility/constant.dart';
 import 'package:tourist/widgets/app_bar_back.dart';
 import 'package:tourist/widgets/common_text_field.dart';
 import 'package:tourist/widgets/custom_user_list.dart';
+import 'package:intl/intl.dart';
 
 class ChatScreen extends StatefulWidget {
   final UserData? userData;
@@ -308,7 +309,8 @@ class _ChatScreenState extends State<ChatScreen> {
             message: messageText.text.trim(),
             senderId: AppConstant.userData!.id,
             receiverId: widget.userData!.id,
-            timestamp: DateTime.now().toString(),
+            timestamp:
+                DateFormat('yyyy-MM-dd').format(DateTime.now()).toString(),
           ),
         );
 
