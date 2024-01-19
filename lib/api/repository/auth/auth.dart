@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 
 import 'package:tourist/api/network/auth/auth.dart';
+import 'package:tourist/utility/constant.dart';
 
 class AuthRepository {
   Future<dynamic> checkEmailApiCall({String? email}) async {
@@ -78,5 +79,16 @@ class AuthRepository {
     var body = {"user_type": userType};
 
     return await AuthNetwork.updateProfile(body);
+  }
+
+  Future<dynamic> addFavoriteUsersApiCall({
+    String? favoriteUserID,
+  }) async {
+    var body = {
+      "user_id": AppConstant.userData!.id.toString(),
+      "favourite_user_id": favoriteUserID
+    };
+
+    return await AuthNetwork.addUserToFavorite(body);
   }
 }

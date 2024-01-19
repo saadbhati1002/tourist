@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:tourist/api/repository/auth/auth.dart';
 import 'package:tourist/api/repository/user/user.dart';
+import 'package:tourist/models/common.dart';
 import 'package:tourist/models/user/guest_user_model.dart';
 import 'package:tourist/models/user/user_model.dart';
 import 'package:tourist/screen/auth/edit_profile/edit_profile_screen.dart';
@@ -29,8 +31,8 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  GlobalKey _globalKey = GlobalKey();
-
+  final GlobalKey _globalKey = GlobalKey();
+  bool isApiLoading = false;
   UserData? userData;
   bool isLoading = false;
   final vcardData = 'BEGIN:VCARD\n'
@@ -329,15 +331,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  customButtons(
-                                    FaIcon(
-                                      FontAwesomeIcons.star,
-                                      size: 18,
-                                      color: ColorConstants.white,
-                                    ),
+                                  favoriteDesign(
+                                    FaIcon(FontAwesomeIcons.star,
+                                        size: 18,
+                                        color:
+                                            (userData!.isUserFavorite == true)
+                                                ? ColorConstants.white
+                                                : ColorConstants.black),
                                     'Favorite',
                                     () {
-                                      Get.to(() => const EditProfileScreen());
+                                      if (userData!.isUserFavorite == true) {
+                                      } else {
+                                        saveToFavorite();
+                                      }
                                     },
                                   ),
                                   customButtons(
@@ -449,6 +455,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
               ),
             ),
+            isApiLoading ? const ShowProgressBar() : const SizedBox(),
           ],
         ),
       ),
@@ -480,6 +487,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   fontSize: 12,
                   fontFamily: 'inter',
                   color: ColorConstants.white,
+                  fontWeight: FontWeight.w600,
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget favoriteDesign(FaIcon? icon, String? title, VoidCallback? onTap) {
+    return GestureDetector(
+      onTap: onTap!,
+      child: Container(
+        height: 35,
+        decoration: BoxDecoration(
+          color: (userData!.isUserFavorite == true)
+              ? ColorConstants.mainColor
+              : ColorConstants.greyLight,
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              icon!,
+              const SizedBox(
+                width: 5,
+              ),
+              Text(
+                title!,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontFamily: 'inter',
+                  color: (userData!.isUserFavorite == true)
+                      ? ColorConstants.white
+                      : ColorConstants.black,
                   fontWeight: FontWeight.w600,
                 ),
               )
@@ -758,6 +804,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
       if (result["isSuccess"] == true) {
         toastShow(message: "Image saved to gallery");
       }
+    }
+  }
+
+  saveToFavorite() async {
+    try {
+      setState(() {
+        isApiLoading = true;
+      });
+      Common response = await AuthRepository()
+          .addFavoriteUsersApiCall(favoriteUserID: userData!.id);
+      if (response.message == 'User saved to favourite successfully') {
+        setState(() {
+          userData!.isUserFavorite = true;
+        });
+        toastShow(message: "User saved to favorite successfully");
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    } finally {
+      setState(() {
+        isApiLoading = false;
+      });
     }
   }
 }

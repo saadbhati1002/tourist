@@ -91,6 +91,7 @@ class UserData {
   bool? isImageFromStorage;
   String? userType;
   dynamic userNote;
+  bool? isUserFavorite;
   List<ChatHistory>? chatHistory;
   UserData(
       {id,
@@ -116,7 +117,7 @@ class UserData {
       companyProfile,
       personalBio,
       additionalPreferences,
-      venuePreferance,
+      venuePreference,
       meetingPreference,
       meetingPreferenceOther,
       status,
@@ -155,7 +156,8 @@ class UserData {
       this.isImageFromStorage,
       this.userNote,
       this.userType,
-      this.chatHistory});
+      this.chatHistory,
+      this.isUserFavorite});
 
   UserData.fromJson(Map<String, dynamic> json) {
     id = json['id'];

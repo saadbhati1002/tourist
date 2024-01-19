@@ -9,6 +9,7 @@ class AuthNetwork {
   static const String setPasswordUrl = "auth-api.php/passwordSet";
   static const String userLoginUrl = "auth-api.php/login";
   static const String updateProfileUrl = "auth-api.php/updateProfile?id=";
+  static const String addFavoriteUsersUrl = "auth-api.php/saveFavouriteUser";
 
   static Future<dynamic> checkEmail(prams) async {
     final result = await httpManager.post(url: emailCheckUrl, data: prams);
@@ -35,6 +36,14 @@ class AuthNetwork {
         url: "$updateProfileUrl${AppConstant.userData!.id!}", data: prams);
 
     UpdateProfile loginRes = UpdateProfile.fromJson(result);
+    return loginRes;
+  }
+
+  static Future<dynamic> addUserToFavorite(prams) async {
+    final result =
+        await httpManager.post(url: addFavoriteUsersUrl, data: prams);
+    print(result);
+    Common loginRes = Common.fromJson(result);
     return loginRes;
   }
 }
