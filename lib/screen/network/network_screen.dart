@@ -1,9 +1,17 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:tourist/api/repository/message/message.dart';
 import 'package:tourist/api/repository/user/user.dart';
 import 'package:tourist/models/all_user/all_user_model.dart';
+import 'package:tourist/models/message/message_model.dart';
 import 'package:tourist/models/user/user_model.dart';
+import 'package:tourist/screen/chat/chat_screen.dart';
+import 'package:tourist/screen/profile/profile_screen.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:tourist/utility/constant.dart';
 import 'package:tourist/widgets/common_text_field.dart';
@@ -21,7 +29,9 @@ class NetworkScreen extends StatefulWidget {
 
 class _NetworkScreenState extends State<NetworkScreen> {
   final GlobalKey<ScaffoldState> _key = GlobalKey();
+  List<UserData> chatUsers = [];
   bool isLoading = false;
+  bool isLoadingMessage = false;
   List<UserData> userList = [];
   Timer? _debounce;
   String? searchedName;
@@ -31,8 +41,13 @@ class _NetworkScreenState extends State<NetworkScreen> {
 
   @override
   void initState() {
-    getUserData();
+    getData();
     super.initState();
+  }
+
+  getData() async {
+    await getUserData();
+    await getChatUserList();
   }
 
   @override
@@ -69,6 +84,27 @@ class _NetworkScreenState extends State<NetworkScreen> {
         });
       }
     }
+    return userList;
+  }
+
+  getChatUserList() async {
+    try {
+      setState(() {
+        isLoadingMessage = true;
+      });
+      MessageRes response = await MessageRepository().getMessageApiCall();
+      if (response.chatUsers != null) {
+        chatUsers = response.chatUsers!;
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    } finally {
+      if (mounted) {
+        setState(() {
+          isLoadingMessage = false;
+        });
+      }
+    }
   }
 
   @override
@@ -102,9 +138,30 @@ class _NetworkScreenState extends State<NetworkScreen> {
                   context: context,
                 ),
               ),
-              const SizedBox(
-                height: 25,
+              SizedBox(
+                height: chatUsers.isEmpty ? 0 : 20,
               ),
+              chatUsers.isEmpty
+                  ? const SizedBox()
+                  : customHeadingText(title: 'Recent Chat'),
+              SizedBox(
+                height: chatUsers.isEmpty ? 0 : 10,
+              ),
+              chatUsers.isEmpty
+                  ? const SizedBox()
+                  : SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: 97,
+                      child: ListView.builder(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: chatUsers.length,
+                        itemBuilder: (context, index) {
+                          return recentChatUser(index);
+                        },
+                      ),
+                    ),
               // customHeadingText(title: 'Recommended Participants'),
               // const SizedBox(
               //   height: 10,
@@ -143,7 +200,24 @@ class _NetworkScreenState extends State<NetworkScreen> {
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 10, horizontal: 10),
                                     child: UserListData(
+                                      onProfileTap: () async {
+                                        await Get.to(
+                                          () => ProfileScreen(
+                                            isFromGuest: true,
+                                            id: userList[index].id.toString(),
+                                          ),
+                                        );
+                                        await getChatUserList();
+                                      },
                                       userData: userList[index],
+                                      onChatTap: () async {
+                                        await Get.to(
+                                          () => ChatScreen(
+                                            userData: userList[index],
+                                          ),
+                                        );
+                                        await getChatUserList();
+                                      },
                                     ),
                                   )
                                 : getUserName(userList[index])
@@ -155,6 +229,25 @@ class _NetworkScreenState extends State<NetworkScreen> {
                                             vertical: 10, horizontal: 10),
                                         child: UserListData(
                                           userData: userList[index],
+                                          onProfileTap: () async {
+                                            await Get.to(
+                                              () => ProfileScreen(
+                                                isFromGuest: true,
+                                                id: userList[index]
+                                                    .id
+                                                    .toString(),
+                                              ),
+                                            );
+                                            await getChatUserList();
+                                          },
+                                          onChatTap: () async {
+                                            await Get.to(
+                                              () => ChatScreen(
+                                                userData: userList[index],
+                                              ),
+                                            );
+                                            await getChatUserList();
+                                          },
                                         ),
                                       )
                                     : const SizedBox();
@@ -198,6 +291,111 @@ class _NetworkScreenState extends State<NetworkScreen> {
             fontSize: 12,
             fontFamily: 'inter',
             fontWeight: FontWeight.w900),
+      ),
+    );
+  }
+
+  Widget recentChatUser(index) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: GestureDetector(
+        onTap: () {
+          Get.to(
+            () => ChatScreen(
+              userData: chatUsers[index],
+            ),
+          );
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 70,
+              width: 70,
+              child: (chatUsers[index].logo3 != null &&
+                      chatUsers[index].logo3 != "")
+                  ? CachedNetworkImage(
+                      imageUrl: chatUsers[index].logo3 ?? "",
+                      imageBuilder: (context, imageProvider) {
+                        return Container(
+                          height: 70,
+                          width: 70,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        );
+                      },
+                      placeholder: (context, url) {
+                        return Shimmer.fromColors(
+                          baseColor: Theme.of(context).hoverColor,
+                          highlightColor: Theme.of(context).highlightColor,
+                          enabled: true,
+                          child: Container(
+                            height: 70,
+                            width: 70,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: ColorConstants.white,
+                                border: Border.all(
+                                    width: 1, color: ColorConstants.greyLight)),
+                            child: const FaIcon(
+                              FontAwesomeIcons.solidUser,
+                              size: 30,
+                              color: ColorConstants.greyLight,
+                            ),
+                          ),
+                        );
+                      },
+                      errorWidget: (context, url, error) {
+                        return Shimmer.fromColors(
+                          baseColor: Theme.of(context).hoverColor,
+                          highlightColor: Theme.of(context).highlightColor,
+                          enabled: true,
+                          child: Container(
+                            height: 70,
+                            width: 70,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: ColorConstants.white,
+                                border: Border.all(
+                                    width: 1, color: ColorConstants.greyLight)),
+                            child: const FaIcon(
+                              FontAwesomeIcons.solidUser,
+                              size: 30,
+                              color: ColorConstants.greyLight,
+                            ),
+                          ),
+                        );
+                      },
+                    )
+                  : Container(
+                      height: 70,
+                      width: 70,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: ColorConstants.white,
+                          border: Border.all(
+                              width: 1, color: ColorConstants.greyLight)),
+                      child: const FaIcon(
+                        FontAwesomeIcons.solidUser,
+                        size: 30,
+                        color: ColorConstants.greyLight,
+                      ),
+                    ),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Text(chatUsers[index].firstName ?? '')
+          ],
+        ),
       ),
     );
   }

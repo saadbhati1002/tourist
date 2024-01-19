@@ -2,12 +2,14 @@ import 'dart:ui' as ui;
 import 'package:flutter/rendering.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:tourist/api/repository/user/user.dart';
 import 'package:tourist/models/user/guest_user_model.dart';
 import 'package:tourist/models/user/user_model.dart';
 import 'package:tourist/screen/auth/edit_profile/edit_profile_screen.dart';
+import 'package:tourist/screen/chat/chat_screen.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:tourist/utility/constant.dart';
 import 'package:tourist/utility/images.dart';
@@ -328,14 +330,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   customButtons(
-                                    Images.star,
+                                    FaIcon(
+                                      FontAwesomeIcons.star,
+                                      size: 18,
+                                      color: ColorConstants.white,
+                                    ),
                                     'Favorite',
                                     () {
                                       Get.to(() => const EditProfileScreen());
                                     },
                                   ),
                                   customButtons(
-                                    Images.save,
+                                    FaIcon(
+                                      FontAwesomeIcons.floppyDisk,
+                                      color: ColorConstants.white,
+                                      size: 18,
+                                    ),
                                     'Save as contact',
                                     () async {
                                       try {
@@ -374,10 +384,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     },
                                   ),
                                   customButtons(
-                                    Images.chat,
+                                    FaIcon(
+                                      FontAwesomeIcons.solidCommentDots,
+                                      size: 18,
+                                      color: ColorConstants.white,
+                                    ),
                                     'Chat',
                                     () {
-                                      orCodeBottomSheet();
+                                      Get.to(() => ChatScreen(
+                                            userData: userData,
+                                          ));
                                     },
                                   ),
                                 ],
@@ -392,14 +408,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   customButtons(
-                                    Images.edit,
+                                    FaIcon(
+                                      FontAwesomeIcons.penToSquare,
+                                      size: 18,
+                                      color: ColorConstants.white,
+                                    ),
                                     'Edit profile',
                                     () {
                                       Get.to(() => const EditProfileScreen());
                                     },
                                   ),
                                   customButtons(
-                                    Images.qr,
+                                    FaIcon(
+                                      FontAwesomeIcons.qrcode,
+                                      size: 18,
+                                      color: ColorConstants.white,
+                                    ),
                                     'Share Card',
                                     () {
                                       orCodeBottomSheet();
@@ -431,7 +455,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget customButtons(String? image, String? title, VoidCallback? onTap) {
+  Widget customButtons(FaIcon? icon, String? title, VoidCallback? onTap) {
     return GestureDetector(
       onTap: onTap!,
       child: Container(
@@ -446,10 +470,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
-                image!,
-                color: ColorConstants.white,
-              ),
+              icon!,
               const SizedBox(
                 width: 5,
               ),
@@ -478,7 +499,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         borderRadius: BorderRadius.circular(10),
         child: Container(
           width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: ColorConstants.white),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             child: Column(

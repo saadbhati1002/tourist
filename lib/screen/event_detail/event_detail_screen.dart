@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tourist/api/repository/event/event.dart';
 import 'package:tourist/models/common.dart';
 import 'package:tourist/models/event/event_list.dart';
+import 'package:tourist/screen/chat/chat_screen.dart';
+import 'package:tourist/screen/profile/profile_screen.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:tourist/utility/constant.dart';
 import 'package:tourist/widgets/app_bar_back.dart';
@@ -270,6 +273,23 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                           return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 10),
                             child: UserListData(
+                              onProfileTap: () {
+                                Get.to(
+                                  () => ProfileScreen(
+                                    isFromGuest: true,
+                                    id: widget.eventData!.userList![index].id
+                                        .toString(),
+                                  ),
+                                );
+                              },
+                              onChatTap: () async {
+                                await Get.to(
+                                  () => ChatScreen(
+                                    userData:
+                                        widget.eventData!.userList![index],
+                                  ),
+                                );
+                              },
                               userData: widget.eventData!.userList![index],
                             ),
                           );

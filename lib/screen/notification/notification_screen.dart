@@ -94,7 +94,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: GestureDetector(
         onTap: () {
-          Get.to(NotificationDetailScreen(
+          Get.to(() => NotificationDetailScreen(
               notificationData: notificationList[index]));
         },
         child: Column(
@@ -168,34 +168,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
             borderRadius: BorderRadius.circular(10),
             border: Border.all(width: 0.9, color: ColorConstants.mainColor),
           ),
-          padding:
-              const EdgeInsets.only(right: 10, left: 10, top: 10, bottom: 10),
           child: SkeletonTheme(
             themeMode: ThemeMode.light,
-            child: SkeletonItem(
-                child: SizedBox(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * .8,
-                    child: SkeletonParagraph(
-                      style: SkeletonParagraphStyle(
-                          lines: 6,
-                          spacing: 10,
-                          lineStyle: SkeletonLineStyle(
-                            randomLength: false,
-                            // height: 10,
-                            borderRadius: BorderRadius.circular(8),
-                            minLength: MediaQuery.of(context).size.width / 6,
-                            maxLength: MediaQuery.of(context).size.width / 3,
-                          )),
-                    ),
-                  ),
-                ],
-              ),
-            )),
+            child: SkeletonAvatar(
+              style: SkeletonAvatarStyle(
+                  height: 150, width: MediaQuery.of(context).size.width),
+            ),
           ),
         ),
       ),

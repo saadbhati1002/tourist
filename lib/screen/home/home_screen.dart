@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
   getData() async {
     setState(() {
       isBanner1Loading = true;
-      isBanner1Loading = true;
+      isBanner2Loading = true;
       isSponsorBannerLoading = true;
     });
     if (mounted) {
@@ -84,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
     } finally {
       if (mounted) {
         setState(() {
-          isBanner1Loading = false;
+          isBanner2Loading = false;
         });
       }
     }
@@ -132,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(
                 height: 25,
               ),
-              banner2List.isNotEmpty
+              (banner2List.isNotEmpty || isBanner2Loading == true)
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

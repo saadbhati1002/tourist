@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:skeletons/skeletons.dart';
+import 'package:tourist/api/repository/message/message.dart';
+import 'package:tourist/models/common.dart';
+import 'package:tourist/models/message/message_model.dart';
 import 'package:tourist/models/user/user_model.dart';
+import 'package:tourist/screen/profile/profile_screen.dart';
 import 'package:tourist/utility/color.dart';
+import 'package:tourist/utility/constant.dart';
 import 'package:tourist/widgets/app_bar_back.dart';
 import 'package:tourist/widgets/common_text_field.dart';
 import 'package:tourist/widgets/custom_user_list.dart';
@@ -14,6 +21,39 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  bool isLoading = false;
+  List<ChatHistory> chatHistory = [];
+  TextEditingController messageText = TextEditingController();
+  @override
+  void initState() {
+    getChatMessageList();
+    super.initState();
+  }
+
+  getChatMessageList() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      MessageRes response = await MessageRepository().getMessageApiCall();
+      if (response.chatUsers != null) {
+        for (int i = 0; i < response.chatUsers!.length; i++) {
+          if (widget.userData!.id == response.chatUsers![i].id) {
+            chatHistory = response.chatUsers![i].chatHistory!;
+          }
+        }
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    } finally {
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,6 +69,21 @@ class _ChatScreenState extends State<ChatScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: UserListData(
+              onProfileTap: () {
+                Get.to(
+                  () => ProfileScreen(
+                    isFromGuest: true,
+                    id: widget.userData!.id.toString(),
+                  ),
+                );
+              },
+              onChatTap: () async {
+                await Get.to(
+                  () => ChatScreen(
+                    userData: widget.userData!,
+                  ),
+                );
+              },
               userData: widget.userData,
               isFromChat: true,
             ),
@@ -37,15 +92,24 @@ class _ChatScreenState extends State<ChatScreen> {
             height: 10,
           ),
           Flexible(
-            child: ListView.builder(
-              itemCount: 10,
-              padding: const EdgeInsets.only(top: 15, left: 10, right: 10),
-              physics: const BouncingScrollPhysics(),
-              reverse: true,
-              itemBuilder: (context, index) {
-                return chatBoxWidget(index);
-              },
-            ),
+            child: isLoading
+                ? ListView.builder(
+                    reverse: true,
+                    padding: const EdgeInsets.only(top: 10),
+                    itemCount: 10,
+                    itemBuilder: (BuildContext context, int index) {
+                      return chatSkeleton();
+                    })
+                : ListView.builder(
+                    itemCount: chatHistory.length,
+                    padding:
+                        const EdgeInsets.only(top: 15, left: 10, right: 10),
+                    physics: const BouncingScrollPhysics(),
+                    reverse: true,
+                    itemBuilder: (context, index) {
+                      return chatBoxWidget(index);
+                    },
+                  ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -57,6 +121,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     width: MediaQuery.of(context).size.width * .805,
                     height: 40,
                     child: CustomTextFormField(
+                      controller: messageText,
                       hintText: "Start writing something ....",
                       context: context,
                     ),
@@ -64,10 +129,19 @@ class _ChatScreenState extends State<ChatScreen> {
                   const SizedBox(
                     width: 10,
                   ),
-                  const Icon(
-                    Icons.send,
-                    color: ColorConstants.mainColor,
-                    size: 35,
+                  GestureDetector(
+                    onTap: () {
+                      if (messageText.text.isEmpty) {
+                        toastShow(message: "Please enter message");
+                        return;
+                      }
+                      sendMessage();
+                    },
+                    child: const Icon(
+                      Icons.send,
+                      color: ColorConstants.mainColor,
+                      size: 35,
+                    ),
                   ),
                 ],
               ),
@@ -78,11 +152,102 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
+  Widget chatSkeleton() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      width: MediaQuery.of(context).size.width * .35,
+      decoration: const BoxDecoration(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.only(
+            bottomRight: Radius.circular(8), topRight: Radius.circular(8)),
+      ),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Container(
+          alignment: Alignment.topRight,
+          child: Column(children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width * .35,
+              child: SkeletonParagraph(
+                style: SkeletonParagraphStyle(
+                    lines: 1,
+                    lineStyle: SkeletonLineStyle(
+                      randomLength: true,
+                      height: 10,
+                      borderRadius: BorderRadius.circular(8),
+                      minLength: MediaQuery.of(context).size.width / 6,
+                      maxLength: MediaQuery.of(context).size.width / 3,
+                    )),
+              ),
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * .35,
+              child: SkeletonParagraph(
+                style: SkeletonParagraphStyle(
+                    lines: 1,
+                    lineStyle: SkeletonLineStyle(
+                      randomLength: true,
+                      height: 10,
+                      borderRadius: BorderRadius.circular(8),
+                      minLength: MediaQuery.of(context).size.width / 6,
+                      maxLength: MediaQuery.of(context).size.width / 3,
+                    )),
+              ),
+            )
+          ]),
+        ),
+        const SizedBox(
+          height: 15,
+        ),
+        Container(
+          decoration: BoxDecoration(
+            border: Border.all(width: 1, color: ColorConstants.greySimple),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Column(children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width * .35,
+              child: SkeletonParagraph(
+                style: SkeletonParagraphStyle(
+                    lines: 1,
+                    spacing: 6,
+                    lineStyle: SkeletonLineStyle(
+                      height: 12,
+                      randomLength: true,
+                      // height: 10,
+                      borderRadius: BorderRadius.circular(8),
+                      minLength: MediaQuery.of(context).size.width / 6,
+                      maxLength: MediaQuery.of(context).size.width / 3,
+                    )),
+              ),
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * .35,
+              child: SkeletonParagraph(
+                style: SkeletonParagraphStyle(
+                    lines: 1,
+                    spacing: 6,
+                    lineStyle: SkeletonLineStyle(
+                      randomLength: true,
+                      height: 12,
+                      // height: 10,
+                      borderRadius: BorderRadius.circular(8),
+                      minLength: MediaQuery.of(context).size.width / 6,
+                      maxLength: MediaQuery.of(context).size.width / 3,
+                    )),
+              ),
+            )
+          ]),
+        )
+      ]),
+    );
+  }
+
   Widget chatBoxWidget(index) {
     return Row(
-      mainAxisAlignment: (index == 0 || index == 3)
-          ? MainAxisAlignment.end
-          : MainAxisAlignment.start,
+      mainAxisAlignment:
+          (chatHistory[index].senderId == AppConstant.userData!.id)
+              ? MainAxisAlignment.end
+              : MainAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 10),
@@ -106,27 +271,21 @@ class _ChatScreenState extends State<ChatScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      "Lorem ipsum dolor sit amet consectetur. Augue pretium mus feugiat commodo posuere nunc risus elit ipsum. Suspendisse ultrices sed magna lacinia tincidunt quis. Enim congue eu condimentum in in consequat rutrum ullamcorper aliquet. Blandit cras rutrum malesuada enim adipiscing dignissim fames interdum.",
-                      style: TextStyle(
+                    Text(
+                      chatHistory[index].message ?? '',
+                      style: const TextStyle(
                           fontSize: 14,
                           color: Colors.black,
                           fontWeight: FontWeight.w500),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Text(
-                        '${2024 - 01 - 18} | 03:25 PM',
-                        maxLines: 3,
-                        style: TextStyle(
-                            fontFamily: "inter",
-                            fontWeight: FontWeight.w700,
-                            fontSize: 12,
-                            color: ColorConstants.white),
-                      ),
+                    Text(
+                      chatHistory[index].timestamp ?? "",
+                      maxLines: 3,
+                      style: TextStyle(
+                          fontFamily: "inter",
+                          fontWeight: FontWeight.w500,
+                          fontSize: 10,
+                          color: ColorConstants.black),
                     ),
                   ],
                 ),
@@ -134,5 +293,30 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
       ],
     );
+  }
+
+  sendMessage() async {
+    try {
+      Common response = await MessageRepository().sendMessageMessageApiCall(
+          message: messageText.text.toString(),
+          receiverID: widget.userData!.id.toString());
+      if (response.message == "Message send seccessfully") {
+        chatHistory.insert(
+          0,
+          ChatHistory(
+            id: "0",
+            message: messageText.text.trim(),
+            senderId: AppConstant.userData!.id,
+            receiverId: widget.userData!.id,
+            timestamp: DateTime.now().toString(),
+          ),
+        );
+
+        messageText.clear();
+        setState(() {});
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 }

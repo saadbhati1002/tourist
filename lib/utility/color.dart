@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ColorConstants {
   static const Color mainColor = Color(0xFFC19454);
-  static const Color gradientColor = Color.fromRGBO(235, 196, 127, 1);
+  static const Color gradientColor = Color(0xFFEBC47F);
   static Color black = Colors.black;
   static Color white = Colors.white;
   static const Color greyLight = Color(0xFFB7B7B7);
@@ -14,6 +14,8 @@ class ColorConstants {
   static const Color blueColor = Color(0xFF314E71);
   static const Color blueDark = Color(0xFF0074FF);
   static const Color boxColorTime = Color(0xFFEFEFEF);
-  static const Color greySimple = Color(0xFFD9D9D9);
+  static const Color greySimple = Color(0xFFEFEFEF);
   static const Color greyDark = Color(0xFFA2A2A2);
+  static const Color teal = Color.fromRGBO(0, 144, 154, 1);
+
 }

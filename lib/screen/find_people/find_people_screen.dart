@@ -1,9 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tourist/api/repository/user/user.dart';
 import 'package:tourist/models/all_user/all_user_model.dart';
 import 'package:tourist/models/user/user_model.dart';
+import 'package:tourist/screen/chat/chat_screen.dart';
+import 'package:tourist/screen/profile/profile_screen.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:tourist/utility/constant.dart';
 import 'package:tourist/widgets/app_bar_back.dart';
@@ -118,6 +121,21 @@ class _FindPeopleScreenState extends State<FindPeopleScreen> {
                                         vertical: 10, horizontal: 10),
                                     child: UserListData(
                                       userData: userList[index],
+                                      onProfileTap: () {
+                                        Get.to(
+                                          () => ProfileScreen(
+                                            isFromGuest: true,
+                                            id: userList[index].id.toString(),
+                                          ),
+                                        );
+                                      },
+                                      onChatTap: () async {
+                                        await Get.to(
+                                          () => ChatScreen(
+                                            userData: userList[index],
+                                          ),
+                                        );
+                                      },
                                     ),
                                   )
                                 : getUserName(userList[index])
@@ -129,6 +147,23 @@ class _FindPeopleScreenState extends State<FindPeopleScreen> {
                                             vertical: 10, horizontal: 10),
                                         child: UserListData(
                                           userData: userList[index],
+                                          onProfileTap: () {
+                                            Get.to(
+                                              () => ProfileScreen(
+                                                isFromGuest: true,
+                                                id: userList[index]
+                                                    .id
+                                                    .toString(),
+                                              ),
+                                            );
+                                          },
+                                          onChatTap: () async {
+                                            await Get.to(
+                                              () => ChatScreen(
+                                                userData: userList[index],
+                                              ),
+                                            );
+                                          },
                                         ),
                                       )
                                     : const SizedBox();

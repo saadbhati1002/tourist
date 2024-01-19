@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
 import 'package:tourist/models/user/user_model.dart';
-import 'package:tourist/screen/chat/chat_screen.dart';
-import 'package:tourist/screen/profile/profile_screen.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:tourist/utility/constant.dart';
 import 'package:tourist/widgets/custom_image_view.dart';
@@ -11,7 +8,14 @@ import 'package:tourist/widgets/custom_image_view.dart';
 class UserListData extends StatefulWidget {
   final UserData? userData;
   final bool? isFromChat;
-  const UserListData({super.key, this.userData, this.isFromChat});
+  final VoidCallback? onChatTap;
+  final VoidCallback? onProfileTap;
+  const UserListData(
+      {super.key,
+      this.userData,
+      this.isFromChat,
+      this.onChatTap,
+      this.onProfileTap});
 
   @override
   State<UserListData> createState() => _UserListDataState();
@@ -21,12 +25,7 @@ class _UserListDataState extends State<UserListData> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Get.to(() => ProfileScreen(
-              isFromGuest: true,
-              id: widget.userData!.id.toString(),
-            ));
-      },
+      onTap: widget.onProfileTap,
       child: SizedBox(
         height: 70,
         width: MediaQuery.of(context).size.width * 1,
@@ -172,11 +171,7 @@ class _UserListDataState extends State<UserListData> {
                         ),
                       )
                     : GestureDetector(
-                        onTap: () {
-                          Get.to(
-                            () => ChatScreen(userData: widget.userData),
-                          );
-                        },
+                        onTap: widget.onChatTap,
                         child: Material(
                           borderRadius: BorderRadius.circular(5),
                           elevation: 1,

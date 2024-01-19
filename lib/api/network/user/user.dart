@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:tourist/api/http_manager.dart';
 import 'package:tourist/models/all_user/all_user_model.dart';
 import 'package:tourist/models/user/guest_user_model.dart';
@@ -10,6 +12,7 @@ class UserNetwork {
     final result = await httpManager.post(
       url: allUSersUrl,
     );
+
     AllUserRes loginRes = AllUserRes.fromJson(result);
     return loginRes;
   }

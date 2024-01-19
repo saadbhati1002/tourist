@@ -1,3 +1,5 @@
+import 'package:tourist/models/message/message_model.dart';
+
 class UserRes {
   String? error;
   String? message;
@@ -89,6 +91,7 @@ class UserData {
   bool? isImageFromStorage;
   String? userType;
   dynamic userNote;
+  List<ChatHistory>? chatHistory;
   UserData(
       {id,
       deviceToken,
@@ -151,7 +154,8 @@ class UserData {
       tnc3Approval,
       this.isImageFromStorage,
       this.userNote,
-      this.userType});
+      this.userType,
+      this.chatHistory});
 
   UserData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -214,6 +218,12 @@ class UserData {
     tnc2Approval = json['tnc2_approval'];
     tnc3Approval = json['tnc3_approval'];
     userType = json['user_type'];
+    if (json['chat_history'] != null) {
+      chatHistory = <ChatHistory>[];
+      json['chat_history'].forEach((v) {
+        chatHistory!.add(ChatHistory.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -278,6 +288,9 @@ class UserData {
     data['tnc2_approval'] = tnc2Approval;
     data['tnc3_approval'] = tnc3Approval;
     data['user_type'] = userType;
+    if (chatHistory != null) {
+      data['chat_history'] = chatHistory!.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }
