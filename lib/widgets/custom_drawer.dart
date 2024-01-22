@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:tourist/screen/favourite/favourite_screen.dart';
 import 'package:tourist/screen/find_people/find_people_screen.dart';
 import 'package:tourist/screen/qr_code/qr_code_screen.dart';
 import 'package:tourist/screen/splash/splash.dart';
@@ -48,15 +49,17 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 ),
                 headingText(
                   'Favorite',
-                  () {},
+                  () {
+                    Get.to(() => const FavoriteScreen());
+                  },
                 ),
-                const SizedBox(
-                  height: 15,
-                ),
-                headingText(
-                  'Guest List',
-                  () {},
-                ),
+                // const SizedBox(
+                //   height: 15,
+                // ),
+                // headingText(
+                //   'Guest List',
+                //   () {},
+                // ),
                 const SizedBox(
                   height: 15,
                 ),

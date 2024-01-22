@@ -86,6 +86,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   getFavoriteUserList() async {
+    setState(() {
+      isLoading = true;
+    });
     FavoriteRes response = await AuthRepository().favoriteUsersListApiCall();
     if (response.data != null) {
       var checked = response.data!.where((element) =>
@@ -96,390 +99,415 @@ class _ProfileScreenState extends State<ProfileScreen> {
         });
       }
     }
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  Future<bool> willPopScope() {
+    if (userData!.isUserFavorite == true) {
+      Navigator.pop(context, 1);
+    } else {
+      Navigator.pop(context, 0);
+    }
+    return Future.value(true);
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      top: true,
-      child: Scaffold(
-        backgroundColor: ColorConstants.white,
-        appBar: customAppBarBack(
-          context: context,
-          onTap: () {
-            Navigator.pop(context);
-          },
-        ),
-        body: Stack(
-          children: [
-            qrImage(),
-            Container(
-              color: ColorConstants.white,
-              height: MediaQuery.of(context).size.height * 1,
-              width: MediaQuery.of(context).size.width * 1,
-              child: SingleChildScrollView(
-                child: isLoading
-                    ? SizedBox(
-                        height: MediaQuery.of(context).size.height * .8,
-                        width: MediaQuery.of(context).size.width * 1,
-                        child: const ShowProgressBar())
-                    : Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: SizedBox(
-                              height: MediaQuery.of(context).size.height * .3,
-                              width: MediaQuery.of(context).size.width,
-                              child: Stack(
-                                children: [
-                                  SizedBox(
-                                    height:
-                                        MediaQuery.of(context).size.height * .3,
-                                    width:
-                                        MediaQuery.of(context).size.width * 1,
-                                    child: Image.asset(
-                                      Images.profileBox,
-                                      fit: BoxFit.fill,
+    return WillPopScope(
+      onWillPop: willPopScope,
+      child: SafeArea(
+        top: true,
+        child: Scaffold(
+          backgroundColor: ColorConstants.white,
+          appBar: customAppBarBack(
+            context: context,
+            onTap: () {
+              if (userData!.isUserFavorite == true) {
+                Navigator.pop(context, 1);
+              } else {
+                Navigator.pop(context, 0);
+              }
+            },
+          ),
+          body: Stack(
+            children: [
+              qrImage(),
+              Container(
+                color: ColorConstants.white,
+                height: MediaQuery.of(context).size.height * 1,
+                width: MediaQuery.of(context).size.width * 1,
+                child: SingleChildScrollView(
+                  child: isLoading
+                      ? SizedBox(
+                          height: MediaQuery.of(context).size.height * .8,
+                          width: MediaQuery.of(context).size.width * 1,
+                          child: const ShowProgressBar())
+                      : Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: SizedBox(
+                                height: MediaQuery.of(context).size.height * .3,
+                                width: MediaQuery.of(context).size.width,
+                                child: Stack(
+                                  children: [
+                                    SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              .3,
+                                      width:
+                                          MediaQuery.of(context).size.width * 1,
+                                      child: Image.asset(
+                                        Images.profileBox,
+                                        fit: BoxFit.fill,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 15, vertical: 15),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          SizedBox(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                SizedBox(
-                                                  height: 90,
-                                                  child: Row(
+                                    SizedBox(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15, vertical: 15),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  SizedBox(
+                                                    height: 90,
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        SizedBox(
+                                                          height: 90,
+                                                          width: 90,
+                                                          child: Stack(
+                                                            children: [
+                                                              CustomImage(
+                                                                height: 90,
+                                                                width: 90,
+                                                                imagePath:
+                                                                    userData!
+                                                                        .logo3!,
+                                                              ),
+                                                              userData!.userType !=
+                                                                      null
+                                                                  ? Align(
+                                                                      alignment:
+                                                                          Alignment
+                                                                              .bottomLeft,
+                                                                      child:
+                                                                          Container(
+                                                                        height:
+                                                                            15,
+                                                                        width:
+                                                                            90,
+                                                                        decoration: BoxDecoration(
+                                                                            borderRadius: const BorderRadius.only(
+                                                                              bottomLeft: Radius.circular(
+                                                                                5,
+                                                                              ),
+                                                                              bottomRight: Radius.circular(5),
+                                                                            ),
+                                                                            color: userData!.userType == "Delegate"
+                                                                                ? ColorConstants.delegateColor
+                                                                                : userData!.userType == 'Vendor'
+                                                                                    ? ColorConstants.vendorColor
+                                                                                    : userData!.userType == 'Media'
+                                                                                        ? ColorConstants.mediaColor
+                                                                                        : ColorConstants.speakerColor),
+                                                                        alignment:
+                                                                            Alignment.center,
+                                                                        child:
+                                                                            Text(
+                                                                          userData!
+                                                                              .userType!,
+                                                                          style: TextStyle(
+                                                                              fontSize: 10,
+                                                                              fontWeight: FontWeight.w700,
+                                                                              fontFamily: 'inter',
+                                                                              color: userData!.userType == "Delegate" || userData!.userType == "Media" ? ColorConstants.white : ColorConstants.black),
+                                                                        ),
+                                                                      ),
+                                                                    )
+                                                                  : const SizedBox(),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              .5,
+                                                          child: Text(
+                                                            userData!
+                                                                    .companyName ??
+                                                                '',
+                                                            textAlign:
+                                                                TextAlign.right,
+                                                            style: TextStyle(
+                                                                fontSize: 12,
+                                                                color:
+                                                                    ColorConstants
+                                                                        .white,
+                                                                fontFamily:
+                                                                    'inter',
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Text(
+                                                    userData!.username ??
+                                                        getUserName(),
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: ColorConstants
+                                                            .white,
+                                                        fontFamily: 'inter',
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
+                                                  Text(
+                                                    userData!.jobTitle ?? '',
+                                                    style: TextStyle(
+                                                        fontSize: 12,
+                                                        color: ColorConstants
+                                                            .white,
+                                                        fontFamily: 'inter',
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    userData!.mobile!,
+                                                    style: TextStyle(
+                                                        fontSize: 12,
+                                                        color: ColorConstants
+                                                            .white,
+                                                        fontFamily: 'inter',
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
+                                                  Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
                                                             .spaceBetween,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
                                                     children: [
-                                                      SizedBox(
-                                                        height: 90,
-                                                        width: 90,
-                                                        child: Stack(
-                                                          children: [
-                                                            CustomImage(
-                                                              height: 90,
-                                                              width: 90,
-                                                              imagePath:
-                                                                  userData!
-                                                                      .logo3!,
-                                                            ),
-                                                            userData!.userType !=
-                                                                    null
-                                                                ? Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .bottomLeft,
-                                                                    child:
-                                                                        Container(
-                                                                      height:
-                                                                          15,
-                                                                      width: 90,
-                                                                      decoration: BoxDecoration(
-                                                                          borderRadius: const BorderRadius.only(
-                                                                            bottomLeft:
-                                                                                Radius.circular(
-                                                                              5,
-                                                                            ),
-                                                                            bottomRight:
-                                                                                Radius.circular(5),
-                                                                          ),
-                                                                          color: userData!.userType == "Delegate"
-                                                                              ? ColorConstants.delegateColor
-                                                                              : userData!.userType == 'Vendor'
-                                                                                  ? ColorConstants.vendorColor
-                                                                                  : userData!.userType == 'Media'
-                                                                                      ? ColorConstants.mediaColor
-                                                                                      : ColorConstants.speakerColor),
-                                                                      alignment:
-                                                                          Alignment
-                                                                              .center,
-                                                                      child:
-                                                                          Text(
-                                                                        userData!
-                                                                            .userType!,
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                10,
-                                                                            fontWeight: FontWeight
-                                                                                .w700,
-                                                                            fontFamily:
-                                                                                'inter',
-                                                                            color: userData!.userType == "Delegate" || userData!.userType == "Media"
-                                                                                ? ColorConstants.white
-                                                                                : ColorConstants.black),
-                                                                      ),
-                                                                    ),
-                                                                  )
-                                                                : const SizedBox(),
-                                                          ],
-                                                        ),
+                                                      Text(
+                                                        userData!.email ?? '',
+                                                        style: TextStyle(
+                                                            fontSize: 12,
+                                                            color:
+                                                                ColorConstants
+                                                                    .white,
+                                                            fontFamily: 'inter',
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w500),
                                                       ),
-                                                      SizedBox(
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width *
-                                                            .5,
-                                                        child: Text(
-                                                          userData!
-                                                                  .companyName ??
-                                                              '',
-                                                          textAlign:
-                                                              TextAlign.right,
-                                                          style: TextStyle(
-                                                              fontSize: 12,
-                                                              color:
-                                                                  ColorConstants
-                                                                      .white,
-                                                              fontFamily:
-                                                                  'inter',
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                        ),
+                                                      Text(
+                                                        userData!.country ?? '',
+                                                        style: TextStyle(
+                                                            fontSize: 12,
+                                                            color:
+                                                                ColorConstants
+                                                                    .white,
+                                                            fontFamily: 'inter',
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w500),
                                                       ),
                                                     ],
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Text(
-                                                  userData!.username ??
-                                                      getUserName(),
-                                                  style: TextStyle(
-                                                      fontSize: 14,
-                                                      color:
-                                                          ColorConstants.white,
-                                                      fontFamily: 'inter',
-                                                      fontWeight:
-                                                          FontWeight.w500),
-                                                ),
-                                                Text(
-                                                  userData!.jobTitle ?? '',
-                                                  style: TextStyle(
-                                                      fontSize: 12,
-                                                      color:
-                                                          ColorConstants.white,
-                                                      fontFamily: 'inter',
-                                                      fontWeight:
-                                                          FontWeight.w500),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  userData!.mobile!,
-                                                  style: TextStyle(
-                                                      fontSize: 12,
-                                                      color:
-                                                          ColorConstants.white,
-                                                      fontFamily: 'inter',
-                                                      fontWeight:
-                                                          FontWeight.w500),
-                                                ),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      userData!.email ?? '',
-                                                      style: TextStyle(
-                                                          fontSize: 12,
-                                                          color: ColorConstants
-                                                              .white,
-                                                          fontFamily: 'inter',
-                                                          fontWeight:
-                                                              FontWeight.w500),
-                                                    ),
-                                                    Text(
-                                                      userData!.country ?? '',
-                                                      style: TextStyle(
-                                                          fontSize: 12,
-                                                          color: ColorConstants
-                                                              .white,
-                                                          fontFamily: 'inter',
-                                                          fontWeight:
-                                                              FontWeight.w500),
-                                                    ),
-                                                  ],
-                                                )
-                                              ],
-                                            ),
-                                          )
-                                        ],
+                                                  )
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          if (widget.isFromGuest == true) ...[
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 15),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  favoriteDesign(
-                                    FaIcon(FontAwesomeIcons.star,
-                                        size: 18,
-                                        color:
-                                            (userData!.isUserFavorite == true)
-                                                ? ColorConstants.white
-                                                : ColorConstants.black),
-                                    'Favorite',
-                                    () {
-                                      if (userData!.isUserFavorite == true) {
-                                        removeUserFromFavorite();
-                                      } else {
-                                        saveToFavorite();
-                                      }
-                                    },
-                                  ),
-                                  customButtons(
-                                    FaIcon(
-                                      FontAwesomeIcons.floppyDisk,
-                                      color: ColorConstants.white,
-                                      size: 18,
-                                    ),
-                                    'Save as contact',
-                                    () async {
-                                      try {
-                                        if (await FlutterContacts
-                                            .requestPermission()) {
-                                          final newContact = Contact()
-                                            ..name.first =
-                                                userData!.firstName ?? ''
-                                            ..name.last =
-                                                userData!.lastName ?? ''
-                                            ..emails = [
-                                              Email(userData!.email ?? '')
-                                            ]
-                                            ..organizations = [
-                                              Organization(
-                                                  company:
-                                                      userData!.companyName ??
-                                                          '',
-                                                  title:
-                                                      userData!.jobTitle ?? '',
-                                                  officeLocation:
-                                                      userData!.country ?? '')
-                                            ]
-                                            ..phones = [
-                                              Phone(userData!.mobile ?? '')
-                                            ];
-                                          await newContact.insert();
-
-                                          toastShow(
-                                              message:
-                                                  "Contact Saved Successfully to your contact");
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            if (widget.isFromGuest == true) ...[
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 15),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    favoriteDesign(
+                                      FaIcon(FontAwesomeIcons.star,
+                                          size: 18,
+                                          color:
+                                              (userData!.isUserFavorite == true)
+                                                  ? ColorConstants.white
+                                                  : ColorConstants.black),
+                                      'Favorite',
+                                      () {
+                                        if (userData!.isUserFavorite == true) {
+                                          removeUserFromFavorite();
+                                        } else {
+                                          saveToFavorite();
                                         }
-                                      } catch (e) {
-                                        toastShow(message: e.toString());
-                                      }
-                                    },
-                                  ),
-                                  customButtons(
-                                    FaIcon(
-                                      FontAwesomeIcons.solidCommentDots,
-                                      size: 18,
-                                      color: ColorConstants.white,
+                                      },
                                     ),
-                                    'Chat',
-                                    () {
-                                      Get.to(() => ChatScreen(
+                                    customButtons(
+                                      FaIcon(
+                                        FontAwesomeIcons.floppyDisk,
+                                        color: ColorConstants.white,
+                                        size: 18,
+                                      ),
+                                      'Save as contact',
+                                      () async {
+                                        try {
+                                          if (await FlutterContacts
+                                              .requestPermission()) {
+                                            final newContact = Contact()
+                                              ..name.first =
+                                                  userData!.firstName ?? ''
+                                              ..name.last =
+                                                  userData!.lastName ?? ''
+                                              ..emails = [
+                                                Email(userData!.email ?? '')
+                                              ]
+                                              ..organizations = [
+                                                Organization(
+                                                    company:
+                                                        userData!.companyName ??
+                                                            '',
+                                                    title: userData!.jobTitle ??
+                                                        '',
+                                                    officeLocation:
+                                                        userData!.country ?? '')
+                                              ]
+                                              ..phones = [
+                                                Phone(userData!.mobile ?? '')
+                                              ];
+                                            await newContact.insert();
+
+                                            toastShow(
+                                                message:
+                                                    "Contact Saved Successfully to your contact");
+                                          }
+                                        } catch (e) {
+                                          toastShow(message: e.toString());
+                                        }
+                                      },
+                                    ),
+                                    customButtons(
+                                      FaIcon(
+                                        FontAwesomeIcons.solidCommentDots,
+                                        size: 18,
+                                        color: ColorConstants.white,
+                                      ),
+                                      'Chat',
+                                      () async {
+                                        var response = await Get.to(
+                                          () => ChatScreen(
                                             userData: userData,
-                                          ));
-                                    },
-                                  ),
-                                ],
+                                          ),
+                                        );
+                                        if (response == 1) {
+                                          userData!.isUserFavorite = true;
+                                        } else {
+                                          userData!.isUserFavorite = false;
+                                        }
+                                      },
+                                    ),
+                                  ],
+                                ),
                               ),
+                            ] else ...[
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 15),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    customButtons(
+                                      FaIcon(
+                                        FontAwesomeIcons.penToSquare,
+                                        size: 18,
+                                        color: ColorConstants.white,
+                                      ),
+                                      'Edit profile',
+                                      () {
+                                        Get.to(() => const EditProfileScreen());
+                                      },
+                                    ),
+                                    customButtons(
+                                      FaIcon(
+                                        FontAwesomeIcons.qrcode,
+                                        size: 18,
+                                        color: ColorConstants.white,
+                                      ),
+                                      'Share Card',
+                                      () {
+                                        orCodeBottomSheet();
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                            const SizedBox(
+                              height: 20,
                             ),
-                          ] else ...[
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 15),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  customButtons(
-                                    FaIcon(
-                                      FontAwesomeIcons.penToSquare,
-                                      size: 18,
-                                      color: ColorConstants.white,
-                                    ),
-                                    'Edit profile',
-                                    () {
-                                      Get.to(() => const EditProfileScreen());
-                                    },
-                                  ),
-                                  customButtons(
-                                    FaIcon(
-                                      FontAwesomeIcons.qrcode,
-                                      size: 18,
-                                      color: ColorConstants.white,
-                                    ),
-                                    'Share Card',
-                                    () {
-                                      orCodeBottomSheet();
-                                    },
-                                  ),
-                                ],
-                              ),
+                            customDataBox("Bio", userData!.personalBio ?? ''),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            customDataBox(
+                                "Company Bio", userData!.companyProfile ?? ''),
+                            const SizedBox(
+                              height: 20,
                             ),
                           ],
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          customDataBox("Bio", userData!.personalBio ?? ''),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          customDataBox(
-                              "Company Bio", userData!.companyProfile ?? ''),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                        ],
-                      ),
+                        ),
+                ),
               ),
-            ),
-            isApiLoading ? const ShowProgressBar() : const SizedBox(),
-          ],
+              isApiLoading ? const ShowProgressBar() : const SizedBox(),
+            ],
+          ),
         ),
       ),
     );

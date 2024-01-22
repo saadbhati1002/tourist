@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:skeletons/skeletons.dart';
+import 'package:tourist/api/repository/auth/auth.dart';
 import 'package:tourist/api/repository/message/message.dart';
 import 'package:tourist/models/common.dart';
+import 'package:tourist/models/favorite/favorite_model.dart';
 import 'package:tourist/models/message/message_model.dart';
 import 'package:tourist/models/user/user_model.dart';
 import 'package:tourist/screen/profile/profile_screen.dart';
@@ -22,13 +24,19 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  bool isApiLoading = false;
   bool isLoading = false;
   List<ChatHistory> chatHistory = [];
   TextEditingController messageText = TextEditingController();
   @override
   void initState() {
-    getChatMessageList();
+    getData();
     super.initState();
+  }
+
+  getData() async {
+    await getChatMessageList();
+    await getFavoriteUserList();
   }
 
   getChatMessageList() async {
@@ -55,102 +63,151 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
+  getFavoriteUserList() async {
+    FavoriteRes response = await AuthRepository().favoriteUsersListApiCall();
+    if (response.data != null) {
+      var checked = response.data!.where((element) =>
+          element.joinedUsers!.id.toString() == widget.userData!.id.toString());
+      if (checked.isNotEmpty) {
+        setState(() {
+          widget.userData!.isUserFavorite = true;
+        });
+      }
+    }
+  }
+
+  Future<bool> willPopScope() {
+    if (widget.userData!.isUserFavorite == true) {
+      Navigator.pop(context, 1);
+    } else {
+      Navigator.pop(context, 0);
+    }
+    return Future.value(true);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorConstants.white,
-      appBar: customAppBarBack(
-        context: context,
-        onTap: () {
-          Navigator.pop(context);
-        },
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            child: UserListData(
-              onProfileTap: () {
-                Get.to(
-                  () => ProfileScreen(
-                    isFromGuest: true,
-                    id: widget.userData!.id.toString(),
-                  ),
-                );
-              },
-              onChatTap: () async {
-                await Get.to(
-                  () => ChatScreen(
-                    userData: widget.userData!,
-                  ),
-                );
-              },
-              userData: widget.userData,
-              isFromChat: true,
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Flexible(
-            child: isLoading
-                ? ListView.builder(
-                    reverse: true,
-                    padding: const EdgeInsets.only(top: 10),
-                    itemCount: 10,
-                    itemBuilder: (BuildContext context, int index) {
-                      return chatSkeleton();
-                    })
-                : ListView.builder(
-                    itemCount: chatHistory.length,
-                    padding:
-                        const EdgeInsets.only(top: 15, left: 10, right: 10),
-                    physics: const BouncingScrollPhysics(),
-                    reverse: true,
-                    itemBuilder: (context, index) {
-                      int itemCount = chatHistory.length;
-                      int reversedIndex = itemCount - 1 - index;
-                      return chatBoxWidget(reversedIndex);
-                    },
-                  ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            child: SizedBox(
-              height: 40,
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * .805,
-                    height: 40,
-                    child: CustomTextFormField(
-                      controller: messageText,
-                      hintText: "Start writing something ....",
-                      context: context,
+    return WillPopScope(
+      onWillPop: willPopScope,
+      child: Scaffold(
+        backgroundColor: ColorConstants.white,
+        appBar: customAppBarBack(
+          context: context,
+          onTap: () {
+            if (widget.userData!.isUserFavorite == true) {
+              Navigator.pop(context, 1);
+            } else {
+              Navigator.pop(context, 0);
+            }
+          },
+        ),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: UserListData(
+                onProfileTap: () async {
+                  var response = await Get.to(
+                    () => ProfileScreen(
+                      isFromGuest: true,
+                      id: widget.userData!.id.toString(),
                     ),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      if (messageText.text.isEmpty) {
-                        toastShow(message: "Please enter message");
-                        return;
-                      }
-                      sendMessage();
-                    },
-                    child: const Icon(
-                      Icons.send,
-                      color: ColorConstants.mainColor,
-                      size: 35,
+                  );
+                  if (response == 1) {
+                    widget.userData!.isUserFavorite = true;
+                  } else {
+                    widget.userData!.isUserFavorite = false;
+                  }
+                  setState(() {});
+                },
+                onFavoriteTap: () {
+                  if (widget.userData!.isUserFavorite == true) {
+                    removeUserFromFavorite();
+                  } else {
+                    saveToFavorite();
+                  }
+                },
+                onChatTap: () async {
+                  await Get.to(
+                    () => ChatScreen(
+                      userData: widget.userData!,
                     ),
-                  ),
-                ],
+                  );
+                },
+                userData: widget.userData,
+                isFromChat: true,
               ),
             ),
-          )
-        ],
+            const SizedBox(
+              height: 10,
+            ),
+            Flexible(
+              child: isLoading
+                  ? ListView.builder(
+                      reverse: true,
+                      padding: const EdgeInsets.only(top: 10),
+                      itemCount: 10,
+                      itemBuilder: (BuildContext context, int index) {
+                        return chatSkeleton();
+                      })
+                  : chatHistory.isEmpty
+                      ? SizedBox(
+                          height: MediaQuery.of(context).size.height * .75,
+                          child: const Center(
+                              child: Text(
+                                  "Chat not found. Please start the start ")),
+                        )
+                      : ListView.builder(
+                          itemCount: chatHistory.length,
+                          padding: const EdgeInsets.only(
+                              top: 15, left: 10, right: 10),
+                          physics: const BouncingScrollPhysics(),
+                          reverse: true,
+                          itemBuilder: (context, index) {
+                            int itemCount = chatHistory.length;
+                            int reversedIndex = itemCount - 1 - index;
+                            return chatBoxWidget(reversedIndex);
+                          },
+                        ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              child: SizedBox(
+                height: 40,
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * .805,
+                      height: 40,
+                      child: CustomTextFormField(
+                        controller: messageText,
+                        hintText: "Start writing something ....",
+                        context: context,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        if (messageText.text.isEmpty) {
+                          toastShow(message: "Please enter message");
+                          return;
+                        }
+                        sendMessage();
+                      },
+                      child: const Icon(
+                        Icons.send,
+                        color: ColorConstants.mainColor,
+                        size: 35,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -321,6 +378,50 @@ class _ChatScreenState extends State<ChatScreen> {
       }
     } catch (e) {
       debugPrint(e.toString());
+    }
+  }
+
+  saveToFavorite() async {
+    try {
+      setState(() {
+        isApiLoading = true;
+      });
+      Common response = await AuthRepository()
+          .addFavoriteUsersApiCall(favoriteUserID: widget.userData!.id);
+      if (response.message == 'User saved to favorite successfully') {
+        setState(() {
+          widget.userData!.isUserFavorite = true;
+        });
+        toastShow(message: "User saved to favorite successfully");
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    } finally {
+      setState(() {
+        isApiLoading = false;
+      });
+    }
+  }
+
+  removeUserFromFavorite() async {
+    try {
+      setState(() {
+        isApiLoading = true;
+      });
+      Common response = await AuthRepository()
+          .removeFavoriteUsersApiCall(favoriteUserID: widget.userData!.id);
+      if (response.message == 'User saved to favorite successfully') {
+        setState(() {
+          widget.userData!.isUserFavorite = false;
+        });
+        toastShow(message: "User removed from favorite list");
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    } finally {
+      setState(() {
+        isApiLoading = false;
+      });
     }
   }
 }

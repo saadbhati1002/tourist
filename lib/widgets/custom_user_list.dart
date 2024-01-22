@@ -10,12 +10,14 @@ class UserListData extends StatefulWidget {
   final bool? isFromChat;
   final VoidCallback? onChatTap;
   final VoidCallback? onProfileTap;
+  final VoidCallback? onFavoriteTap;
   const UserListData(
       {super.key,
       this.userData,
       this.isFromChat,
       this.onChatTap,
-      this.onProfileTap});
+      this.onProfileTap,
+      this.onFavoriteTap});
 
   @override
   State<UserListData> createState() => _UserListDataState();
@@ -134,13 +136,16 @@ class _UserListDataState extends State<UserListData> {
                 ? const SizedBox()
                 : widget.isFromChat == true
                     ? GestureDetector(
+                        onDoubleTap: widget.onFavoriteTap,
                         child: Material(
                           borderRadius: BorderRadius.circular(5),
                           elevation: 1,
                           child: Container(
                             height: 37,
                             decoration: BoxDecoration(
-                              color: ColorConstants.mainColor,
+                              color: (widget.userData!.isUserFavorite == true)
+                                  ? ColorConstants.mainColor
+                                  : ColorConstants.greyLight,
                               borderRadius: BorderRadius.circular(5),
                             ),
                             alignment: Alignment.center,
@@ -149,11 +154,12 @@ class _UserListDataState extends State<UserListData> {
                                   const EdgeInsets.symmetric(horizontal: 10),
                               child: Row(
                                 children: [
-                                  FaIcon(
-                                    FontAwesomeIcons.star,
-                                    size: 20,
-                                    color: ColorConstants.white,
-                                  ),
+                                  FaIcon(FontAwesomeIcons.star,
+                                      size: 20,
+                                      color: (widget.userData!.isUserFavorite ==
+                                              true)
+                                          ? ColorConstants.white
+                                          : ColorConstants.black),
                                   const SizedBox(
                                     width: 10,
                                   ),
@@ -161,7 +167,11 @@ class _UserListDataState extends State<UserListData> {
                                     "Favorite",
                                     style: TextStyle(
                                         fontSize: 12,
-                                        color: ColorConstants.white,
+                                        color:
+                                            (widget.userData!.isUserFavorite ==
+                                                    true)
+                                                ? ColorConstants.white
+                                                : ColorConstants.black,
                                         fontWeight: FontWeight.w500),
                                   )
                                 ],
