@@ -37,7 +37,9 @@ class EventData {
   String? eventType;
   bool? isSavedToMyCalender = false;
   bool? isAttendingEvent = false;
+  bool? isReviewSubmitted = false;
   List<UserData>? userList = [];
+  List<EventReview>? eventReview;
 
   EventData(
       {this.id,
@@ -52,7 +54,8 @@ class EventData {
       this.eventType,
       this.isAttendingEvent,
       this.isSavedToMyCalender,
-      this.userList});
+      this.userList,
+      this.eventReview});
 
   EventData.fromJson(Map<String, dynamic> json) {
     id = json['event_id'];
@@ -75,6 +78,12 @@ class EventData {
         });
       }
     }
+    if (json['EVENT_REVIEW'] != null) {
+      eventReview = <EventReview>[];
+      json['EVENT_REVIEW'].forEach((v) {
+        eventReview!.add(EventReview.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -90,6 +99,35 @@ class EventData {
     data['event_type'] = eventType;
     data['map_link'] = mapLink;
     data['joined_users'] = userList!.map((v) => v.toJson()).toList();
+    return data;
+  }
+}
+
+class EventReview {
+  String? id;
+  String? eventId;
+  String? userId;
+  String? review;
+  String? createdDate;
+
+  EventReview(
+      {this.id, this.eventId, this.userId, this.review, this.createdDate});
+
+  EventReview.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    eventId = json['event_id'];
+    userId = json['user_id'];
+    review = json['review'];
+    createdDate = json['created_date'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['event_id'] = eventId;
+    data['user_id'] = userId;
+    data['review'] = review;
+    data['created_date'] = createdDate;
     return data;
   }
 }

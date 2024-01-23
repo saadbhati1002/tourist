@@ -37,4 +37,14 @@ class EventRepository {
   Future<dynamic> getMyCalenderEventApiCall() async {
     return await EventNetwork.getMySavedEvents();
   }
+
+  Future<dynamic> addEventReviewApiCall(
+      {String? review, String? eventID}) async {
+    final param = {
+      "user_id": AppConstant.userData!.id.toString(),
+      "event_id": eventID,
+      "review": review
+    };
+    return await EventNetwork.addEventReview(param);
+  }
 }

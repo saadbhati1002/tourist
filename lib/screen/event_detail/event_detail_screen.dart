@@ -67,17 +67,17 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
           ),
           body: Stack(
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const SizedBox(
-                        height: 25,
-                      ),
-                      Text(
+              SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Text(
                         widget.eventData!.title ?? '',
                         style: TextStyle(
                             fontSize: 18,
@@ -85,10 +85,13 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                             fontFamily: 'inter',
                             fontWeight: FontWeight.w700),
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Text(
                         widget.eventData!.eventTime ?? '',
                         style: TextStyle(
                             fontSize: 14,
@@ -96,11 +99,14 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                             fontWeight: FontWeight.w600,
                             fontFamily: 'inter'),
                       ),
-                      SizedBox(
-                        height: widget.eventData!.eventType != null ? 15 : 0,
-                      ),
-                      widget.eventData!.eventType != null
-                          ? Container(
+                    ),
+                    SizedBox(
+                      height: widget.eventData!.eventType != null ? 15 : 0,
+                    ),
+                    widget.eventData!.eventType != null
+                        ? Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Container(
                               decoration: BoxDecoration(
                                 color: widget.eventData!.eventType == "Event"
                                     ? ColorConstants.blueColor
@@ -123,13 +129,16 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                                       fontWeight: FontWeight.w500),
                                 ),
                               ),
-                            )
-                          : const SizedBox(),
-                      SizedBox(
-                        height: widget.eventData!.place != null ? 15 : 0,
-                      ),
-                      widget.eventData!.place != null
-                          ? Container(
+                            ),
+                          )
+                        : const SizedBox(),
+                    SizedBox(
+                      height: widget.eventData!.place != null ? 15 : 0,
+                    ),
+                    widget.eventData!.place != null
+                        ? Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Container(
                               decoration: BoxDecoration(
                                 color: ColorConstants.black,
                                 borderRadius: BorderRadius.circular(5),
@@ -149,94 +158,146 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                                       fontWeight: FontWeight.w500),
                                 ),
                               ),
-                            )
-                          : const SizedBox(),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              if (widget.eventData!.isSavedToMyCalender ==
-                                  false) {
-                                addEventToMyCalender();
-                              } else {
-                                removeEventFromMyCalender();
-                              }
-                            },
-                            child: Container(
-                              height: 32,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                color: widget.eventData!.isSavedToMyCalender ==
-                                        true
-                                    ? ColorConstants.mainColor
-                                    : ColorConstants.greyLight,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              alignment: Alignment.center,
-                              child: Icon(
-                                Icons.calendar_month,
-                                color: ColorConstants.white,
-                                size: 20,
-                              ),
                             ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              if (widget.eventData!.isAttendingEvent == false) {
-                                joinEvent();
-                              } else {
-                                leaveEvent();
-                              }
-                            },
-                            child: Container(
-                              height: 32,
-                              decoration: BoxDecoration(
-                                color:
-                                    widget.eventData!.isAttendingEvent == true
-                                        ? ColorConstants.mainColor
-                                        : ColorConstants.greyLight,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              alignment: Alignment.center,
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 12),
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.check_circle,
+                          )
+                        : const SizedBox(),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    widget.eventData!.isReviewSubmitted == false
+                        ? Container(
+                            width: MediaQuery.of(context).size.width * 1,
+                            color: ColorConstants.greenLight,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: Text(
+                                    'Your Feedback',
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontFamily: 'inter',
+                                        fontWeight: FontWeight.w700,
+                                        color: ColorConstants.black),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: Text(
+                                    checkForYourReview(),
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontFamily: 'inter',
+                                        fontWeight: FontWeight.w500,
+                                        color: ColorConstants.black),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                              ],
+                            ),
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    if (widget.eventData!.isSavedToMyCalender ==
+                                        false) {
+                                      addEventToMyCalender();
+                                    } else {
+                                      removeEventFromMyCalender();
+                                    }
+                                  },
+                                  child: Container(
+                                    height: 32,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                      color: widget.eventData!
+                                                  .isSavedToMyCalender ==
+                                              true
+                                          ? ColorConstants.mainColor
+                                          : ColorConstants.greyLight,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: Icon(
+                                      Icons.calendar_month,
                                       color: ColorConstants.white,
                                       size: 20,
                                     ),
-                                    const SizedBox(
-                                      width: 7,
-                                    ),
-                                    Text(
-                                      'Attending',
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          fontFamily: 'inter',
-                                          fontWeight: FontWeight.w500,
-                                          color: ColorConstants.white),
-                                    )
-                                  ],
+                                  ),
                                 ),
-                              ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    if (widget.eventData!.isAttendingEvent ==
+                                        false) {
+                                      joinEvent();
+                                    } else {
+                                      leaveEvent();
+                                    }
+                                  },
+                                  child: Container(
+                                    height: 32,
+                                    decoration: BoxDecoration(
+                                      color:
+                                          widget.eventData!.isAttendingEvent ==
+                                                  true
+                                              ? ColorConstants.mainColor
+                                              : ColorConstants.greyLight,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 12),
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.check_circle,
+                                            color: ColorConstants.white,
+                                            size: 20,
+                                          ),
+                                          const SizedBox(
+                                            width: 7,
+                                          ),
+                                          Text(
+                                            'Attending',
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                fontFamily: 'inter',
+                                                fontWeight: FontWeight.w500,
+                                                color: ColorConstants.white),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Text(
                         'About the event',
                         style: TextStyle(
                             fontSize: 12,
@@ -244,10 +305,13 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                             fontWeight: FontWeight.w700,
                             color: ColorConstants.black),
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Text(
                         widget.eventData!.description ?? '',
                         style: TextStyle(
                             fontSize: 12,
@@ -255,10 +319,13 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                             fontWeight: FontWeight.w500,
                             color: ColorConstants.black),
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const Text(
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: Text(
                         'Participants',
                         style: TextStyle(
                             fontSize: 12,
@@ -266,38 +333,38 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                             fontWeight: FontWeight.w700,
                             color: ColorConstants.greyLight),
                       ),
-                      ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: widget.eventData!.userList!.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: UserListData(
-                              onProfileTap: () {
-                                Get.to(
-                                  () => ProfileScreen(
-                                    isFromGuest: true,
-                                    id: widget.eventData!.userList![index].id
-                                        .toString(),
-                                  ),
-                                );
-                              },
-                              onChatTap: () async {
-                                await Get.to(
-                                  () => ChatScreen(
-                                    userData:
-                                        widget.eventData!.userList![index],
-                                  ),
-                                );
-                              },
-                              userData: widget.eventData!.userList![index],
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
+                    ),
+                    ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      itemCount: widget.eventData!.userList!.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: UserListData(
+                            onProfileTap: () {
+                              Get.to(
+                                () => ProfileScreen(
+                                  isFromGuest: true,
+                                  id: widget.eventData!.userList![index].id
+                                      .toString(),
+                                ),
+                              );
+                            },
+                            onChatTap: () async {
+                              await Get.to(
+                                () => ChatScreen(
+                                  userData: widget.eventData!.userList![index],
+                                ),
+                              );
+                            },
+                            userData: widget.eventData!.userList![index],
+                          ),
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ),
               isAPiCalling ? const ShowProgressBar() : const SizedBox()
@@ -306,6 +373,16 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
         ),
       ),
     );
+  }
+
+  checkForYourReview() {
+    if (widget.eventData!.eventReview != null &&
+        widget.eventData!.eventReview!.isNotEmpty) {
+      var contain = widget.eventData!.eventReview!.indexWhere((element) =>
+          element.userId.toString() == AppConstant.userData!.id.toString());
+
+      return widget.eventData!.eventReview![contain].review;
+    }
   }
 
   joinEvent() async {

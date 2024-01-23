@@ -16,6 +16,6 @@ class ColorConstants {
   static const Color boxColorTime = Color(0xFFEFEFEF);
   static const Color greySimple = Color(0xFFEFEFEF);
   static const Color greyDark = Color(0xFFA2A2A2);
-  static const Color teal = Color.fromRGBO(0, 144, 154, 1);
-
+  static const Color teal = Color(0xFF00909A);
+  static const Color greenLight = Color(0xFFF9FFE7);
 }

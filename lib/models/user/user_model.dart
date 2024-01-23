@@ -220,6 +220,7 @@ class UserData {
     tnc2Approval = json['tnc2_approval'];
     tnc3Approval = json['tnc3_approval'];
     userType = json['user_type'];
+    userNote = json['notes'];
     if (json['chat_history'] != null) {
       chatHistory = <ChatHistory>[];
       json['chat_history'].forEach((v) {
@@ -290,6 +291,7 @@ class UserData {
     data['tnc2_approval'] = tnc2Approval;
     data['tnc3_approval'] = tnc3Approval;
     data['user_type'] = userType;
+    data['notes'] = userNote;
     if (chatHistory != null) {
       data['chat_history'] = chatHistory!.map((v) => v.toJson()).toList();
     }

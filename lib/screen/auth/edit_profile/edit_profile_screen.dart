@@ -328,13 +328,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       onTap: () {
                         if (AppConstant.userData!.logo3 != null &&
                             AppConstant.userData!.logo3 != '') {
-                          updateProfile(false);
+                          updateProfile();
                         } else {
                           if (imageSelected == null) {
                             toastShow(message: 'Please select your image');
                             return;
                           }
-                          updateProfile(true);
+                          updateProfile();
                         }
                       },
                       title: "Update",
@@ -496,7 +496,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     }
   }
 
-  updateProfile(bool updateType) async {
+  updateProfile() async {
     if (firstName.text.isEmpty) {
       toastShow(message: "Please enter your first name");
       return;
@@ -547,7 +547,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           lastName: lastName.text.toString(),
           middleName: middleName.text.toString(),
           mobileNumber: phoneNumber.text.toString(),
-          isProfileUpdated: updateType,
           personalBio: personalBio.text.toString(),
           userImage: imageSelected);
       if (response.message == 'Profile updated successfully') {

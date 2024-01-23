@@ -6,6 +6,7 @@ import 'package:tourist/api/repository/event/event.dart';
 import 'package:tourist/models/common.dart';
 import 'package:tourist/models/event/event_list.dart';
 import 'package:tourist/screen/event_detail/event_detail_screen.dart';
+import 'package:tourist/screen/event_review/event_review_screen.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:tourist/utility/constant.dart';
 import 'package:tourist/widgets/custom_app_bar.dart';
@@ -371,7 +372,34 @@ class _EventListScreenState extends State<EventListScreen> {
                                                 removeEventFromMyCalender(
                                                     index);
                                               }
-                                            }),
+                                            },
+                                            onTapReview: () async {
+                                              var response = await Get.to(
+                                                () => EventReviewScreen(
+                                                  eventID: eventData[index].id,
+                                                ),
+                                              );
+                                              if (response != null) {
+                                                eventData[index]
+                                                    .eventReview!
+                                                    .insert(
+                                                      0,
+                                                      EventReview(
+                                                          createdDate:
+                                                              DateTime.now()
+                                                                  .toString(),
+                                                          eventId:
+                                                              eventData[index]
+                                                                  .id,
+                                                          review: response,
+                                                          userId: AppConstant
+                                                              .userData!.id),
+                                                    );
+                                              }
+                                            },
+                                            isEventEnded: false,
+                                            isReviewSubmitted:
+                                                checkForUsersReview(index)),
                                       )
                                     : const SizedBox();
                               },
@@ -473,8 +501,22 @@ class _EventListScreenState extends State<EventListScreen> {
         eventData[index].isAttendingEvent = true;
       }
     }
+    return false;
   }
-  //Join event api call
+
+  checkForUsersReview(index) {
+    if (eventData[index].eventReview != null &&
+        eventData[index].eventReview!.isNotEmpty) {
+      var contain = eventData[index].eventReview!.where((element) =>
+          element.userId.toString() == AppConstant.userData!.id.toString());
+
+      if (contain.isNotEmpty) {
+        eventData[index].isReviewSubmitted = true;
+      }
+    }
+    return false;
+  }
+//Join event api call
 
   joinEvent(index) async {
     try {

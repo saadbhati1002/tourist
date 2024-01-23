@@ -2,9 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
+import 'package:tourist/api/repository/auth/auth.dart';
+import 'package:tourist/models/updateProfile/update_profile_model.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:tourist/utility/constant.dart';
 import 'package:tourist/widgets/app_bar_back.dart';
+import 'package:tourist/widgets/show_progress_bar.dart';
 
 class QuickScreen extends StatefulWidget {
   const QuickScreen({super.key});
@@ -14,6 +17,7 @@ class QuickScreen extends StatefulWidget {
 }
 
 class _QuickScreenState extends State<QuickScreen> {
+  bool isLoading = false;
   HtmlEditorController controller = HtmlEditorController();
   @override
   void initState() {
@@ -43,6 +47,7 @@ class _QuickScreenState extends State<QuickScreen> {
         ),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () async {
+            saveNote();
             var txt = await controller.getText();
 
             AppConstant.userData!.userNote = txt;
@@ -63,21 +68,57 @@ class _QuickScreenState extends State<QuickScreen> {
                 fontFamily: "inter"),
           ),
         ),
-        body: HtmlEditor(
-          controller: controller, //required
+        body: Stack(
+          children: [
+            HtmlEditor(
+              controller: controller, //required
 
-          htmlEditorOptions: const HtmlEditorOptions(
-            hint: "Your text here...",
-            spellCheck: true,
+              htmlEditorOptions: const HtmlEditorOptions(
+                hint: "Your text here...",
+                spellCheck: true,
 
-            //initalText: "text content initial, if any",
-          ),
+                //initalText: "text content initial, if any",
+              ),
 
-          otherOptions: const OtherOptions(
-            height: 600,
-          ),
+              otherOptions: const OtherOptions(
+                height: 600,
+              ),
+            ),
+            isLoading ? const ShowProgressBar() : const SizedBox()
+          ],
         ),
       ),
     );
+  }
+
+  saveNote() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      var txt = await controller.getText();
+
+      UpdateProfile response =
+          await AuthRepository().updateUserNotesApiCall(notes: txt.toString());
+      if (response.message == 'Profile updated successfully') {
+        AppConstant.userData = response.data;
+        toastShow(message: "Note saved successful");
+        AppConstant.userDetailSaved(
+          jsonEncode(AppConstant.userData),
+        );
+        AppConstant.userData!.userNote = txt;
+        AppConstant.userDetailSaved(
+          jsonEncode(AppConstant.userData),
+        );
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+
+    toastShow(message: "Note saved successfully to device");
   }
 }

@@ -56,8 +56,6 @@ class AuthNetwork {
     final result = await httpManager.deleteWithToken(
         url:
             "$removeFavoriteUsersUrl$anotherUserID&user_id=${AppConstant.userData!.id}");
-    print(result);
-
     Common loginRes = Common.fromJson(result);
     return loginRes;
   }

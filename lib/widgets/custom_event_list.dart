@@ -5,13 +5,17 @@ import 'package:tourist/utility/color.dart';
 import 'package:avatar_stack/avatar_stack.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-Widget eventListing(
-    {BuildContext? context,
-    EventData? eventData,
-    VoidCallback? attendEvent,
-    VoidCallback? addToMyCalender,
-    bool? isEventJoin,
-    bool? isMyEvent}) {
+Widget eventListing({
+  BuildContext? context,
+  EventData? eventData,
+  VoidCallback? attendEvent,
+  VoidCallback? onTapReview,
+  VoidCallback? addToMyCalender,
+  bool? isEventJoin,
+  bool? isMyEvent,
+  bool? isEventEnded,
+  bool? isReviewSubmitted,
+}) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
     child: Material(
@@ -21,6 +25,9 @@ Widget eventListing(
       child: Container(
         width: MediaQuery.of(context!).size.width,
         decoration: BoxDecoration(
+          color: isEventEnded == true
+              ? ColorConstants.greyLight.withOpacity(0.6)
+              : ColorConstants.white,
           borderRadius: BorderRadius.circular(10),
           border: Border.all(width: 0.9, color: ColorConstants.mainColor),
         ),
@@ -35,7 +42,9 @@ Widget eventListing(
                   Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        color: ColorConstants.greySimple),
+                        color: isEventEnded == true
+                            ? ColorConstants.white.withOpacity(0.6)
+                            : ColorConstants.greySimple),
                     alignment: Alignment.center,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
@@ -44,7 +53,9 @@ Widget eventListing(
                         eventData!.eventTime ?? '',
                         style: TextStyle(
                             fontSize: 14,
-                            color: ColorConstants.black,
+                            color: isEventEnded == true
+                                ? ColorConstants.greyLight
+                                : ColorConstants.black,
                             fontWeight: FontWeight.w700,
                             fontFamily: 'inter'),
                       ),
@@ -85,7 +96,9 @@ Widget eventListing(
                 eventData.title ?? '',
                 style: TextStyle(
                     fontSize: 14,
-                    color: ColorConstants.black,
+                    color: isEventEnded == true
+                        ? ColorConstants.black.withOpacity(0.5)
+                        : ColorConstants.black,
                     fontFamily: 'inter',
                     fontWeight: FontWeight.w700),
               ),
@@ -95,8 +108,11 @@ Widget eventListing(
               eventData.place != null
                   ? Row(
                       children: [
-                        const FaIcon(
+                        FaIcon(
                           FontAwesomeIcons.locationDot,
+                          color: isEventEnded == true
+                              ? ColorConstants.black.withOpacity(0.5)
+                              : ColorConstants.black,
                           size: 14,
                         ),
                         const SizedBox(
@@ -118,7 +134,9 @@ Widget eventListing(
                               style: TextStyle(
                                   fontSize: 12,
                                   fontFamily: "inter",
-                                  color: ColorConstants.black,
+                                  color: isEventEnded == true
+                                      ? ColorConstants.black.withOpacity(0.5)
+                                      : ColorConstants.black,
                                   fontWeight: FontWeight.w600),
                             ),
                           ),
@@ -176,43 +194,105 @@ Widget eventListing(
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            GestureDetector(
-                              onTap: attendEvent,
-                              child: Container(
-                                height: 32,
-                                decoration: BoxDecoration(
-                                  color: eventData.isAttendingEvent == true
-                                      ? ColorConstants.mainColor
-                                      : ColorConstants.greyLight,
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                alignment: Alignment.center,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 12),
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.check_circle,
-                                        color: ColorConstants.white,
-                                        size: 20,
-                                      ),
-                                      const SizedBox(
-                                        width: 7,
-                                      ),
-                                      Text(
-                                        'Attending',
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            fontFamily: 'inter',
-                                            fontWeight: FontWeight.w500,
-                                            color: ColorConstants.white),
+                            isEventEnded == true
+                                ? eventData.isReviewSubmitted == true
+                                    ? Container(
+                                        height: 32,
+                                        decoration: BoxDecoration(
+                                          color: ColorConstants.black,
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        alignment: Alignment.center,
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 12),
+                                          child: Text(
+                                            'Completed',
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                fontFamily: 'inter',
+                                                fontWeight: FontWeight.w500,
+                                                color: ColorConstants.white),
+                                          ),
+                                        ),
                                       )
-                                    ],
+                                    : GestureDetector(
+                                        onTap: onTapReview,
+                                        child: Container(
+                                          height: 32,
+                                          decoration: BoxDecoration(
+                                            color: ColorConstants.blueColor,
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          alignment: Alignment.center,
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 12),
+                                            child: Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.check_circle,
+                                                  color: ColorConstants.white,
+                                                  size: 20,
+                                                ),
+                                                const SizedBox(
+                                                  width: 7,
+                                                ),
+                                                Text(
+                                                  'Give Feedback',
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      fontFamily: 'inter',
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color:
+                                                          ColorConstants.white),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                : GestureDetector(
+                                    onTap: attendEvent,
+                                    child: Container(
+                                      height: 32,
+                                      decoration: BoxDecoration(
+                                        color:
+                                            eventData.isAttendingEvent == true
+                                                ? ColorConstants.mainColor
+                                                : ColorConstants.greyLight,
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      alignment: Alignment.center,
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 12),
+                                        child: Row(
+                                          children: [
+                                            Icon(
+                                              Icons.check_circle,
+                                              color: ColorConstants.white,
+                                              size: 20,
+                                            ),
+                                            const SizedBox(
+                                              width: 7,
+                                            ),
+                                            Text(
+                                              'Attending',
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontFamily: 'inter',
+                                                  fontWeight: FontWeight.w500,
+                                                  color: ColorConstants.white),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                            ),
                             const SizedBox(
                               width: 10,
                             ),

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:tourist/api/http_manager.dart';
 import 'package:tourist/models/all_user/all_user_model.dart';
 import 'package:tourist/models/user/guest_user_model.dart';

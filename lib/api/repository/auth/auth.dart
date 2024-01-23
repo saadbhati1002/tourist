@@ -37,11 +37,10 @@ class AuthRepository {
       String? country,
       String? personalBio,
       String? jobTitle,
-      bool? isProfileUpdated,
       File? userImage}) async {
     FormData body;
-    if (isProfileUpdated == true) {
-      String fileName = userImage!.path.split('/').last;
+    if (userImage != null) {
+      String fileName = userImage.path.split('/').last;
       body = FormData.fromMap({
         'email': email,
         "first_name": firstName,
@@ -77,6 +76,14 @@ class AuthRepository {
     String? userType,
   }) async {
     var body = {"user_type": userType};
+
+    return await AuthNetwork.updateProfile(body);
+  }
+
+  Future<dynamic> updateUserNotesApiCall({
+    String? notes,
+  }) async {
+    var body = {"notes": notes};
 
     return await AuthNetwork.updateProfile(body);
   }
