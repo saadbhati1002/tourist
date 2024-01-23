@@ -5,6 +5,7 @@ import 'package:skeletons/skeletons.dart';
 import 'package:tourist/api/repository/banner/banner.dart';
 import 'package:tourist/models/banner/banner_model.dart';
 import 'package:tourist/screen/find_people/find_people_screen.dart';
+import 'package:tourist/screen/leader_board/leader_board_screen.dart';
 import 'package:tourist/screen/note/note_screen.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:tourist/widgets/custom_app_bar.dart';
@@ -128,7 +129,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   : banner1List.isNotEmpty
                       ? homeBanner1()
                       : const SizedBox(),
-
               const SizedBox(
                 height: 25,
               ),
@@ -151,7 +151,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     )
                   : const SizedBox(),
-
               customHeadingText(title: 'QUICK ACTIONS'),
               const SizedBox(
                 height: 10,
@@ -181,7 +180,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: ColorConstants.white,
                         size: 30,
                       ),
-                      () {},
+                      () {
+                        Get.to(() => const LeaderBoardScreen());
+                      },
                     ),
                     customActionButton(
                       "Guest List",
@@ -220,32 +221,6 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(
                 height: 5,
               ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     InkWell(
-              //       onTap: () {
-              //         if (userIndex == 3) {
-              //           setState(() {
-              //             userIndex = 6;
-              //           });
-              //         } else {
-              //           setState(() {
-              //             userIndex = 3;
-              //           });
-              //         }
-              //       },
-              //       child: Text(
-              //         userIndex == 3 ? "Load More" : "Show Less",
-              //         style: const TextStyle(
-              //             fontSize: 14,
-              //             color: ColorConstants.greyLight,
-              //             fontWeight: FontWeight.w600,
-              //             fontFamily: 'inter'),
-              //       ),
-              //     )
-              //   ],
-              // ),
               const SizedBox(
                 height: 25,
               ),
@@ -268,7 +243,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     )
                   : const SizedBox(),
-
               const SizedBox(
                 height: 25,
               ),
