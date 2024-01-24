@@ -8,6 +8,7 @@ import 'package:tourist/api/repository/message/message.dart';
 import 'package:tourist/api/repository/user/user.dart';
 import 'package:tourist/models/all_user/all_user_model.dart';
 import 'package:tourist/models/message/message_model.dart';
+import 'package:tourist/models/recommended_user/recommended_users_model.dart';
 import 'package:tourist/models/user/user_model.dart';
 import 'package:tourist/screen/chat/chat_screen.dart';
 import 'package:tourist/screen/profile/profile_screen.dart';
@@ -31,6 +32,10 @@ class _NetworkScreenState extends State<NetworkScreen> {
   List<UserData> chatUsers = [];
   bool isLoading = false;
   bool isLoadingMessage = false;
+  bool isRecommendedLoading = false;
+
+  List<UserData> recommendedUsersList = [];
+
   List<UserData> userList = [];
   Timer? _debounce;
   String? searchedName;
@@ -45,8 +50,13 @@ class _NetworkScreenState extends State<NetworkScreen> {
   }
 
   getData() async {
-    await getUserData();
+    setState(() {
+      isLoading = true;
+      isRecommendedLoading = true;
+    });
     await getChatUserList();
+    await getRecommendedUsers();
+    await getUserData();
   }
 
   @override
@@ -54,6 +64,24 @@ class _NetworkScreenState extends State<NetworkScreen> {
     _debounce?.cancel();
 
     super.dispose();
+  }
+
+  getRecommendedUsers() async {
+    try {
+      RecommendedRes response =
+          await UserRepository().getRecommendedUsersApiCall();
+      if (response.recommended != null) {
+        setState(() {
+          recommendedUsersList = response.recommended!;
+        });
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    } finally {
+      setState(() {
+        isRecommendedLoading = false;
+      });
+    }
   }
 
   _onSearchChanged(String query) {
@@ -161,24 +189,55 @@ class _NetworkScreenState extends State<NetworkScreen> {
                         },
                       ),
                     ),
-              // customHeadingText(title: 'Recommended Participants'),
-              // const SizedBox(
-              //   height: 10,
-              // ),
-              // ListView.builder(
-              //   physics: const NeverScrollableScrollPhysics(),
-              //   shrinkWrap: true,
-              //   itemCount: 3,
-              //   itemBuilder: (context, index) {
-              //     return Padding(
-              //       padding:
-              //           const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-              //       child: UserListData(
-              //         userType: userType[index],
-              //       ),
-              //     );
-              //   },
-              // ),
+              const SizedBox(
+                height: 20,
+              ),
+              customHeadingText(title: 'Recommended Participants'),
+              const SizedBox(
+                height: 10,
+              ),
+              isRecommendedLoading
+                  ? ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: 0,
+                      itemBuilder: (context, index) {
+                        return const Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 10),
+                          child: UserListData(),
+                        );
+                      },
+                    )
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: 5,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 10),
+                          child: UserListData(
+                            userData: recommendedUsersList[index],
+                            onProfileTap: () async {
+                              await Get.to(
+                                () => ProfileScreen(
+                                  isFromGuest: true,
+                                  id: recommendedUsersList[index].id.toString(),
+                                ),
+                              );
+                            },
+                            onChatTap: () async {
+                              await Get.to(
+                                () => ChatScreen(
+                                  userData: recommendedUsersList[index],
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    ),
               const SizedBox(
                 height: 20,
               ),

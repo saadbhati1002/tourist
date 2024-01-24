@@ -3,16 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:skeletons/skeletons.dart';
 import 'package:tourist/api/repository/banner/banner.dart';
+import 'package:tourist/api/repository/user/user.dart';
 import 'package:tourist/models/banner/banner_model.dart';
+import 'package:tourist/models/recommended_user/recommended_users_model.dart';
+import 'package:tourist/models/user/user_model.dart';
+import 'package:tourist/screen/chat/chat_screen.dart';
 import 'package:tourist/screen/find_people/find_people_screen.dart';
 import 'package:tourist/screen/leader_board/leader_board_screen.dart';
 import 'package:tourist/screen/note/note_screen.dart';
+import 'package:tourist/screen/profile/profile_screen.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:tourist/widgets/custom_app_bar.dart';
 import 'package:tourist/widgets/custom_drawer.dart';
 import 'package:tourist/widgets/custom_user_list.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:card_swiper/card_swiper.dart';
+import 'package:tourist/widgets/user_skeleton.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -26,9 +32,11 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isBanner1Loading = false;
   bool isBanner2Loading = false;
   bool isSponsorBannerLoading = false;
+  bool isRecommendedLoading = false;
   List<BannerData> banner1List = [];
   List<BannerData> banner2List = [];
   List<BannerData> sponsorBannerList = [];
+  List<UserData> recommendedUsersList = [];
 
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   setStateNow() {
@@ -48,11 +56,31 @@ class _HomeScreenState extends State<HomeScreen> {
       isBanner1Loading = true;
       isBanner2Loading = true;
       isSponsorBannerLoading = true;
+      isRecommendedLoading = true;
     });
     if (mounted) {
       await getBanner1();
       await getBanner2();
+      await getRecommendedUsers();
       await getSponsorBanner();
+    }
+  }
+
+  getRecommendedUsers() async {
+    try {
+      RecommendedRes response =
+          await UserRepository().getRecommendedUsersApiCall();
+      if (response.recommended != null) {
+        setState(() {
+          recommendedUsersList = response.recommended!;
+        });
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    } finally {
+      setState(() {
+        isRecommendedLoading = false;
+      });
     }
   }
 
@@ -207,17 +235,48 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(
                 height: 10,
               ),
-              ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: 0,
-                itemBuilder: (context, index) {
-                  return const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                    child: UserListData(),
-                  );
-                },
-              ),
+              isRecommendedLoading
+                  ? ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: 0,
+                      itemBuilder: (context, index) {
+                        return const Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 10),
+                          child: UserListData(),
+                        );
+                      },
+                    )
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: 5,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 10),
+                          child: UserListData(
+                            userData: recommendedUsersList[index],
+                            onProfileTap: () async {
+                              await Get.to(
+                                () => ProfileScreen(
+                                  isFromGuest: true,
+                                  id: recommendedUsersList[index].id.toString(),
+                                ),
+                              );
+                            },
+                            onChatTap: () async {
+                              await Get.to(
+                                () => ChatScreen(
+                                  userData: recommendedUsersList[index],
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    ),
               const SizedBox(
                 height: 5,
               ),

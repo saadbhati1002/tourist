@@ -56,7 +56,7 @@ customAppBar(
               SizedBox(
                 width: MediaQuery.of(context).size.width * .37,
                 child: Text(
-                  AppConstant.userData!.username ?? getUserName(),
+                  getUserName(),
                   maxLines: 1,
                   style: TextStyle(
                       fontFamily: "inter",

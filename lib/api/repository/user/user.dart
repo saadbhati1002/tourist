@@ -8,4 +8,8 @@ class UserRepository {
   Future<dynamic> getUserDetailApiCall({String? userID}) async {
     return await UserNetwork.getUserDetails(userID);
   }
+
+  Future<dynamic> getRecommendedUsersApiCall() async {
+    return await UserNetwork.getRecommendedUsers();
+  }
 }

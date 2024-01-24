@@ -258,9 +258,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                                   .width *
                                                               .5,
                                                           child: Text(
-                                                            userData!
-                                                                    .companyName ??
-                                                                '',
+                                                            userData!.companyName ==
+                                                                    "null"
+                                                                ? ''
+                                                                : userData!
+                                                                    .companyName!,
                                                             textAlign:
                                                                 TextAlign.right,
                                                             style: TextStyle(
@@ -282,8 +284,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                     height: 10,
                                                   ),
                                                   Text(
-                                                    userData!.username ??
-                                                        getUserName(),
+                                                    getUserName(),
                                                     style: TextStyle(
                                                         fontSize: 14,
                                                         color: ColorConstants
@@ -338,7 +339,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                                     .w500),
                                                       ),
                                                       Text(
-                                                        userData!.country ?? '',
+                                                        userData!.country !=
+                                                                "null"
+                                                            ? userData!.country
+                                                                .toString()
+                                                            : "",
                                                         style: TextStyle(
                                                             fontSize: 12,
                                                             color:
