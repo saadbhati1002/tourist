@@ -60,7 +60,8 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          QrImage(
+                          QrImageView(
+                            constrainErrorBounds: true,
                             data: vcardData,
                             version: QrVersions.auto,
                             size: 300.0,
@@ -163,7 +164,7 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                QrImage(
+                QrImageView(
                   data: vcardData,
                   version: QrVersions.auto,
                   size: 300.0,

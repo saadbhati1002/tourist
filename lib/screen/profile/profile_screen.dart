@@ -281,7 +281,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                     ),
                                                   ),
                                                   const SizedBox(
-                                                    height: 10,
+                                                    height: 9,
                                                   ),
                                                   Text(
                                                     getUserName(),
@@ -684,7 +684,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  QrImage(
+                                  QrImageView(
+                                    constrainErrorBounds: true,
                                     data: vcardData,
                                     version: QrVersions.auto,
                                     size: 180.0,
@@ -796,8 +797,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                QrImage(
+                QrImageView(
                   data: vcardData,
+                  constrainErrorBounds: true,
                   version: QrVersions.auto,
                   size: 300.0,
                   backgroundColor: Colors.white,

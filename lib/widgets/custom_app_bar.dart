@@ -16,6 +16,7 @@ customAppBar(
     toolbarHeight: 60,
     titleSpacing: 0,
     backgroundColor: ColorConstants.white,
+    centerTitle: false,
     automaticallyImplyLeading: false,
     title: GestureDetector(
       onTap: () {
@@ -37,7 +38,7 @@ customAppBar(
           ),
           borderRadius: BorderRadius.circular(10),
         ),
-        alignment: Alignment.center,
+        alignment: Alignment.centerLeft,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Row(

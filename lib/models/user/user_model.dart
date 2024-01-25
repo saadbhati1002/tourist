@@ -1,4 +1,4 @@
-whaimport 'package:tourist/models/message/message_model.dart';
+import 'package:tourist/models/message/message_model.dart';
 
 class UserRes {
   String? error;

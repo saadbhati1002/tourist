@@ -50,14 +50,16 @@ class _DashBoardScreenState extends State<DashBoardScreen>
             bottomNavigationBar: Material(
               color: ColorConstants.black,
               child: TabBar(
-                indicatorWeight: 0.01,
+                padding: EdgeInsets.zero,
+                indicatorPadding: EdgeInsets.zero,
+                indicatorWeight: 0.001,
                 controller: _tabController,
                 onTap: (index) {
                   _setPage(index);
                 },
-                labelPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+                labelPadding: EdgeInsets.zero,
                 indicatorColor: Colors.black,
-                isScrollable: true,
+                isScrollable: false,
                 tabs: [
                   _barItem(
                       FaIcon(

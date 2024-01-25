@@ -85,7 +85,7 @@ class _UserListDataState extends State<UserListData> {
               ),
             ),
             const SizedBox(
-              width: 10,
+              width: 9,
             ),
             SizedBox(
               width: widget.isFromChat == true
@@ -130,7 +130,7 @@ class _UserListDataState extends State<UserListData> {
               ),
             ),
             const SizedBox(
-              width: 7,
+              width: 6,
             ),
             AppConstant.userData!.id == widget.userData!.id
                 ? const SizedBox()
