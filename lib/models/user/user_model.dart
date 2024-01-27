@@ -12,7 +12,9 @@ class UserRes {
     message = json["message"];
     success = json['Success'] != null
         ? UserData.fromJson(json['Success'])
-        : UserData.fromJson(json['data']);
+        : json['data'] != null
+            ? UserData.fromJson(json['data'])
+            : null;
   }
 
   Map<String, dynamic> toJson() {
