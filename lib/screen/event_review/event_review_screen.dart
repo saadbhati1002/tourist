@@ -21,7 +21,7 @@ class _EventReviewScreenState extends State<EventReviewScreen> {
   bool isReviewSubmitted = false;
   Future<bool> willPopScope() {
     if (isReviewSubmitted == true) {
-      Navigator.pop(context, review.text.trim);
+      Navigator.pop(context, review.text.trim());
     } else {
       Navigator.pop(context);
     }
@@ -37,7 +37,7 @@ class _EventReviewScreenState extends State<EventReviewScreen> {
           context: context,
           onTap: () {
             if (isReviewSubmitted == true) {
-              Navigator.pop(context, review.text.trim);
+              Navigator.pop(context, review.text.trim());
             } else {
               Navigator.pop(context);
             }

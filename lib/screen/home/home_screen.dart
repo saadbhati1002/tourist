@@ -18,7 +18,6 @@ import 'package:tourist/widgets/custom_drawer.dart';
 import 'package:tourist/widgets/custom_user_list.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:card_swiper/card_swiper.dart';
-import 'package:tourist/widgets/user_skeleton.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -78,9 +77,11 @@ class _HomeScreenState extends State<HomeScreen> {
     } catch (e) {
       debugPrint(e.toString());
     } finally {
-      setState(() {
-        isRecommendedLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          isRecommendedLoading = false;
+        });
+      }
     }
   }
 

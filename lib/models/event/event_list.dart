@@ -35,11 +35,13 @@ class EventData {
   String? sDate;
   String? mapLink;
   String? eventType;
+  String? endTime;
   bool? isSavedToMyCalender = false;
   bool? isAttendingEvent = false;
   bool? isReviewSubmitted = false;
   List<UserData>? userList = [];
   List<EventReview>? eventReview;
+  String? eventStatus;
 
   EventData(
       {this.id,
@@ -55,7 +57,8 @@ class EventData {
       this.isAttendingEvent,
       this.isSavedToMyCalender,
       this.userList,
-      this.eventReview});
+      this.eventReview,
+      this.endTime});
 
   EventData.fromJson(Map<String, dynamic> json) {
     id = json['event_id'];
@@ -68,6 +71,7 @@ class EventData {
     sDate = json['s_date'];
     eventType = json['event_type'];
     mapLink = json['map_link'];
+    endTime = json['end_time'];
     if (AppConstant.isMyEvent == true) {
       userList!.add(UserData.fromJson(json['joined_users']));
     } else {
@@ -98,6 +102,7 @@ class EventData {
     data['s_date'] = sDate;
     data['event_type'] = eventType;
     data['map_link'] = mapLink;
+    data['end_time'] = endTime;
     data['joined_users'] = userList!.map((v) => v.toJson()).toList();
     return data;
   }

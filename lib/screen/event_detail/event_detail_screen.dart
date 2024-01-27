@@ -164,132 +164,134 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                     const SizedBox(
                       height: 15,
                     ),
-                    // widget.eventData!.isReviewSubmitted == false
-                    //     ? Container(
-                    //         width: MediaQuery.of(context).size.width * 1,
-                    //         color: ColorConstants.greenLight,
-                    //         child: Column(
-                    //           crossAxisAlignment: CrossAxisAlignment.start,
-                    //           children: [
-                    //             const SizedBox(
-                    //               height: 20,
-                    //             ),
-                    //             Padding(
-                    //               padding: const EdgeInsets.symmetric(
-                    //                   horizontal: 10),
-                    //               child: Text(
-                    //                 'Your Feedback',
-                    //                 style: TextStyle(
-                    //                     fontSize: 12,
-                    //                     fontFamily: 'inter',
-                    //                     fontWeight: FontWeight.w700,
-                    //                     color: ColorConstants.black),
-                    //               ),
-                    //             ),
-                    //             const SizedBox(
-                    //               height: 10,
-                    //             ),
-                    //             Padding(
-                    //               padding: const EdgeInsets.symmetric(
-                    //                   horizontal: 10),
-                    //               child: Text(
-                    //                 "checkForYourReview()",
-                    //                 style: TextStyle(
-                    //                     fontSize: 12,
-                    //                     fontFamily: 'inter',
-                    //                     fontWeight: FontWeight.w500,
-                    //                     color: ColorConstants.black),
-                    //               ),
-                    //             ),
-                    //             const SizedBox(
-                    //               height: 20,
-                    //             ),
-                    //           ],
-                    //         ),
-                    //       )
-                    //     :
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              if (widget.eventData!.isSavedToMyCalender ==
-                                  false) {
-                                addEventToMyCalender();
-                              } else {
-                                removeEventFromMyCalender();
-                              }
-                            },
-                            child: Container(
-                              height: 32,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                color: widget.eventData!.isSavedToMyCalender ==
-                                        true
-                                    ? ColorConstants.mainColor
-                                    : ColorConstants.greyLight,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              alignment: Alignment.center,
-                              child: Icon(
-                                Icons.calendar_month,
-                                color: ColorConstants.white,
-                                size: 20,
-                              ),
+                    widget.eventData!.isReviewSubmitted == true
+                        ? Container(
+                            width: MediaQuery.of(context).size.width * 1,
+                            color: ColorConstants.greenLight,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: Text(
+                                    'Your Feedback',
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontFamily: 'inter',
+                                        fontWeight: FontWeight.w700,
+                                        color: ColorConstants.black),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: Text(
+                                    checkForYourReview(),
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontFamily: 'inter',
+                                        fontWeight: FontWeight.w500,
+                                        color: ColorConstants.black),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                              ],
                             ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              if (widget.eventData!.isAttendingEvent == false) {
-                                joinEvent();
-                              } else {
-                                leaveEvent();
-                              }
-                            },
-                            child: Container(
-                              height: 32,
-                              decoration: BoxDecoration(
-                                color:
-                                    widget.eventData!.isAttendingEvent == true
-                                        ? ColorConstants.mainColor
-                                        : ColorConstants.greyLight,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              alignment: Alignment.center,
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 12),
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.check_circle,
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    if (widget.eventData!.isSavedToMyCalender ==
+                                        false) {
+                                      addEventToMyCalender();
+                                    } else {
+                                      removeEventFromMyCalender();
+                                    }
+                                  },
+                                  child: Container(
+                                    height: 32,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                      color: widget.eventData!
+                                                  .isSavedToMyCalender ==
+                                              true
+                                          ? ColorConstants.mainColor
+                                          : ColorConstants.greyLight,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: Icon(
+                                      Icons.calendar_month,
                                       color: ColorConstants.white,
                                       size: 20,
                                     ),
-                                    const SizedBox(
-                                      width: 7,
-                                    ),
-                                    Text(
-                                      'Attending',
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          fontFamily: 'inter',
-                                          fontWeight: FontWeight.w500,
-                                          color: ColorConstants.white),
-                                    )
-                                  ],
+                                  ),
                                 ),
-                              ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    if (widget.eventData!.isAttendingEvent ==
+                                        false) {
+                                      joinEvent();
+                                    } else {
+                                      leaveEvent();
+                                    }
+                                  },
+                                  child: Container(
+                                    height: 32,
+                                    decoration: BoxDecoration(
+                                      color:
+                                          widget.eventData!.isAttendingEvent ==
+                                                  true
+                                              ? ColorConstants.mainColor
+                                              : ColorConstants.greyLight,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 12),
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.check_circle,
+                                            color: ColorConstants.white,
+                                            size: 20,
+                                          ),
+                                          const SizedBox(
+                                            width: 7,
+                                          ),
+                                          Text(
+                                            'Attending',
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                fontFamily: 'inter',
+                                                fontWeight: FontWeight.w500,
+                                                color: ColorConstants.white),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                    ),
                     const SizedBox(
                       height: 20,
                     ),

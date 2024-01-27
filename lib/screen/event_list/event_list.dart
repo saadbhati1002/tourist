@@ -385,19 +385,25 @@ class _EventListScreenState extends State<EventListScreen> {
                                                     .insert(
                                                       0,
                                                       EventReview(
-                                                          createdDate:
-                                                              DateTime.now()
-                                                                  .toString(),
-                                                          eventId:
-                                                              eventData[index]
-                                                                  .id,
-                                                          review: response,
-                                                          userId: AppConstant
-                                                              .userData!.id),
+                                                        createdDate:
+                                                            DateTime.now()
+                                                                .toString(),
+                                                        eventId:
+                                                            eventData[index]
+                                                                .id
+                                                                .toString(),
+                                                        review:
+                                                            response.toString(),
+                                                        userId: AppConstant
+                                                            .userData!.id
+                                                            .toString(),
+                                                      ),
                                                     );
+                                                setState(() {});
                                               }
                                             },
-                                            isEventEnded: false,
+                                            isEventEnded:
+                                                checkEventStatus(index),
                                             isReviewSubmitted:
                                                 checkForUsersReview(index)),
                                       )
@@ -504,6 +510,25 @@ class _EventListScreenState extends State<EventListScreen> {
     return false;
   }
 
+  //check event is working or not
+  checkEventStatus(index) {
+    bool isEventEnded = false;
+    DateTime endTime = DateTime.parse(eventData[index].endTime!);
+    DateTime startTime = DateTime.parse(eventData[index].sDate!);
+    if (endTime.isBefore(DateTime.now())) {
+      isEventEnded = true;
+    } else {
+      isEventEnded = false;
+    }
+    if (startTime.isAfter(DateTime.now())) {
+      eventData[index].eventStatus = "In Progress";
+    } else if (endTime.isBefore(DateTime.now())) {
+      eventData[index].eventStatus = "Ended";
+    }
+    return isEventEnded;
+  }
+
+//check for users review
   checkForUsersReview(index) {
     if (eventData[index].eventReview != null &&
         eventData[index].eventReview!.isNotEmpty) {
