@@ -520,9 +520,10 @@ class _EventListScreenState extends State<EventListScreen> {
     } else {
       isEventEnded = false;
     }
-    if (startTime.isAfter(DateTime.now())) {
+    if (startTime.isBefore(DateTime.now())) {
       eventData[index].eventStatus = "In Progress";
-    } else if (endTime.isBefore(DateTime.now())) {
+    }
+    if (endTime.isBefore(DateTime.now())) {
       eventData[index].eventStatus = "Ended";
     }
     return isEventEnded;

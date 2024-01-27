@@ -105,45 +105,117 @@ Widget eventListing({
               SizedBox(
                 height: eventData.eventType != null ? 15 : 0,
               ),
-              eventData.place != null
-                  ? Row(
-                      children: [
-                        FaIcon(
-                          FontAwesomeIcons.locationDot,
-                          color: isEventEnded == true
-                              ? ColorConstants.black.withOpacity(0.5)
-                              : ColorConstants.black,
-                          size: 14,
-                        ),
-                        const SizedBox(
-                          width: 7,
-                        ),
-                        Expanded(
-                          flex: 4,
-                          child: GestureDetector(
-                            onTap: () {
-                              if (eventData.mapLink != null) {
-                                launchUrl(Uri.parse(eventData.mapLink!));
-                              }
-                            },
-                            child: Text(
-                              eventData.place ?? "",
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  fontFamily: "inter",
-                                  color: isEventEnded == true
-                                      ? ColorConstants.black.withOpacity(0.5)
-                                      : ColorConstants.black,
-                                  fontWeight: FontWeight.w600),
-                            ),
+              eventData.eventStatus == "In Progress"
+                  ? Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * .66,
+                            child: eventData.place != null
+                                ? Row(
+                                    children: [
+                                      FaIcon(
+                                        FontAwesomeIcons.locationDot,
+                                        color: isEventEnded == true
+                                            ? ColorConstants.black
+                                                .withOpacity(0.5)
+                                            : ColorConstants.black,
+                                        size: 14,
+                                      ),
+                                      const SizedBox(
+                                        width: 7,
+                                      ),
+                                      Expanded(
+                                        flex: 4,
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            if (eventData.mapLink != null) {
+                                              launchUrl(Uri.parse(
+                                                  eventData.mapLink!));
+                                            }
+                                          },
+                                          child: Text(
+                                            eventData.place ?? "",
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                fontFamily: "inter",
+                                                color: isEventEnded == true
+                                                    ? ColorConstants.black
+                                                        .withOpacity(0.5)
+                                                    : ColorConstants.black,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                : const SizedBox(),
                           ),
-                        ),
-                      ],
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: 15,
+                                width: 15,
+                                decoration: BoxDecoration(
+                                    color: Colors.red, shape: BoxShape.circle),
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                eventData.eventStatus ?? '',
+                                style: TextStyle(fontSize: 12),
+                              )
+                            ],
+                          )
+                        ],
+                      ),
                     )
-                  : const SizedBox(),
+                  : eventData.place != null
+                      ? Row(
+                          children: [
+                            FaIcon(
+                              FontAwesomeIcons.locationDot,
+                              color: isEventEnded == true
+                                  ? ColorConstants.black.withOpacity(0.5)
+                                  : ColorConstants.black,
+                              size: 14,
+                            ),
+                            const SizedBox(
+                              width: 7,
+                            ),
+                            Expanded(
+                              flex: 4,
+                              child: GestureDetector(
+                                onTap: () {
+                                  if (eventData.mapLink != null) {
+                                    launchUrl(Uri.parse(eventData.mapLink!));
+                                  }
+                                },
+                                child: Text(
+                                  eventData.place ?? "",
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      fontFamily: "inter",
+                                      color: isEventEnded == true
+                                          ? ColorConstants.black
+                                              .withOpacity(0.5)
+                                          : ColorConstants.black,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      : const SizedBox(),
               SizedBox(
                 height: isMyEvent == true ? 0 : 15,
               ),
