@@ -116,7 +116,9 @@ class _UserListDataState extends State<UserListData> {
                         fontFamily: "inter"),
                   ),
                   Text(
-                    widget.userData!.country != null
+                  widget.userData!.country != null &&
+                            widget.userData!.country != "null" &&
+                            widget.userData!.country != ""
                         ? '${widget.userData!.companyName ?? ''}, ${widget.userData!.country ?? ''}'
                         : widget.userData!.companyName ?? '',
                     maxLines: 1,

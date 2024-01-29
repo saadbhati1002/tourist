@@ -60,37 +60,37 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 //   'Guest List',
                 //   () {},
                 // ),
-                const SizedBox(
-                  height: 15,
-                ),
-                headingText(
-                  'Notification Settings',
-                  () {},
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                headingText(
-                  'External Link 1',
-                  () {},
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                headingText(
-                  'External Link 2',
-                  () {},
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                headingText(
-                  'External Link 3',
-                  () {},
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
+                // const SizedBox(
+                //   height: 15,
+                // ),
+                // headingText(
+                //   'Notification Settings',
+                //   () {},
+                // ),
+                // const SizedBox(
+                //   height: 15,
+                // ),
+                // headingText(
+                //   'External Link 1',
+                //   () {},
+                // ),
+                // const SizedBox(
+                //   height: 15,
+                // ),
+                // headingText(
+                //   'External Link 2',
+                //   () {},
+                // ),
+                // const SizedBox(
+                //   height: 15,
+                // ),
+                // headingText(
+                //   'External Link 3',
+                //   () {},
+                // ),
+                // const SizedBox(
+                //   height: 15,
+                // ),
                 headingText(
                   'Log Out',
                   () {
