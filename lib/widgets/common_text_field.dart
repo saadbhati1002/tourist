@@ -71,6 +71,7 @@ class CustomTextFormField extends StatelessWidget {
       margin: margin,
       height: isMaxLine == true ? 180 : 45,
       child: TextField(
+        onTap: onTap,
         onChanged: onChanged,
         cursorColor: ColorConstants.mainColor,
         keyboardType: keyboardType,

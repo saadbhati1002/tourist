@@ -129,8 +129,8 @@ class _LeaderBoardUserState extends State<LeaderBoardUser> {
                     widget.userData!.country != null &&
                             widget.userData!.country != "null" &&
                             widget.userData!.country != ""
-                        ? '${widget.userData!.companyName ?? ''}, ${widget.userData!.country ?? ''}'
-                        : widget.userData!.companyName ?? '',
+                        ? '${widget.userData!.companyName!.trim()}, ${widget.userData!.country ?? ''}'
+                        : widget.userData!.companyName!.trim(),
                     maxLines: 1,
                     style: TextStyle(
                         fontSize: 10,
@@ -176,12 +176,12 @@ class _LeaderBoardUserState extends State<LeaderBoardUser> {
   }
 
   getUserName() {
-    String name = widget.userData!.firstName!;
+    String name = widget.userData!.firstName!.replaceAll(" ", "");
     if (widget.userData!.middleName != null) {
-      name = "$name ${widget.userData!.middleName}";
+      name = "$name ${widget.userData!.middleName!.replaceAll(" ", "")}";
     }
     if (widget.userData!.lastName != null) {
-      name = "$name ${widget.userData!.lastName}";
+      name = "$name ${widget.userData!.lastName!.replaceAll(" ", "")}";
     }
     return name;
   }

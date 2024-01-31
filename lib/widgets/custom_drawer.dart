@@ -53,9 +53,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     Get.to(() => const FavoriteScreen());
                   },
                 ),
-                // const SizedBox(
-                //   height: 15,
-                // ),
+                const SizedBox(
+                  height: 15,
+                ),
                 // headingText(
                 //   'Guest List',
                 //   () {},
@@ -97,6 +97,14 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     Navigator.pop(context);
                     logOutPopUp();
                   },
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 1,
+                  color: ColorConstants.mainColor,
                 ),
               ],
             ),

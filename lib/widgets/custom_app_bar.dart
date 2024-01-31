@@ -89,12 +89,12 @@ customAppBar(
 }
 
 getUserName() {
-  String name = AppConstant.userData!.firstName!;
+  String name = AppConstant.userData!.firstName!.replaceAll(" ", "");
   if (AppConstant.userData!.middleName != null) {
-    name = "$name ${AppConstant.userData!.middleName}";
+    name = "$name ${AppConstant.userData!.middleName!.replaceAll(" ", "")}";
   }
   if (AppConstant.userData!.lastName != null) {
-    name = "$name ${AppConstant.userData!.lastName}";
+    name = "$name ${AppConstant.userData!.lastName!.replaceAll(" ", "")}";
   }
   return name;
 }

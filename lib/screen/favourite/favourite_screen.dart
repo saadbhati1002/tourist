@@ -201,12 +201,12 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   }
 
   getUserName(UserData? userData) {
-    String name = userData!.firstName!;
+    String name = userData!.firstName!.replaceAll(" ", "");
     if (userData.middleName != null) {
-      name = "$name ${userData.middleName}";
+      name = "$name ${userData.middleName!.replaceAll(" ", "")}";
     }
     if (userData.lastName != null) {
-      name = "$name ${userData.lastName}";
+      name = "$name ${userData.lastName!.replaceAll(" ", "")}";
     }
     return name;
   }

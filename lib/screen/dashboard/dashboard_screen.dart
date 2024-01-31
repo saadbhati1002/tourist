@@ -51,15 +51,16 @@ class _DashBoardScreenState extends State<DashBoardScreen>
               color: ColorConstants.black,
               child: TabBar(
                 padding: EdgeInsets.zero,
-                indicatorPadding: EdgeInsets.zero,
-                indicatorWeight: 0.001,
+                indicatorWeight: 0.01,
                 controller: _tabController,
                 onTap: (index) {
                   _setPage(index);
                 },
-                labelPadding: EdgeInsets.zero,
+                physics: NeverScrollableScrollPhysics(),
+                tabAlignment: TabAlignment.start,
+                labelPadding: const EdgeInsets.symmetric(horizontal: 0.0),
                 indicatorColor: Colors.black,
-                isScrollable: false,
+                isScrollable: true,
                 tabs: [
                   _barItem(
                       FaIcon(

@@ -11,6 +11,7 @@ import 'package:tourist/models/message/message_model.dart';
 import 'package:tourist/models/recommended_user/recommended_users_model.dart';
 import 'package:tourist/models/user/user_model.dart';
 import 'package:tourist/screen/chat/chat_screen.dart';
+import 'package:tourist/screen/find_people/find_people_screen.dart';
 import 'package:tourist/screen/profile/profile_screen.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:tourist/utility/constant.dart';
@@ -78,9 +79,11 @@ class _NetworkScreenState extends State<NetworkScreen> {
     } catch (e) {
       debugPrint(e.toString());
     } finally {
-      setState(() {
-        isRecommendedLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          isRecommendedLoading = false;
+        });
+      }
     }
   }
 
@@ -154,6 +157,16 @@ class _NetworkScreenState extends State<NetworkScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: CustomTextFormField(
+                  onTap: () {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FindPeopleScreen(),
+                      ),
+                    );
+                  },
+
                   // controller: email,
                   hintText: "Search For Participants",
                   suffix: Icon(
@@ -329,12 +342,12 @@ class _NetworkScreenState extends State<NetworkScreen> {
   }
 
   getUserName(UserData? userData) {
-    String name = userData!.firstName!;
+    String name = userData!.firstName!.replaceAll(" ", "");
     if (userData.middleName != null) {
-      name = "$name ${userData.middleName}";
+      name = "$name ${userData.middleName!.replaceAll(" ", "")}";
     }
     if (userData.lastName != null) {
-      name = "$name ${userData.lastName}";
+      name = "$name ${userData.lastName!.replaceAll(" ", "")}";
     }
     return name;
   }
