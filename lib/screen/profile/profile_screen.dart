@@ -876,7 +876,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         setState(() {
           userData!.isUserFavorite = true;
         });
-        toastShow(message: "User saved to favorite successfully");
+        toastShow(message: "Added to favorite");
       }
     } catch (e) {
       debugPrint(e.toString());
@@ -898,7 +898,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         setState(() {
           userData!.isUserFavorite = false;
         });
-        toastShow(message: "User removed from favorite list");
+        toastShow(message: "Removed from favorite");
       }
     } catch (e) {
       debugPrint(e.toString());

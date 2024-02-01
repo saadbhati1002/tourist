@@ -54,7 +54,6 @@ class _QuickScreenState extends State<QuickScreen> {
             AppConstant.userDetailSaved(
               jsonEncode(AppConstant.userData),
             );
-            toastShow(message: "Note saved successfully to device");
           },
           isExtended: true,
           backgroundColor: ColorConstants.mainColor,
@@ -102,7 +101,7 @@ class _QuickScreenState extends State<QuickScreen> {
           await AuthRepository().updateUserNotesApiCall(notes: txt.toString());
       if (response.message == 'Profile updated successfully') {
         AppConstant.userData = response.data;
-        toastShow(message: "Note saved successful");
+        toastShow(message: "Note saved");
         AppConstant.userDetailSaved(
           jsonEncode(AppConstant.userData),
         );

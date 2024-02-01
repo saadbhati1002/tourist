@@ -64,6 +64,7 @@ class _EventListScreenState extends State<EventListScreen> {
         for (int i = 0; i < eventData.length; i++) {
           eventData[i].isSavedToMyCalender = true;
         }
+        myEventData = eventData;
       } else {
         EventRes response = await EventRepository().allEventListApiCall();
         eventData = response.event!;
@@ -644,6 +645,7 @@ class _EventListScreenState extends State<EventListScreen> {
   //checking if any any event leaved or not
   checkIsAnyEventLaved(response, index) {
     if (response != null) {
+      print(response);
       if (response == 1) {
         if (eventData[index].isAttendingEvent == false) {
           eventData[index].isAttendingEvent = true;
@@ -674,12 +676,17 @@ class _EventListScreenState extends State<EventListScreen> {
               .removeWhere((element) => element.id == eventData[index].id);
         }
       } else if (response == 2) {
+        print(eventData[index].isAttendingEvent);
+        print(eventData[index].isSavedToMyCalender);
         if (eventData[index].isAttendingEvent == false) {
           eventData[index].isAttendingEvent = true;
           eventData[index].userList!.add(AppConstant.userData!);
         }
+
         if (eventData[index].isSavedToMyCalender == true) {
-          eventData[index].isAttendingEvent = false;
+          eventData[index].isSavedToMyCalender = false;
+          eventData.removeAt(index);
+          setState(() {});
           eventData[index].userList!.removeWhere(
                 (element) =>
                     element.id.toString() ==
@@ -687,6 +694,10 @@ class _EventListScreenState extends State<EventListScreen> {
               );
           myEventData
               .removeWhere((element) => element.id == eventData[index].id);
+        }
+        if (selectedCalender == 0) {
+          eventData.removeAt(index);
+          setState(() {});
         }
       } else if (response == 3) {
         if (eventData[index].isAttendingEvent == true) {

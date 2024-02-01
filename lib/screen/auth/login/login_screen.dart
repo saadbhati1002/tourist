@@ -160,7 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
           () => PasswordScreen(email: email.text.trim()),
         );
       } else {
-        toastShow(message: "This email is not register with us.");
+        toastShow(message: "This email is not registered with us.");
       }
     } catch (e) {
       debugPrint(e.toString());

@@ -383,6 +383,7 @@ class _HomeScreenState extends State<HomeScreen> {
       width: MediaQuery.of(context).size.width * 1,
       height: MediaQuery.of(context).size.height * .25,
       child: Swiper(
+        autoplay: true,
         itemCount: banner1List.length,
         onTap: (index) {
           if (banner1List[index].bannerLink != null ||
@@ -425,6 +426,7 @@ class _HomeScreenState extends State<HomeScreen> {
       width: MediaQuery.of(context).size.width * 1,
       height: MediaQuery.of(context).size.height * .25,
       child: Swiper(
+        autoplay: true,
         scale: 0.75,
         viewportFraction: 0.7,
         itemCount: banner2List.length,
@@ -472,6 +474,7 @@ class _HomeScreenState extends State<HomeScreen> {
       width: MediaQuery.of(context).size.width * 1,
       height: MediaQuery.of(context).size.height * .25,
       child: Swiper(
+        autoplay: true,
         scale: 0.75,
         viewportFraction: 0.7,
         itemCount: sponsorBannerList.length,

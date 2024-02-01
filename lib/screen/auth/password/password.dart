@@ -24,13 +24,13 @@ class PasswordScreen extends StatefulWidget {
 class _PasswordScreenState extends State<PasswordScreen> {
   TextEditingController password = TextEditingController();
   bool isPassword = true;
-  String? deviceToken = 'testToken';
+  String? deviceToken;
   bool isLoading = false;
-  // @override
-  // void initState() {
-  //   getDeviceToken();
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    getDeviceToken();
+    super.initState();
+  }
 
   getDeviceToken() async {
     deviceToken = await FirebaseMessaging.instance.getToken();
@@ -164,6 +164,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
       toastShow(message: "Please enter password");
       return;
     }
+    print(deviceToken);
     try {
       setState(() {
         isLoading = true;
@@ -174,12 +175,12 @@ class _PasswordScreenState extends State<PasswordScreen> {
         password: password.text.trim(),
       );
       if (response.success != null) {
-        toastShow(message: "User login successfully");
+        toastShow(message: "Welcome to DWS 2024");
         AppConstant.userData = response.success;
         AppConstant.userDetailSaved(jsonEncode(response.success));
         Get.to(() => const DashBoardScreen());
       } else {
-        toastShow(message: "You entered wrong password");
+        toastShow(message: "Incorrect password");
       }
     } catch (e) {
       debugPrint(e.toString());
