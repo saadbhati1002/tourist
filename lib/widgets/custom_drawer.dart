@@ -5,6 +5,7 @@ import 'package:tourist/screen/favourite/favourite_screen.dart';
 import 'package:tourist/screen/find_people/find_people_screen.dart';
 import 'package:tourist/screen/qr_code/qr_code_screen.dart';
 import 'package:tourist/screen/splash/splash.dart';
+import 'package:tourist/screen/users/users_screen.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:tourist/utility/constant.dart';
 
@@ -39,10 +40,43 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   height: 15,
                 ),
                 headingText(
-                  'Find People',
+                  'Delegates',
                   () {
                     Get.to(() => const FindPeopleScreen());
                   },
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                headingText(
+                  'Speakers',
+                  () {
+                    Get.to(
+                      () => UsersScreen(
+                        userType: "Speaker",
+                      ),
+                    );
+                  },
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                headingText(
+                  'Media',
+                  () {
+                    Get.to(
+                      () => UsersScreen(
+                        userType: "Media",
+                      ),
+                    );
+                  },
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                headingText(
+                  'Staff',
+                  () {},
                 ),
                 const SizedBox(
                   height: 15,

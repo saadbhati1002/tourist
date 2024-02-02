@@ -204,12 +204,14 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
   }
 
   getUserName(UserData? userData) {
-    String name = userData!.firstName!;
-    if (userData.middleName != null) {
-      name = "$name ${userData.middleName}";
+    String name = userData!.firstName!.replaceAll(" ", "").trim();
+    if (userData.middleName != null &&
+        userData.middleName != "null" &&
+        userData.middleName != " ") {
+      name = "$name ${userData.middleName!.replaceAll(" ", "").trim()}";
     }
     if (userData.lastName != null) {
-      name = "$name ${userData.lastName}";
+      name = "$name ${userData.lastName!.replaceAll(" ", "").trim()}";
     }
     return name;
   }

@@ -428,7 +428,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Swiper(
         autoplay: true,
         scale: 0.75,
-        viewportFraction: 0.7,
+        viewportFraction: 0.9,
         itemCount: banner2List.length,
         onTap: (index) {
           if (banner2List[index].bannerLink != null ||

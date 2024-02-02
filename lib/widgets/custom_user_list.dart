@@ -64,7 +64,7 @@ class _UserListDataState extends State<UserListData> {
                                         ? ColorConstants.vendorColor
                                         : widget.userData!.userType == 'Media'
                                             ? ColorConstants.mediaColor
-                                            : ColorConstants.speakerColor),
+                                            : ColorConstants.mainColor),
                             alignment: Alignment.center,
                             child: Text(
                               widget.userData!.userType!,
@@ -76,7 +76,7 @@ class _UserListDataState extends State<UserListData> {
                                               "Delegate" ||
                                           widget.userData!.userType == "Media"
                                       ? ColorConstants.white
-                                      : ColorConstants.black),
+                                      : ColorConstants.white),
                             ),
                           ),
                         )
@@ -212,12 +212,14 @@ class _UserListDataState extends State<UserListData> {
   }
 
   getUserName() {
-    String name = widget.userData!.firstName!.replaceAll(" ", "");
-    if (widget.userData!.middleName != null) {
-      name = "$name ${widget.userData!.middleName!.replaceAll(" ", "")}";
+    String name = widget.userData!.firstName!.replaceAll(" ", "").trim();
+    if (widget.userData!.middleName != null &&
+        widget.userData!.middleName != "null" &&
+        widget.userData!.middleName != "") {
+      name = "$name ${widget.userData!.middleName!.replaceAll(" ", "").trim()}";
     }
     if (widget.userData!.lastName != null) {
-      name = "$name ${widget.userData!.lastName!.replaceAll(" ", "")}";
+      name = "$name ${widget.userData!.lastName!.replaceAll(" ", "").trim()}";
     }
     return name;
   }

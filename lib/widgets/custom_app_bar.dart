@@ -89,12 +89,16 @@ customAppBar(
 }
 
 getUserName() {
-  String name = AppConstant.userData!.firstName!.replaceAll(" ", "");
-  if (AppConstant.userData!.middleName != null) {
-    name = "$name ${AppConstant.userData!.middleName!.replaceAll(" ", "")}";
+  String name = AppConstant.userData!.firstName!.replaceAll(" ", "").trim();
+  if (AppConstant.userData!.middleName != null &&
+      AppConstant.userData!.middleName != "null" &&
+      AppConstant.userData!.middleName != "") {
+    name =
+        "$name ${AppConstant.userData!.middleName!.replaceAll(" ", "").trim()}";
   }
   if (AppConstant.userData!.lastName != null) {
-    name = "$name ${AppConstant.userData!.lastName!.replaceAll(" ", "")}";
+    name =
+        "$name ${AppConstant.userData!.lastName!.replaceAll(" ", "").trim()}";
   }
   return name;
 }

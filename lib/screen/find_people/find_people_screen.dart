@@ -201,12 +201,14 @@ class _FindPeopleScreenState extends State<FindPeopleScreen> {
   }
 
   getUserName(UserData? userData) {
-    String name = userData!.firstName!.replaceAll(" ", "");
-    if (userData.middleName != null) {
-      name = "$name ${userData.middleName!.replaceAll(" ", "")}";
+    String name = userData!.firstName!.replaceAll(" ", "").trim();
+    if (userData.middleName != null &&
+        userData.middleName != "null" &&
+        userData.middleName != " ") {
+      name = "$name ${userData.middleName!.replaceAll(" ", "").trim()}";
     }
     if (userData.lastName != null) {
-      name = "$name ${userData.lastName!.replaceAll(" ", "")}";
+      name = "$name ${userData.lastName!.replaceAll(" ", "").trim()}";
     }
     return name;
   }
