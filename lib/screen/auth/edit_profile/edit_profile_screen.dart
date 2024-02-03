@@ -18,7 +18,8 @@ import 'package:tourist/widgets/custom_image_view.dart';
 import 'package:tourist/widgets/show_progress_bar.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  const EditProfileScreen({super.key});
+  final bool? isFromAccountSetup;
+  const EditProfileScreen({super.key, this.isFromAccountSetup});
 
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
@@ -33,6 +34,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController email = TextEditingController();
   TextEditingController phoneNumber = TextEditingController();
   TextEditingController country = TextEditingController();
+  TextEditingController dietaryRestrictions = TextEditingController();
   TextEditingController personalBio = TextEditingController();
   TextEditingController companyBio = TextEditingController();
   final ImagePicker _picker = ImagePicker();
@@ -286,6 +288,28 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       context: context,
                     ),
                   ),
+                  if (widget.isFromAccountSetup == true) ...[
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        commonTextStyle('Dietary Restrictions & Allergies'),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: CustomTextFormField(
+                            controller: dietaryRestrictions,
+                            hintText: "Dietary Restrictions & Allergies",
+                            context: context,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                   const SizedBox(
                     height: 15,
                   ),
@@ -327,7 +351,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       width: MediaQuery.of(context).size.width,
                       onTap: () {
                         if (AppConstant.userData!.logo3 != null &&
-                            AppConstant.userData!.logo3 != '') {
+                            AppConstant.userData!.logo3 != '' &&
+                            AppConstant.userData!.logo3 != "null") {
                           updateProfile();
                         } else {
                           if (imageSelected == null) {
@@ -548,6 +573,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           middleName: middleName.text.toString(),
           mobileNumber: phoneNumber.text.toString(),
           personalBio: personalBio.text.toString(),
+          dietaryRestrictions: dietaryRestrictions.text.toString().trim(),
           userImage: imageSelected);
       if (response.message == 'Profile updated successfully') {
         AppConstant.userData = response.data;

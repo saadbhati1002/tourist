@@ -46,7 +46,7 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
       top: true,
       child: Scaffold(
         backgroundColor: ColorConstants.white,
-        resizeToAvoidBottomInset: false,
+        // resizeToAvoidBottomInset: false,
         body: GestureDetector(
           onTap: () {
             FocusManager.instance.primaryFocus?.unfocus();

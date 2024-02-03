@@ -165,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        customHeadingText(title: 'WHATS ON'),
+                        customHeadingText(title: 'Speaker'),
                         const SizedBox(
                           height: 10,
                         ),
@@ -383,8 +383,8 @@ class _HomeScreenState extends State<HomeScreen> {
       width: MediaQuery.of(context).size.width * 1,
       height: MediaQuery.of(context).size.height * .25,
       child: Swiper(
-        autoplay: true,
         itemCount: banner1List.length,
+        autoplay: banner1List.length > 1 ? true : false,
         onTap: (index) {
           if (banner1List[index].bannerLink != null ||
               banner1List[index].bannerLink != "") {
@@ -426,7 +426,7 @@ class _HomeScreenState extends State<HomeScreen> {
       width: MediaQuery.of(context).size.width * 1,
       height: MediaQuery.of(context).size.height * .25,
       child: Swiper(
-        autoplay: true,
+        autoplay: banner2List.length > 1 ? true : false,
         scale: 0.75,
         viewportFraction: 0.9,
         itemCount: banner2List.length,
@@ -474,9 +474,9 @@ class _HomeScreenState extends State<HomeScreen> {
       width: MediaQuery.of(context).size.width * 1,
       height: MediaQuery.of(context).size.height * .25,
       child: Swiper(
-        autoplay: true,
+        autoplay: sponsorBannerList.length > 1 ? true : false,
         scale: 0.75,
-        viewportFraction: 0.7,
+        viewportFraction: 0.9,
         itemCount: sponsorBannerList.length,
         onTap: (index) {
           if (sponsorBannerList[index].bannerLink != null ||
@@ -499,7 +499,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     image: DecorationImage(
                       image: imageProvider,
-                      fit: BoxFit.cover,
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),

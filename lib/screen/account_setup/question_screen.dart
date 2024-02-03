@@ -221,7 +221,11 @@ class _QuestionScreenState extends State<QuestionScreen> {
         AppConstant.userDetailSaved(
           jsonEncode(AppConstant.userData),
         );
-        Get.to(() => const EditProfileScreen());
+        Get.to(
+          () => const EditProfileScreen(
+            isFromAccountSetup: true,
+          ),
+        );
       }
     } catch (e) {
       debugPrint(e.toString());

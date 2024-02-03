@@ -37,6 +37,7 @@ class AuthRepository {
       String? country,
       String? personalBio,
       String? jobTitle,
+      String? dietaryRestrictions,
       File? userImage}) async {
     FormData body;
     if (userImage != null) {
@@ -55,6 +56,20 @@ class AuthRepository {
         "logo3":
             await MultipartFile.fromFile(userImage.path, filename: fileName)
       });
+    } else if (dietaryRestrictions != null && dietaryRestrictions != "") {
+      body = FormData.fromMap({
+        'email': email,
+        "first_name": firstName,
+        "middle_name": middleName,
+        "last_name": lastName,
+        "Company_Name": companyName,
+        "mobile": mobileNumber,
+        "Company_Profile": companyName,
+        "Personal_Bio": personalBio,
+        "country": country,
+        "job_title": jobTitle,
+        "dietary_restrictions": dietaryRestrictions
+      });
     } else {
       body = FormData.fromMap({
         'email': email,
@@ -66,7 +81,7 @@ class AuthRepository {
         "Company_Profile": companyName,
         "Personal_Bio": personalBio,
         "country": country,
-        "job_title": jobTitle
+        "job_title": jobTitle,
       });
     }
     return await AuthNetwork.updateProfile(body);
