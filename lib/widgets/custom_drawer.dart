@@ -138,7 +138,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 Container(
                   width: MediaQuery.of(context).size.width,
                   height: 1,
-                  color: ColorConstants.mainColor,
+                  color: ColorConstants.bagColor,
                 ),
               ],
             ),
@@ -152,7 +152,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   },
                   child: const FaIcon(
                     FontAwesomeIcons.squareXmark,
-                    color: ColorConstants.mainColor,
+                    color: Color(0xFF1B1819),
                     size: 35,
                   ),
                 ),
@@ -173,7 +173,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
           Container(
             width: MediaQuery.of(context).size.width,
             height: 1,
-            color: ColorConstants.mainColor,
+            color: ColorConstants.bagColor,
           ),
           const SizedBox(
             height: 15,

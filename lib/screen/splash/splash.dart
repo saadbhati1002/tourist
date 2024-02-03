@@ -71,11 +71,32 @@ class _SplashScreenState extends State<SplashScreen> {
       top: true,
       child: Scaffold(
         backgroundColor: ColorConstants.white,
-        body: Center(
-          child: SizedBox(
-            height: 200,
-            width: MediaQuery.of(context).size.width * .8,
-            child: Image.asset(Images.logoName),
+        body: Container(
+          height: MediaQuery.of(context).size.height * 1,
+          width: MediaQuery.of(context).size.width * 1,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              stops: [0, 2],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color(0xFF433C3D),
+                Color(0xFF1B1819),
+              ],
+            ),
+          ),
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width * .6,
+                  height: MediaQuery.of(context).size.height * .26,
+                  alignment: Alignment.center,
+                  child: Image.asset(Images.logoName),
+                ),
+              ],
+            ),
           ),
         ),
       ),

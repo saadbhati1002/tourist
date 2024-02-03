@@ -50,104 +50,114 @@ class _PasswordScreenState extends State<PasswordScreen> {
           child: Stack(
             fit: StackFit.loose,
             children: [
-              SingleChildScrollView(
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * .05,
-                            ),
-                            Container(
-                              height: MediaQuery.of(context).size.height * .26,
-                              alignment: Alignment.center,
-                              child: Image.asset(Images.logoName),
-                            ),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * .05,
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 25),
-                              child: Text(
-                                "DUBAI WEDDING SYMPOSIUM DUBAI 2024",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w800),
+              Container(
+                height: MediaQuery.of(context).size.height * 1,
+                width: MediaQuery.of(context).size.width * 1,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    stops: [0, 2],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color(0xFF433C3D),
+                      Color(0xFF1B1819),
+                    ],
+                  ),
+                ),
+                child: SingleChildScrollView(
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * .12,
                               ),
-                            ),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * .07,
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 25),
-                              child: Text(
-                                "Enter the password",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w600),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * .6,
+                                    height: MediaQuery.of(context).size.height *
+                                        .26,
+                                    alignment: Alignment.center,
+                                    child: Image.asset(Images.logoName),
+                                  ),
+                                ],
                               ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 25),
-                              child: CustomTextFormField(
-                                controller: password,
-                                isObscureText: isPassword,
-                                hintText: "Enter the password",
-                                context: context,
-                                suffix: GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        isPassword = !isPassword;
-                                      });
-                                    },
-                                    child: Icon(isPassword
-                                        ? Icons.visibility_off
-                                        : Icons.remove_red_eye)),
+                              SizedBox(
+                                height: MediaQuery.of(context).size.height * .1,
                               ),
-                            ),
-                            const SizedBox(
-                              height: 25,
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 25),
-                              child: CommonButton(
-                                width: MediaQuery.of(context).size.width,
-                                onTap: () {
-                                  userLogin();
-                                },
-                                title: "Login",
+                              const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 25),
+                                child: Text(
+                                  "Enter the password",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color: ColorConstants.bagColor,
+                                      fontWeight: FontWeight.w600),
+                                ),
                               ),
-                            )
-                          ],
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 15),
-                          child: SizedBox(
-                            height: 65,
-                            width: 65,
-                            child: Image.asset(Images.vivah),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 25),
+                                child: CustomTextFormField(
+                                  controller: password,
+                                  isObscureText: isPassword,
+                                  hintText: "Enter the password",
+                                  context: context,
+                                  suffix: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          isPassword = !isPassword;
+                                        });
+                                      },
+                                      child: Icon(isPassword
+                                          ? Icons.visibility_off
+                                          : Icons.remove_red_eye)),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 25,
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 25),
+                                child: CommonButton(
+                                  width: MediaQuery.of(context).size.width,
+                                  onTap: () {
+                                    userLogin();
+                                  },
+                                  title: "Login",
+                                ),
+                              )
+                            ],
                           ),
                         ),
-                      )
-                    ],
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 15),
+                            child: SizedBox(
+                              height: 65,
+                              width: 65,
+                              child: Image.asset(Images.vivah),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),

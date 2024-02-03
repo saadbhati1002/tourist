@@ -5,6 +5,7 @@ import 'package:tourist/screen/profile/profile_screen.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:tourist/utility/constant.dart';
 import 'package:tourist/widgets/custom_image_view.dart';
+import 'package:tourist/widgets/gradient_text.dart';
 
 customAppBar(
   key, {
@@ -27,13 +28,13 @@ customAppBar(
         height: 47,
         width: MediaQuery.of(context!).size.width * .6,
         decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            stops: [0.1, 0.7],
+          gradient: LinearGradient(
+            stops: [0, 2],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
             colors: [
-              ColorConstants.gradientColor,
-              ColorConstants.mainColor,
+              Color(0xFF433C3D),
+              Color(0xFF1B1819),
             ],
           ),
           borderRadius: BorderRadius.circular(10),
@@ -56,14 +57,14 @@ customAppBar(
               ),
               SizedBox(
                 width: MediaQuery.of(context).size.width * .37,
-                child: Text(
+                child: GradientText(
                   getUserName(),
-                  maxLines: 1,
-                  style: TextStyle(
-                      fontFamily: "inter",
-                      fontSize: 14,
-                      color: ColorConstants.white,
-                      fontWeight: FontWeight.w700),
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w600),
+                  gradient: LinearGradient(colors: [
+                    Color(0xFFF0D4B6),
+                    Color(0xFF6C4D34),
+                  ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
                 ),
               ),
             ],
@@ -78,9 +79,9 @@ customAppBar(
           onTap: () {
             key.currentState!.openEndDrawer();
           },
-          child: const FaIcon(
+          child: FaIcon(
             FontAwesomeIcons.bars,
-            color: ColorConstants.mainColor,
+            color: Color(0xFF1B1819),
           ),
         ),
       )

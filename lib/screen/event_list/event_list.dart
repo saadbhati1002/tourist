@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:gradient_icon/gradient_icon.dart';
 import 'package:skeletons/skeletons.dart';
 import 'package:tourist/api/repository/event/event.dart';
 import 'package:tourist/models/common.dart';
@@ -12,6 +12,7 @@ import 'package:tourist/utility/constant.dart';
 import 'package:tourist/widgets/custom_app_bar.dart';
 import 'package:tourist/widgets/custom_drawer.dart';
 import 'package:tourist/widgets/custom_event_list.dart';
+import 'package:tourist/widgets/gradient_text.dart';
 import 'package:tourist/widgets/show_progress_bar.dart';
 
 class EventListScreen extends StatefulWidget {
@@ -132,33 +133,63 @@ class _EventListScreenState extends State<EventListScreen> {
                     height: 42,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: selectedCalender == 0
-                          ? ColorConstants.mainColor
-                          : ColorConstants.greySimple,
+                      gradient: LinearGradient(
+                        stops: [0, 2],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: selectedCalender == 0
+                            ? [
+                                Color(0xFF433C3D),
+                                Color(0xFF1B1819),
+                              ]
+                            : [
+                                ColorConstants.white,
+                                ColorConstants.white,
+                              ],
+                      ),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        FaIcon(
-                          FontAwesomeIcons.calendarPlus,
-                          color: selectedCalender == 0
-                              ? ColorConstants.white
-                              : ColorConstants.greyDark,
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 15),
+                          child: GradientIcon(
+                            icon: Icons.edit_calendar_outlined,
+                            gradient: LinearGradient(
+                                colors: selectedCalender == 0
+                                    ? [
+                                        Color(0xFFF0D4B6),
+                                        Color(0xFF6C4D34),
+                                      ]
+                                    : [
+                                        ColorConstants.greyDark,
+                                        ColorConstants.greyDark,
+                                      ],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter),
+                            size: 25,
+                          ),
                         ),
                         const SizedBox(
                           width: 10,
                         ),
-                        Text(
-                          'My Calendar',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'inter',
-                            color: selectedCalender == 0
-                                ? ColorConstants.white
-                                : ColorConstants.greyDark,
-                          ),
+                        GradientText(
+                          "My Calendar",
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w600),
+                          gradient: LinearGradient(
+                              colors: selectedCalender == 0
+                                  ? [
+                                      Color(0xFFF0D4B6),
+                                      Color(0xFF6C4D34),
+                                    ]
+                                  : [
+                                      ColorConstants.greyDark,
+                                      ColorConstants.greyDark,
+                                    ],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter),
                         ),
                       ],
                     ),
@@ -184,33 +215,63 @@ class _EventListScreenState extends State<EventListScreen> {
                     height: 42,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: selectedCalender == 1
-                          ? ColorConstants.mainColor
-                          : ColorConstants.greySimple,
+                      gradient: LinearGradient(
+                        stops: [0, 2],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: selectedCalender == 1
+                            ? [
+                                Color(0xFF433C3D),
+                                Color(0xFF1B1819),
+                              ]
+                            : [
+                                ColorConstants.white,
+                                ColorConstants.white,
+                              ],
+                      ),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        FaIcon(
-                          FontAwesomeIcons.listCheck,
-                          color: selectedCalender == 1
-                              ? ColorConstants.white
-                              : ColorConstants.greyDark,
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 15),
+                          child: GradientIcon(
+                            icon: Icons.list_alt,
+                            gradient: LinearGradient(
+                                colors: selectedCalender == 1
+                                    ? [
+                                        Color(0xFFF0D4B6),
+                                        Color(0xFF6C4D34),
+                                      ]
+                                    : [
+                                        ColorConstants.greyDark,
+                                        ColorConstants.greyDark,
+                                      ],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter),
+                            size: 25,
+                          ),
                         ),
                         const SizedBox(
                           width: 10,
                         ),
-                        Text(
-                          'Event Schedule',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'inter',
-                            color: selectedCalender == 1
-                                ? ColorConstants.white
-                                : ColorConstants.greyDark,
-                          ),
+                        GradientText(
+                          "Event Calender",
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w600),
+                          gradient: LinearGradient(
+                              colors: selectedCalender == 1
+                                  ? [
+                                      Color(0xFFF0D4B6),
+                                      Color(0xFF6C4D34),
+                                    ]
+                                  : [
+                                      ColorConstants.greyDark,
+                                      ColorConstants.greyDark,
+                                    ],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter),
                         ),
                       ],
                     ),
@@ -293,7 +354,7 @@ class _EventListScreenState extends State<EventListScreen> {
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
-                            return notificationSkeleton();
+                            return eventSkeleton();
                           },
                         )
                       : eventData.isEmpty
@@ -421,7 +482,7 @@ class _EventListScreenState extends State<EventListScreen> {
     );
   }
 
-  Widget notificationSkeleton() {
+  Widget eventSkeleton() {
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: 5),
         child: Material(
@@ -432,7 +493,6 @@ class _EventListScreenState extends State<EventListScreen> {
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              border: Border.all(width: 0.9, color: ColorConstants.mainColor),
             ),
             padding:
                 const EdgeInsets.only(right: 10, left: 10, top: 10, bottom: 10),
@@ -474,6 +534,20 @@ class _EventListScreenState extends State<EventListScreen> {
         height: 55,
         width: 55,
         decoration: BoxDecoration(
+          gradient: LinearGradient(
+            stops: [0, 2],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: index == selectedData
+                ? [
+                    Color(0xFF433C3D),
+                    Color(0xFF1B1819),
+                  ]
+                : [
+                    ColorConstants.white,
+                    ColorConstants.white,
+                  ],
+          ),
           color:
               index == selectedData ? ColorConstants.mainColor : Colors.white,
           borderRadius: BorderRadius.circular(10),
@@ -481,16 +555,19 @@ class _EventListScreenState extends State<EventListScreen> {
         alignment: Alignment.center,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 7),
-          child: Text(
+          child: GradientText(
             title!,
             textAlign: TextAlign.center,
-            style: TextStyle(
-                color: index == selectedData
-                    ? ColorConstants.white
-                    : ColorConstants.black,
-                fontSize: 14,
-                fontFamily: 'inter',
-                fontWeight: FontWeight.w800),
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            gradient: LinearGradient(
+                colors: index == selectedData
+                    ? [
+                        Color(0xFFF0D4B6),
+                        Color(0xFF6C4D34),
+                      ]
+                    : [ColorConstants.black, ColorConstants.black],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter),
           ),
         ),
       ),

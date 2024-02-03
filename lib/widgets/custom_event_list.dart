@@ -25,11 +25,21 @@ Widget eventListing({
       child: Container(
         width: MediaQuery.of(context!).size.width,
         decoration: BoxDecoration(
-          color: isEventEnded == true
-              ? ColorConstants.greyLight.withOpacity(0.6)
-              : ColorConstants.white,
+          gradient: LinearGradient(
+            stops: [0, 2],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: isEventEnded == true
+                ? [
+                    ColorConstants.greyLight.withOpacity(0.6),
+                    ColorConstants.greyLight.withOpacity(0.6)
+                  ]
+                : [
+                    Color(0xFFF8A57E),
+                    Color(0xFFBB6358),
+                  ],
+          ),
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(width: 0.9, color: ColorConstants.mainColor),
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 10),
@@ -42,6 +52,20 @@ Widget eventListing({
                   Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
+                        gradient: LinearGradient(
+                          stops: [0, 2],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: isEventEnded == true
+                              ? [
+                                  ColorConstants.white.withOpacity(0.6),
+                                  ColorConstants.white.withOpacity(0.6)
+                                ]
+                              : [
+                                  Color(0xFF433C3D),
+                                  Color(0xFF1B1819),
+                                ],
+                        ),
                         color: isEventEnded == true
                             ? ColorConstants.white.withOpacity(0.6)
                             : ColorConstants.greySimple),
@@ -55,7 +79,7 @@ Widget eventListing({
                             fontSize: 14,
                             color: isEventEnded == true
                                 ? ColorConstants.greyLight
-                                : ColorConstants.black,
+                                : ColorConstants.bagColor,
                             fontWeight: FontWeight.w700,
                             fontFamily: 'inter'),
                       ),
@@ -64,9 +88,20 @@ Widget eventListing({
                   eventData.eventType != null
                       ? Container(
                           decoration: BoxDecoration(
-                            color: eventData.eventType == "Event"
-                                ? ColorConstants.teal
-                                : ColorConstants.eventBoxColor,
+                            gradient: LinearGradient(
+                              stops: [0, 1],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: eventData.eventType == "Event"
+                                  ? [
+                                      Color(0xFF85153E),
+                                      Color(0xFF30141D),
+                                    ]
+                                  : [
+                                      ColorConstants.eventBoxColor,
+                                      ColorConstants.eventBoxColor,
+                                    ],
+                            ),
                             borderRadius: BorderRadius.circular(5),
                           ),
                           // alignment: Alignment.center,
@@ -294,7 +329,15 @@ Widget eventListing({
                                         child: Container(
                                           height: 32,
                                           decoration: BoxDecoration(
-                                            color: ColorConstants.blueColor,
+                                            gradient: LinearGradient(
+                                              stops: [0, 2],
+                                              begin: Alignment.topLeft,
+                                              end: Alignment.bottomRight,
+                                              colors: [
+                                                Color(0xFF433C3D),
+                                                Color(0xFF1B1819),
+                                              ],
+                                            ),
                                             borderRadius:
                                                 BorderRadius.circular(5),
                                           ),
@@ -332,10 +375,21 @@ Widget eventListing({
                                     child: Container(
                                       height: 32,
                                       decoration: BoxDecoration(
-                                        color:
-                                            eventData.isAttendingEvent == true
-                                                ? ColorConstants.mainColor
-                                                : ColorConstants.greyLight,
+                                        gradient: LinearGradient(
+                                          stops: [0, 1],
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                          colors:
+                                              eventData.isAttendingEvent == true
+                                                  ? [
+                                                      Color(0xFF85153E),
+                                                      Color(0xFF30141D),
+                                                    ]
+                                                  : [
+                                                      ColorConstants.white,
+                                                      ColorConstants.white,
+                                                    ],
+                                        ),
                                         borderRadius: BorderRadius.circular(5),
                                       ),
                                       alignment: Alignment.center,
@@ -346,7 +400,11 @@ Widget eventListing({
                                           children: [
                                             Icon(
                                               Icons.check_circle,
-                                              color: ColorConstants.white,
+                                              color:
+                                                  eventData.isAttendingEvent ==
+                                                          true
+                                                      ? ColorConstants.white
+                                                      : ColorConstants.greyDark,
                                               size: 20,
                                             ),
                                             const SizedBox(
@@ -355,10 +413,15 @@ Widget eventListing({
                                             Text(
                                               'Attending',
                                               style: TextStyle(
-                                                  fontSize: 12,
-                                                  fontFamily: 'inter',
-                                                  fontWeight: FontWeight.w500,
-                                                  color: ColorConstants.white),
+                                                fontSize: 12,
+                                                fontFamily: 'inter',
+                                                fontWeight: FontWeight.w500,
+                                                color: eventData
+                                                            .isAttendingEvent ==
+                                                        true
+                                                    ? ColorConstants.white
+                                                    : ColorConstants.greyDark,
+                                              ),
                                             )
                                           ],
                                         ),
@@ -374,15 +437,29 @@ Widget eventListing({
                                 height: 32,
                                 width: 40,
                                 decoration: BoxDecoration(
-                                  color: eventData.isSavedToMyCalender == true
-                                      ? ColorConstants.mainColor
-                                      : ColorConstants.greyLight,
+                                  gradient: LinearGradient(
+                                    stops: [0, 1],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors:
+                                        eventData.isSavedToMyCalender == true
+                                            ? [
+                                                Color(0xFF85153E),
+                                                Color(0xFF30141D),
+                                              ]
+                                            : [
+                                                ColorConstants.white,
+                                                ColorConstants.white,
+                                              ],
+                                  ),
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                                 alignment: Alignment.center,
                                 child: Icon(
                                   Icons.calendar_month,
-                                  color: ColorConstants.white,
+                                  color: eventData.isSavedToMyCalender == true
+                                      ? ColorConstants.white
+                                      : ColorConstants.greyDark,
                                   size: 20,
                                 ),
                               ),

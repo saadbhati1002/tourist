@@ -4,6 +4,7 @@ import 'package:tourist/models/user/user_model.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:tourist/utility/constant.dart';
 import 'package:tourist/widgets/custom_image_view.dart';
+import 'package:gradient_icon/gradient_icon.dart';
 
 class UserListData extends StatefulWidget {
   final UserData? userData;
@@ -58,6 +59,31 @@ class _UserListDataState extends State<UserListData> {
                                   ),
                                   bottomRight: Radius.circular(5),
                                 ),
+                                gradient: LinearGradient(
+                                  stops: [0, 1],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: widget.userData!.userType ==
+                                          "Delegate"
+                                      ? [
+                                          Color(0xFF433C3D),
+                                          Color(0xFF1B1819),
+                                        ]
+                                      : widget.userData!.userType == 'Vendor'
+                                          ? [
+                                              ColorConstants.bagColor,
+                                              ColorConstants.bagColor,
+                                            ]
+                                          : widget.userData!.userType == 'Media'
+                                              ? [
+                                                  Color(0xFFF8A57E),
+                                                  Color(0xFFBB6358),
+                                                ]
+                                              : [
+                                                  Color(0xFF85153E),
+                                                  Color(0xFF30141D),
+                                                ],
+                                ),
                                 color: widget.userData!.userType == "Delegate"
                                     ? ColorConstants.delegateColor
                                     : widget.userData!.userType == 'Vendor'
@@ -90,7 +116,7 @@ class _UserListDataState extends State<UserListData> {
             SizedBox(
               width: widget.isFromChat == true
                   ? MediaQuery.of(context).size.width * .47
-                  : MediaQuery.of(context).size.width * .6,
+                  : MediaQuery.of(context).size.width * .63,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -184,23 +210,34 @@ class _UserListDataState extends State<UserListData> {
                       )
                     : GestureDetector(
                         onTap: widget.onChatTap,
-                        child: Material(
-                          borderRadius: BorderRadius.circular(5),
-                          elevation: 1,
-                          child: Container(
-                            height: 37,
-                            decoration: BoxDecoration(
-                              color: ColorConstants.white,
-                              borderRadius: BorderRadius.circular(5),
+                        child: Container(
+                          height: 37,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              stops: [0, 2],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Color(0xFF433C3D),
+                                Color(0xFF1B1819),
+                              ],
                             ),
-                            alignment: Alignment.center,
-                            child: const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              child: FaIcon(
-                                FontAwesomeIcons.solidCommentDots,
-                                size: 25,
-                                color: ColorConstants.mainColor,
-                              ),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          alignment: Alignment.center,
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                left: 10, right: 10, bottom: 14),
+                            child: GradientIcon(
+                              icon: Icons.chat,
+                              gradient: LinearGradient(
+                                  colors: [
+                                    Color(0xFFF0D4B6),
+                                    Color(0xFF6C4D34),
+                                  ],
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter),
+                              size: 20,
                             ),
                           ),
                         ),

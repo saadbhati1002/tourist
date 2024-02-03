@@ -67,7 +67,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                         FontAwesomeIcons.houseUser,
                         size: 22,
                         color: _pageIndex == 0
-                            ? ColorConstants.white
+                            ? ColorConstants.bagColor
                             : ColorConstants.greyDark,
                       ),
                       0,
@@ -77,7 +77,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                         FontAwesomeIcons.circleNodes,
                         size: 22,
                         color: _pageIndex == 1
-                            ? ColorConstants.white
+                            ? ColorConstants.bagColor
                             : ColorConstants.greyDark,
                       ),
                       1,
@@ -87,7 +87,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                         FontAwesomeIcons.calendarDay,
                         size: 22,
                         color: _pageIndex == 2
-                            ? ColorConstants.white
+                            ? ColorConstants.bagColor
                             : ColorConstants.greyDark,
                       ),
                       2,
@@ -97,7 +97,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                         FontAwesomeIcons.solidBell,
                         size: 22,
                         color: _pageIndex == 3
-                            ? ColorConstants.white
+                            ? ColorConstants.bagColor
                             : ColorConstants.greyDark,
                       ),
                       3,
@@ -125,42 +125,37 @@ class _DashBoardScreenState extends State<DashBoardScreen>
             width: MediaQuery.of(context).size.width * .37,
             child: Padding(
               padding: const EdgeInsets.only(top: 12, bottom: 12, left: 5),
-              child: Material(
-                borderRadius: BorderRadius.circular(10),
-                elevation: 3,
-                shadowColor: Colors.yellowAccent,
-                child: Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    gradient: const LinearGradient(
-                      begin: Alignment.topRight,
-                      end: Alignment.bottomLeft,
-                      stops: [0.1, 0.4],
-                      colors: [
-                        ColorConstants.gradientColor,
-                        ColorConstants.mainColor,
-                      ],
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      icon!,
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        title!,
-                        maxLines: 1,
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontFamily: "inter",
-                            color: ColorConstants.white,
-                            fontWeight: FontWeight.bold),
-                      )
+              child: Container(
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  gradient: LinearGradient(
+                    stops: [0, 1],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color(0xFF85153E),
+                      Color(0xFF30141D),
                     ],
                   ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    icon!,
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      title!,
+                      maxLines: 1,
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontFamily: "inter",
+                          color: ColorConstants.bagColor,
+                          fontWeight: FontWeight.bold),
+                    )
+                  ],
                 ),
               ),
             ),

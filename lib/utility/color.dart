@@ -18,4 +18,5 @@ class ColorConstants {
   static const Color greyDark = Color(0xFFA2A2A2);
   static const Color teal = Color(0xFF00909A);
   static const Color greenLight = Color(0xFFF9FFE7);
+  static const Color bagColor = Color(0xFFFFF1DD);
 }

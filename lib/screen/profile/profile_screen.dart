@@ -159,15 +159,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 width: MediaQuery.of(context).size.width,
                                 child: Stack(
                                   children: [
-                                    SizedBox(
+                                    Container(
                                       height:
                                           MediaQuery.of(context).size.height *
                                               .3,
                                       width:
                                           MediaQuery.of(context).size.width * 1,
-                                      child: Image.asset(
-                                        Images.profileBox,
-                                        fit: BoxFit.fill,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        gradient: LinearGradient(
+                                          stops: [0, 1],
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                          colors: [
+                                            Color(0xFF85153E),
+                                            Color(0xFF30141D),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                     SizedBox(
@@ -226,6 +234,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                                               ),
                                                                               bottomRight: Radius.circular(5),
                                                                             ),
+                                                                            gradient: LinearGradient(
+                                                                              stops: [
+                                                                                0,
+                                                                                1
+                                                                              ],
+                                                                              begin: Alignment.topLeft,
+                                                                              end: Alignment.bottomRight,
+                                                                              colors: userData!.userType == "Delegate"
+                                                                                  ? [
+                                                                                      Color(0xFF433C3D),
+                                                                                      Color(0xFF1B1819),
+                                                                                    ]
+                                                                                  : userData!.userType == 'Vendor'
+                                                                                      ? [
+                                                                                          ColorConstants.bagColor,
+                                                                                          ColorConstants.bagColor,
+                                                                                        ]
+                                                                                      : userData!.userType == 'Media'
+                                                                                          ? [
+                                                                                              Color(0xFFF8A57E),
+                                                                                              Color(0xFFBB6358),
+                                                                                            ]
+                                                                                          : [
+                                                                                              Color(0xFF85153E),
+                                                                                              Color(0xFF30141D),
+                                                                                            ],
+                                                                            ),
                                                                             color: userData!.userType == "Delegate"
                                                                                 ? ColorConstants.delegateColor
                                                                                 : userData!.userType == 'Vendor'
@@ -243,7 +278,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                                               fontSize: 10,
                                                                               fontWeight: FontWeight.w700,
                                                                               fontFamily: 'inter',
-                                                                              color: userData!.userType == "Delegate" || userData!.userType == "Media" ? ColorConstants.white : ColorConstants.black),
+                                                                              color: userData!.userType == "Delegate" || userData!.userType == "Media" ? ColorConstants.bagColor : ColorConstants.black),
                                                                         ),
                                                                       ),
                                                                     )
@@ -269,7 +304,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                                 fontSize: 12,
                                                                 color:
                                                                     ColorConstants
-                                                                        .white,
+                                                                        .bagColor,
                                                                 fontFamily:
                                                                     'inter',
                                                                 fontWeight:
@@ -288,7 +323,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                     style: TextStyle(
                                                         fontSize: 14,
                                                         color: ColorConstants
-                                                            .white,
+                                                            .bagColor,
                                                         fontFamily: 'inter',
                                                         fontWeight:
                                                             FontWeight.w500),
@@ -298,7 +333,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                     style: TextStyle(
                                                         fontSize: 12,
                                                         color: ColorConstants
-                                                            .white,
+                                                            .bagColor,
                                                         fontFamily: 'inter',
                                                         fontWeight:
                                                             FontWeight.w500),
@@ -316,7 +351,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                     style: TextStyle(
                                                         fontSize: 12,
                                                         color: ColorConstants
-                                                            .white,
+                                                            .bagColor,
                                                         fontFamily: 'inter',
                                                         fontWeight:
                                                             FontWeight.w500),
@@ -332,7 +367,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                             fontSize: 12,
                                                             color:
                                                                 ColorConstants
-                                                                    .white,
+                                                                    .bagColor,
                                                             fontFamily: 'inter',
                                                             fontWeight:
                                                                 FontWeight
@@ -348,7 +383,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                             fontSize: 12,
                                                             color:
                                                                 ColorConstants
-                                                                    .white,
+                                                                    .bagColor,
                                                             fontFamily: 'inter',
                                                             fontWeight:
                                                                 FontWeight
@@ -383,7 +418,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           size: 18,
                                           color:
                                               (userData!.isUserFavorite == true)
-                                                  ? ColorConstants.white
+                                                  ? ColorConstants.bagColor
                                                   : ColorConstants.black),
                                       'Favorite',
                                       () {
@@ -397,7 +432,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     customButtons(
                                       FaIcon(
                                         FontAwesomeIcons.floppyDisk,
-                                        color: ColorConstants.white,
+                                        color: ColorConstants.bagColor,
                                         size: 18,
                                       ),
                                       'Save as contact',
@@ -472,7 +507,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       FaIcon(
                                         FontAwesomeIcons.penToSquare,
                                         size: 18,
-                                        color: ColorConstants.white,
+                                        color: ColorConstants.bagColor,
                                       ),
                                       'Edit profile',
                                       () {
@@ -483,7 +518,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       FaIcon(
                                         FontAwesomeIcons.qrcode,
                                         size: 18,
-                                        color: ColorConstants.white,
+                                        color: ColorConstants.bagColor,
                                       ),
                                       'Share Card',
                                       () {
@@ -524,11 +559,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: Container(
         height: 35,
         decoration: BoxDecoration(
-          color: ColorConstants.mainColor,
+          gradient: LinearGradient(
+            stops: [0, 1],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color(0xFF85153E),
+              Color(0xFF30141D),
+            ],
+          ),
           borderRadius: BorderRadius.circular(5),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -542,7 +585,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 style: TextStyle(
                   fontSize: 12,
                   fontFamily: 'inter',
-                  color: ColorConstants.white,
+                  color: ColorConstants.bagColor,
                   fontWeight: FontWeight.w600,
                 ),
               )
@@ -559,9 +602,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: Container(
         height: 35,
         decoration: BoxDecoration(
-          color: (userData!.isUserFavorite == true)
-              ? ColorConstants.mainColor
-              : ColorConstants.greyLight,
+          gradient: LinearGradient(
+            stops: [0, 1],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: (userData!.isUserFavorite == true)
+                ? [
+                    Color(0xFF85153E),
+                    Color(0xFF30141D),
+                  ]
+                : [
+                    ColorConstants.white,
+                    ColorConstants.white,
+                  ],
+          ),
           borderRadius: BorderRadius.circular(5),
         ),
         child: Padding(
@@ -580,7 +634,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   fontSize: 12,
                   fontFamily: 'inter',
                   color: (userData!.isUserFavorite == true)
-                      ? ColorConstants.white
+                      ? ColorConstants.bagColor
                       : ColorConstants.black,
                   fontWeight: FontWeight.w600,
                 ),
@@ -736,7 +790,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       MediaQuery.of(context).size.width * .65,
                                   height: 35,
                                   decoration: BoxDecoration(
-                                      color: ColorConstants.black,
+                                      gradient: LinearGradient(
+                                        stops: [0, 1],
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        colors: [
+                                          Color(0xFF85153E),
+                                          Color(0xFF30141D),
+                                        ],
+                                      ),
                                       borderRadius: BorderRadius.circular(7)),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,

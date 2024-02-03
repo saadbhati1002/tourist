@@ -108,9 +108,20 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: Container(
                               decoration: BoxDecoration(
-                                color: widget.eventData!.eventType == "Event"
-                                    ? ColorConstants.blueColor
-                                    : ColorConstants.eventBoxColor,
+                                gradient: LinearGradient(
+                                  stops: [0, 1],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: widget.eventData!.eventType == "Event"
+                                      ? [
+                                          Color(0xFF85153E),
+                                          Color(0xFF30141D),
+                                        ]
+                                      : [
+                                          ColorConstants.eventBoxColor,
+                                          ColorConstants.eventBoxColor,
+                                        ],
+                                ),
                                 borderRadius: BorderRadius.circular(5),
                               ),
                               // alignment: Alignment.center,
@@ -225,6 +236,22 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                                     height: 32,
                                     width: 40,
                                     decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        stops: [0, 1],
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        colors: widget.eventData!
+                                                    .isSavedToMyCalender ==
+                                                true
+                                            ? [
+                                                Color(0xFF85153E),
+                                                Color(0xFF30141D),
+                                              ]
+                                            : [
+                                                ColorConstants.white,
+                                                ColorConstants.white,
+                                              ],
+                                      ),
                                       color: widget.eventData!
                                                   .isSavedToMyCalender ==
                                               true
@@ -235,7 +262,11 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                                     alignment: Alignment.center,
                                     child: Icon(
                                       Icons.calendar_month,
-                                      color: ColorConstants.white,
+                                      color: widget.eventData!
+                                                  .isSavedToMyCalender ==
+                                              true
+                                          ? ColorConstants.white
+                                          : ColorConstants.greyDark,
                                       size: 20,
                                     ),
                                   ),
@@ -255,6 +286,22 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                                   child: Container(
                                     height: 32,
                                     decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        stops: [0, 1],
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        colors: widget.eventData!
+                                                    .isAttendingEvent ==
+                                                true
+                                            ? [
+                                                Color(0xFF85153E),
+                                                Color(0xFF30141D),
+                                              ]
+                                            : [
+                                                ColorConstants.white,
+                                                ColorConstants.white,
+                                              ],
+                                      ),
                                       color:
                                           widget.eventData!.isAttendingEvent ==
                                                   true
@@ -270,7 +317,11 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                                         children: [
                                           Icon(
                                             Icons.check_circle,
-                                            color: ColorConstants.white,
+                                            color: widget.eventData!
+                                                        .isAttendingEvent ==
+                                                    true
+                                                ? ColorConstants.white
+                                                : ColorConstants.greyDark,
                                             size: 20,
                                           ),
                                           const SizedBox(
@@ -279,10 +330,15 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                                           Text(
                                             'Attending',
                                             style: TextStyle(
-                                                fontSize: 12,
-                                                fontFamily: 'inter',
-                                                fontWeight: FontWeight.w500,
-                                                color: ColorConstants.white),
+                                              fontSize: 12,
+                                              fontFamily: 'inter',
+                                              fontWeight: FontWeight.w500,
+                                              color: widget.eventData!
+                                                          .isAttendingEvent ==
+                                                      true
+                                                  ? ColorConstants.white
+                                                  : ColorConstants.greyDark,
+                                            ),
                                           )
                                         ],
                                       ),

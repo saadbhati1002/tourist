@@ -18,6 +18,7 @@ import 'package:tourist/widgets/custom_drawer.dart';
 import 'package:tourist/widgets/custom_user_list.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:card_swiper/card_swiper.dart';
+import 'package:tourist/widgets/gradient_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -165,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        customHeadingText(title: 'Speaker'),
+                        customHeadingText(title: 'SPEAKERS'),
                         const SizedBox(
                           height: 10,
                         ),
@@ -193,7 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       "Quick Notes",
                       FaIcon(
                         FontAwesomeIcons.solidClipboard,
-                        color: ColorConstants.white,
+                        color: ColorConstants.bagColor,
                         size: 30,
                       ),
                       () {
@@ -206,7 +207,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       "Leader Board",
                       FaIcon(
                         FontAwesomeIcons.trophy,
-                        color: ColorConstants.white,
+                        color: ColorConstants.bagColor,
                         size: 30,
                       ),
                       () {
@@ -217,7 +218,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       "Guest List",
                       FaIcon(
                         FontAwesomeIcons.users,
-                        color: ColorConstants.white,
+                        color: ColorConstants.bagColor,
                         size: 30,
                       ),
                       () {
@@ -320,7 +321,15 @@ class _HomeScreenState extends State<HomeScreen> {
         height: 120,
         width: MediaQuery.of(context).size.width * .3,
         decoration: BoxDecoration(
-            color: ColorConstants.mainColor,
+            gradient: LinearGradient(
+              stops: [0, 1],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color(0xFF85153E),
+                Color(0xFF30141D),
+              ],
+            ),
             borderRadius: BorderRadius.circular(10)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -338,7 +347,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
                     fontFamily: "inter",
-                    color: ColorConstants.white),
+                    color: ColorConstants.bagColor),
               ),
             )
           ],
@@ -350,13 +359,13 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget customHeadingText({String? title}) {
     return Padding(
       padding: const EdgeInsets.only(left: 15),
-      child: Text(
+      child: GradientText(
         title!,
-        style: TextStyle(
-            color: ColorConstants.black,
-            fontSize: 14,
-            fontFamily: 'inter',
-            fontWeight: FontWeight.w600),
+        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+        gradient: LinearGradient(colors: [
+          Color(0xFFF0D4B6),
+          Color(0xFF6C4D34),
+        ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
       ),
     );
   }

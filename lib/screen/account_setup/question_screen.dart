@@ -10,6 +10,7 @@ import 'package:tourist/utility/color.dart';
 import 'package:tourist/utility/constant.dart';
 import 'package:tourist/utility/images.dart';
 import 'package:tourist/widgets/common_button.dart';
+import 'package:tourist/widgets/gradient_text.dart';
 import 'package:tourist/widgets/show_progress_bar.dart';
 
 class QuestionScreen extends StatefulWidget {
@@ -32,78 +33,88 @@ class _QuestionScreenState extends State<QuestionScreen> {
         body: Stack(
           fit: StackFit.loose,
           children: [
-            SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * .12,
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    child: Image.asset(Images.dubai),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * .045,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 25),
-                    child: Text(
-                      "DUBAI WEDDING SYMPOSIUM DUBAI 2024",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w800),
+            Container(
+              height: MediaQuery.of(context).size.height * 1,
+              width: MediaQuery.of(context).size.width * 1,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  stops: [0, 2],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Color(0xFF433C3D),
+                    Color(0xFF1B1819),
+                  ],
+                ),
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * .07,
                     ),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * .08,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25),
-                    child: Text(
-                      pageIndex == 1
-                          ? "Whats your role?"
-                          : "Question if ${AppConstant.selectedRole}",
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width * .6,
+                          alignment: Alignment.center,
+                          child: Image.asset(Images.logoName),
+                        ),
+                      ],
                     ),
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * .5,
-                    child: ListView.builder(
-                      itemCount: pageIndex == 1
-                          ? AppConstant.roleType.length
-                          : AppConstant.rolesSubRole.length,
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return optionBox(
-                            index: index,
-                            title: pageIndex == 1
-                                ? AppConstant.roleType[index]
-                                : AppConstant.rolesSubRole[index]);
-                      },
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * .07,
                     ),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * .07,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25),
-                    child: CommonButton(
-                      width: MediaQuery.of(context).size.width,
-                      onTap: () {
-                        checkNavigation();
-                      },
-                      title: "Proceed",
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
+                      child: Text(
+                        pageIndex == 1
+                            ? "Whats your role?"
+                            : "Question if ${AppConstant.selectedRole}",
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            fontSize: 16,
+                            color: ColorConstants.bagColor,
+                            fontWeight: FontWeight.w600),
+                      ),
                     ),
-                  )
-                ],
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * .5,
+                      child: ListView.builder(
+                        itemCount: pageIndex == 1
+                            ? AppConstant.roleType.length
+                            : AppConstant.rolesSubRole.length,
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return optionBox(
+                              index: index,
+                              title: pageIndex == 1
+                                  ? AppConstant.roleType[index]
+                                  : AppConstant.rolesSubRole[index]);
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * .07,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
+                      child: CommonButton(
+                        width: MediaQuery.of(context).size.width,
+                        onTap: () {
+                          checkNavigation();
+                        },
+                        title: "Proceed",
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
             Align(
@@ -139,20 +150,46 @@ class _QuestionScreenState extends State<QuestionScreen> {
       },
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 10),
-        height: 34,
+        height: 40,
         width: MediaQuery.of(context).size.width * .1,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: getColorBoxCOlor(title: title)),
-        alignment: Alignment.center,
-        child: Text(
-          title!,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              fontSize: 16,
-              color: getTextColor(title: title),
-              fontWeight: FontWeight.w600),
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
+          gradient: AppConstant.selectedRole == title
+              ? LinearGradient(
+                  stops: [0, 1],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Color(0xFF85153E),
+                    Color(0xFF30141D),
+                  ],
+                )
+              : LinearGradient(
+                  colors: [ColorConstants.white, ColorConstants.white],
+                ),
         ),
+        alignment: Alignment.center,
+        child: AppConstant.selectedRole == title
+            ? Text(
+                title!,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 16,
+                    color: ColorConstants.bagColor,
+                    fontWeight: FontWeight.w600),
+              )
+            : GradientText(
+                title!,
+                style:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                gradient: LinearGradient(
+                  colors: [
+                    Color(0xFFF8A57E),
+                    Color(0xFFBB6358),
+                  ],
+                ),
+              ),
       ),
     );
   }

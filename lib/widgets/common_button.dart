@@ -16,13 +16,22 @@ class CommonButton extends StatelessWidget {
         width: width,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
+            gradient: LinearGradient(
+              stops: [0, 1],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color(0xFF85153E),
+                Color(0xFF30141D),
+              ],
+            ),
             color: ColorConstants.black),
         alignment: Alignment.center,
         child: Text(
           title!,
           style: TextStyle(
               fontSize: 16,
-              color: ColorConstants.white,
+              color: ColorConstants.bagColor,
               fontFamily: "inter",
               fontWeight: FontWeight.w900),
         ),
