@@ -175,9 +175,21 @@ class _UserListDataState extends State<UserListData> {
                           child: Container(
                             height: 37,
                             decoration: BoxDecoration(
-                              color: (widget.userData!.isUserFavorite == true)
-                                  ? ColorConstants.mainColor
-                                  : ColorConstants.greyLight,
+                              gradient: LinearGradient(
+                                stops: [0, 2],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors:
+                                    (widget.userData!.isUserFavorite == true)
+                                        ? [
+                                            Color(0xFF85153E),
+                                            Color(0xFF30141D),
+                                          ]
+                                        : [
+                                            ColorConstants.greyLight,
+                                            ColorConstants.greyLight
+                                          ],
+                              ),
                               borderRadius: BorderRadius.circular(5),
                             ),
                             alignment: Alignment.center,

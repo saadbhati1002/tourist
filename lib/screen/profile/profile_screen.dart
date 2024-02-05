@@ -257,8 +257,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                                                               Color(0xFFBB6358),
                                                                                             ]
                                                                                           : [
-                                                                                              Color(0xFF85153E),
-                                                                                              Color(0xFF30141D),
+                                                                                              ColorConstants.white,
+                                                                                              ColorConstants.white,
                                                                                             ],
                                                                             ),
                                                                             color: userData!.userType == "Delegate"
@@ -476,7 +476,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       FaIcon(
                                         FontAwesomeIcons.solidCommentDots,
                                         size: 18,
-                                        color: ColorConstants.white,
+                                        color: ColorConstants.bagColor,
                                       ),
                                       'Chat',
                                       () async {

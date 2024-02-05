@@ -14,6 +14,7 @@ import 'package:tourist/widgets/app_bar_back.dart';
 import 'package:tourist/widgets/common_text_field.dart';
 import 'package:tourist/widgets/custom_user_list.dart';
 import 'package:intl/intl.dart';
+import 'package:tourist/widgets/gradient_text.dart';
 
 class ChatScreen extends StatefulWidget {
   final UserData? userData;
@@ -313,13 +314,13 @@ class _ChatScreenState extends State<ChatScreen> {
           padding: const EdgeInsets.only(top: 10),
           child: Container(
               decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                  stops: [0.1, 0.7],
+                gradient: LinearGradient(
+                  stops: [0, 2],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                   colors: [
-                    ColorConstants.gradientColor,
-                    ColorConstants.mainColor,
+                    Color(0xFF433C3D),
+                    Color(0xFF1B1819),
                   ],
                 ),
                 borderRadius: BorderRadius.circular(10),
@@ -335,17 +336,20 @@ class _ChatScreenState extends State<ChatScreen> {
                       chatHistory[index].message ?? '',
                       style: const TextStyle(
                           fontSize: 14,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500),
+                          color: ColorConstants.bagColor,
+                          fontWeight: FontWeight.w700),
                     ),
-                    Text(
+                    GradientText(
                       chatHistory[index].timestamp ?? "",
-                      maxLines: 3,
-                      style: TextStyle(
-                          fontFamily: "inter",
-                          fontWeight: FontWeight.w500,
-                          fontSize: 10,
-                          color: ColorConstants.black),
+                      style: const TextStyle(
+                          fontSize: 10, fontWeight: FontWeight.w600),
+                      gradient: LinearGradient(
+                          colors: [
+                            Color(0xFFF0D4B6),
+                            Color(0xFF6C4D34),
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter),
                     ),
                   ],
                 ),
