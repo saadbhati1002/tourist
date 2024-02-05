@@ -168,7 +168,7 @@ class _EventListScreenState extends State<EventListScreen> {
                                       ],
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter),
-                            size: 25,
+                            size: 20,
                           ),
                         ),
                         const SizedBox(
@@ -177,7 +177,7 @@ class _EventListScreenState extends State<EventListScreen> {
                         GradientText(
                           "My Calendar",
                           style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w600),
+                              fontSize: 14, fontWeight: FontWeight.w600),
                           gradient: LinearGradient(
                               colors: selectedCalender == 0
                                   ? [
@@ -250,7 +250,7 @@ class _EventListScreenState extends State<EventListScreen> {
                                       ],
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter),
-                            size: 25,
+                            size: 20,
                           ),
                         ),
                         const SizedBox(
@@ -259,7 +259,7 @@ class _EventListScreenState extends State<EventListScreen> {
                         GradientText(
                           "Event Calender",
                           style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w600),
+                              fontSize: 14, fontWeight: FontWeight.w600),
                           gradient: LinearGradient(
                               colors: selectedCalender == 1
                                   ? [

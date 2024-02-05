@@ -4,6 +4,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/rendering.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:tourist/utility/constant.dart';
 import 'package:tourist/utility/images.dart';
@@ -114,14 +115,23 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
                       width: MediaQuery.of(context).size.width * .65,
                       height: 35,
                       decoration: BoxDecoration(
-                          color: ColorConstants.black,
+                          gradient: LinearGradient(
+                            stops: [0, 1],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              Color(0xFF85153E),
+                              Color(0xFF30141D),
+                            ],
+                          ),
                           borderRadius: BorderRadius.circular(7)),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.asset(
-                            Images.download,
-                            color: ColorConstants.white,
+                          FaIcon(
+                            FontAwesomeIcons.download,
+                            color: ColorConstants.bagColor,
+                            size: 17,
                           ),
                           const SizedBox(
                             width: 10,
@@ -130,7 +140,7 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
                             'Download As Image',
                             style: TextStyle(
                                 fontSize: 14,
-                                color: ColorConstants.white,
+                                color: ColorConstants.bagColor,
                                 fontFamily: 'inter',
                                 fontWeight: FontWeight.w500),
                           ),

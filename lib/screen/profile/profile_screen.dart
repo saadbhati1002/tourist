@@ -803,9 +803,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Image.asset(
-                                        Images.download,
-                                        color: ColorConstants.white,
+                                      FaIcon(
+                                        FontAwesomeIcons.download,
+                                        color: ColorConstants.bagColor,
+                                        size: 17,
                                       ),
                                       const SizedBox(
                                         width: 10,
@@ -814,7 +815,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         'Download As Image',
                                         style: TextStyle(
                                             fontSize: 14,
-                                            color: ColorConstants.white,
+                                            color: ColorConstants.bagColor,
                                             fontFamily: 'inter',
                                             fontWeight: FontWeight.w500),
                                       ),

@@ -126,33 +126,37 @@ class _UserListDataState extends State<UserListData> {
                       getUserName(),
                       maxLines: 1,
                       style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: ColorConstants.black,
-                          fontFamily: "inter"),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: ColorConstants.black,
+                      ),
                     ),
                   ),
                   Text(
                     widget.userData!.jobTitle ?? '',
                     maxLines: 1,
                     style: TextStyle(
-                        fontSize: 10,
+                        fontSize: 12,
                         fontWeight: FontWeight.w500,
                         color: ColorConstants.black,
                         fontFamily: "inter"),
                   ),
-                  Text(
-                    widget.userData!.country != null &&
-                            widget.userData!.country != "null" &&
-                            widget.userData!.country != ""
-                        ? '${widget.userData!.companyName!.trim()}, ${widget.userData!.country ?? ''}'
-                        : widget.userData!.companyName!.trim(),
-                    maxLines: 1,
-                    style: TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w500,
-                        color: ColorConstants.black,
-                        fontFamily: "inter"),
+                  Container(
+                    width: MediaQuery.of(context).size.width * .5,
+                    child: Text(
+                      widget.userData!.country != null &&
+                              widget.userData!.country != "null" &&
+                              widget.userData!.country != ""
+                          ? '${widget.userData!.companyName!.trim()}, ${widget.userData!.country ?? ''}'
+                          : widget.userData!.companyName!.trim(),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w500,
+                          color: ColorConstants.mainColor,
+                          fontFamily: "inter"),
+                    ),
                   ),
                 ],
               ),
