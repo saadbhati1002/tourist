@@ -55,7 +55,13 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
       LeaderboardRes response =
           await LeaderBoardRepository().getLeaderboardApiCall();
       if (response.data != null) {
-        userList = response.data!;
+        for (int userLength = 0;
+            userLength < response.data!.length;
+            userLength++) {
+          if (response.data![userLength].userStatus == '1') {
+            userList.add(response.data![userLength]);
+          }
+        }
       }
     } catch (e) {
       debugPrint(e.toString());

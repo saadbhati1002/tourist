@@ -59,7 +59,13 @@ class _FindPeopleScreenState extends State<FindPeopleScreen> {
       });
       AllUserRes response = await UserRepository().allUsersApiCall();
       if (response.data != null) {
-        userList = response.data!;
+        for (int userLength = 0;
+            userLength < response.data!.length;
+            userLength++) {
+          if (response.data![userLength].userStatus == '1') {
+            userList.add(response.data![userLength]);
+          }
+        }
       }
     } catch (e) {
       debugPrint(e.toString());

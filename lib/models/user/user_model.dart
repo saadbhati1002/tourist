@@ -95,6 +95,7 @@ class UserData {
   dynamic userNote;
   bool? isUserFavorite;
   List<ChatHistory>? chatHistory;
+  dynamic userStatus;
   UserData(
       {id,
       deviceToken,
@@ -159,7 +160,8 @@ class UserData {
       this.userNote,
       this.userType,
       this.chatHistory,
-      this.isUserFavorite});
+      this.isUserFavorite,
+      this.userStatus});
 
   UserData.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
@@ -223,6 +225,7 @@ class UserData {
     tnc3Approval = json['tnc3_approval'].toString();
     userType = json['user_type'];
     userNote = json['notes'];
+    userStatus = json['user_status'].toString();
     if (json['chat_history'] != null) {
       chatHistory = <ChatHistory>[];
       json['chat_history'].forEach((v) {
@@ -294,6 +297,7 @@ class UserData {
     data['tnc3_approval'] = tnc3Approval;
     data['user_type'] = userType;
     data['notes'] = userNote;
+    data['user_status'] = userStatus;
     if (chatHistory != null) {
       data['chat_history'] = chatHistory!.map((v) => v.toJson()).toList();
     }

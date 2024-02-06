@@ -71,9 +71,13 @@ class _HomeScreenState extends State<HomeScreen> {
       RecommendedRes response =
           await UserRepository().getRecommendedUsersApiCall();
       if (response.recommended != null) {
-        setState(() {
-          recommendedUsersList = response.recommended!;
-        });
+        for (int userLength = 0;
+            userLength < response.recommended!.length;
+            userLength++) {
+          if (response.recommended![userLength].userStatus == "1") {
+            recommendedUsersList.add(response.recommended![userLength]);
+          }
+        }
       }
     } catch (e) {
       debugPrint(e.toString());
@@ -250,35 +254,39 @@ class _HomeScreenState extends State<HomeScreen> {
                         );
                       },
                     )
-                  : ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: 5,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 10),
-                          child: UserListData(
-                            userData: recommendedUsersList[index],
-                            onProfileTap: () async {
-                              await Get.to(
-                                () => ProfileScreen(
-                                  isFromGuest: true,
-                                  id: recommendedUsersList[index].id.toString(),
-                                ),
-                              );
-                            },
-                            onChatTap: () async {
-                              await Get.to(
-                                () => ChatScreen(
-                                  userData: recommendedUsersList[index],
-                                ),
-                              );
-                            },
-                          ),
-                        );
-                      },
-                    ),
+                  : recommendedUsersList.isNotEmpty
+                      ? ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: 5,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 10),
+                              child: UserListData(
+                                userData: recommendedUsersList[index],
+                                onProfileTap: () async {
+                                  await Get.to(
+                                    () => ProfileScreen(
+                                      isFromGuest: true,
+                                      id: recommendedUsersList[index]
+                                          .id
+                                          .toString(),
+                                    ),
+                                  );
+                                },
+                                onChatTap: () async {
+                                  await Get.to(
+                                    () => ChatScreen(
+                                      userData: recommendedUsersList[index],
+                                    ),
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                        )
+                      : const SizedBox(),
               const SizedBox(
                 height: 5,
               ),
