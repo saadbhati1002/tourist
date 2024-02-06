@@ -246,7 +246,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                                                       Color(0xFF433C3D),
                                                                                       Color(0xFF1B1819),
                                                                                     ]
-                                                                                  : userData!.userType == 'Vendor'
+                                                                                  : userData!.userType == 'Holders '
                                                                                       ? [
                                                                                           ColorConstants.bagColor,
                                                                                           ColorConstants.bagColor,
@@ -263,7 +263,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                                             ),
                                                                             color: userData!.userType == "Delegate"
                                                                                 ? ColorConstants.delegateColor
-                                                                                : userData!.userType == 'Vendor'
+                                                                                : userData!.userType == 'Holders '
                                                                                     ? ColorConstants.vendorColor
                                                                                     : userData!.userType == 'Media'
                                                                                         ? ColorConstants.mediaColor

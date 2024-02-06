@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AppConstant {
   static const String appName = 'Dubai Wedding Symposium';
   static const String baseUrl = 'https://dubaiweddingsymposium.com/API/v1/';
-  static List roleType = ['Delegate', 'Speaker', 'Vendor', 'Media'];
+  static List roleType = ['Delegate', 'Speaker', 'Holders ', 'Media'];
   static List rolesSubRole = ['Answer 1', 'Answer 2', 'Answer 3', 'Answer 4'];
   static String? selectedRole;
   static String? selectedSubRole;

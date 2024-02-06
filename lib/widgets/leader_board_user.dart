@@ -80,7 +80,7 @@ class _LeaderBoardUserState extends State<LeaderBoardUser> {
                                           Color(0xFF433C3D),
                                           Color(0xFF1B1819),
                                         ]
-                                      : widget.userData!.userType == 'Vendor'
+                                      : widget.userData!.userType == 'Holders '
                                           ? [
                                               ColorConstants.bagColor,
                                               ColorConstants.bagColor,
@@ -97,7 +97,7 @@ class _LeaderBoardUserState extends State<LeaderBoardUser> {
                                 ),
                                 color: widget.userData!.userType == "Delegate"
                                     ? ColorConstants.delegateColor
-                                    : widget.userData!.userType == 'Vendor'
+                                    : widget.userData!.userType == 'Holders '
                                         ? ColorConstants.vendorColor
                                         : widget.userData!.userType == 'Media'
                                             ? ColorConstants.mediaColor
