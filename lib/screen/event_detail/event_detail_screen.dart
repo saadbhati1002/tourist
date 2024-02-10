@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tourist/api/repository/event/event.dart';
@@ -21,6 +22,17 @@ class EventDetailScreen extends StatefulWidget {
 }
 
 class _EventDetailScreenState extends State<EventDetailScreen> {
+  @override
+  void initState() {
+    setAnalytics();
+    super.initState();
+  }
+
+  setAnalytics() async {
+    await FirebaseAnalytics.instance
+        .logScreenView(screenName: 'Event Detail Screen');
+  }
+
   Future<bool> willPopScope() {
     if (widget.eventData!.isAttendingEvent == true &&
         widget.eventData!.isSavedToMyCalender == true) {

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:tourist/api/repository/auth/auth.dart';
@@ -21,8 +22,13 @@ class _QuickScreenState extends State<QuickScreen> {
   HtmlEditorController controller = HtmlEditorController();
   @override
   void initState() {
+    setAnalytics();
     checkForData();
     super.initState();
+  }
+
+  setAnalytics() async {
+    await FirebaseAnalytics.instance.logScreenView(screenName: 'Notes Screen');
   }
 
   checkForData() {

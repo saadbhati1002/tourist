@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tourist/api/repository/user/user.dart';
@@ -32,8 +33,14 @@ class _FindPeopleScreenState extends State<FindPeopleScreen> {
 
   @override
   void initState() {
+    setAnalytics();
     getUserData();
     super.initState();
+  }
+
+  setAnalytics() async {
+    await FirebaseAnalytics.instance
+        .logScreenView(screenName: 'Find People Screen');
   }
 
   @override

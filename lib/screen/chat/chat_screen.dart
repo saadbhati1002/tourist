@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:skeletons/skeletons.dart';
@@ -31,8 +32,13 @@ class _ChatScreenState extends State<ChatScreen> {
   TextEditingController messageText = TextEditingController();
   @override
   void initState() {
+    setAnalytics();
     getData();
     super.initState();
+  }
+
+  setAnalytics() async {
+    await FirebaseAnalytics.instance.logScreenView(screenName: 'Chat Screen');
   }
 
   getData() async {

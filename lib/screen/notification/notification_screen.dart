@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:skeletons/skeletons.dart';
@@ -25,8 +26,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   @override
   void initState() {
+    setAnalytics();
     getData();
     super.initState();
+  }
+
+  setAnalytics() async {
+    await FirebaseAnalytics.instance
+        .logScreenView(screenName: 'Notifications Screen');
   }
 
   getData() async {

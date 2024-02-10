@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tourist/api/repository/auth/auth.dart';
@@ -28,8 +29,14 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   String? searchedName;
   @override
   void initState() {
+    setAnalytics();
     getFavoriteUserList();
     super.initState();
+  }
+
+  setAnalytics() async {
+    await FirebaseAnalytics.instance
+        .logScreenView(screenName: 'Favorite Screen');
   }
 
   getFavoriteUserList() async {

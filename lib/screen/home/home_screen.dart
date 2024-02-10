@@ -20,6 +20,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:tourist/widgets/gradient_text.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -48,7 +49,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     getData();
+    setAnalytics();
     super.initState();
+  }
+
+  setAnalytics() async {
+    await FirebaseAnalytics.instance.logScreenView(screenName: 'Home Screen');
   }
 
   getData() async {

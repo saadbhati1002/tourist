@@ -76,17 +76,17 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 const SizedBox(
                   height: 15,
                 ),
-                headingText(
-                  'Staff',
-                  () {
-                    Get.to(
-                      () => const StaffScreen(),
-                    );
-                  },
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
+                // headingText(
+                //   'Staff',
+                //   () {
+                //     Get.to(
+                //       () => const StaffScreen(),
+                //     );
+                //   },
+                // ),
+                // const SizedBox(
+                //   height: 15,
+                // ),
                 headingText(
                   'Favorite',
                   () {
@@ -96,18 +96,16 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 const SizedBox(
                   height: 15,
                 ),
-                headingText(
-                  'Wardrobe ',
-                  () {
-                    launchUrl(
-                      Uri.parse(
-                          'https://dubaiweddingsymposium.com/site/wardrobe/'),
-                    );
-                  },
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
+                // headingText(
+                //   'Wardrobe ',
+                //   () {
+                //     launchUrl(
+                //       Uri.parse(
+                //           'https://dubaiweddingsymposium.com/site/wardrobe/'),
+                //     );
+                //   },
+                // ),
+
                 // headingText(
                 //   'Notification Settings',
                 //   () {},

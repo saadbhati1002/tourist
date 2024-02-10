@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:tourist/api/repository/event/event.dart';
 import 'package:tourist/models/common.dart';
@@ -19,6 +20,17 @@ class _EventReviewScreenState extends State<EventReviewScreen> {
   TextEditingController review = TextEditingController();
   bool isLoading = false;
   bool isReviewSubmitted = false;
+  @override
+  void initState() {
+    setAnalytics();
+    super.initState();
+  }
+
+  setAnalytics() async {
+    await FirebaseAnalytics.instance
+        .logScreenView(screenName: 'Event Review Screen');
+  }
+
   Future<bool> willPopScope() {
     if (isReviewSubmitted == true) {
       Navigator.pop(context, review.text.trim());

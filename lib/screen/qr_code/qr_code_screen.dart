@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,17 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
   Uint8List? imageInMemory;
   String? imagePath;
   File? capturedFile;
+  @override
+  void initState() {
+    setAnalytics();
+    super.initState();
+  }
+
+  setAnalytics() async {
+    await FirebaseAnalytics.instance
+        .logScreenView(screenName: 'QR Code Screen');
+  }
+
   final vcardData = 'BEGIN:VCARD\n'
       'VERSION:3.0\n'
       'N:${AppConstant.userData!.firstName};${AppConstant.userData!.lastName};\n'

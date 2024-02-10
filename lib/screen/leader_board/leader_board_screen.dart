@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tourist/api/repository/leader_board/leader_board.dart';
@@ -27,8 +28,14 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
   List<UserData> userList = [];
   @override
   void initState() {
+    setAnalytics();
     getLeaderBoardUsers();
     super.initState();
+  }
+
+  setAnalytics() async {
+    await FirebaseAnalytics.instance
+        .logScreenView(screenName: 'Leader Board Screen');
   }
 
   @override

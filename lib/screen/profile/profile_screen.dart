@@ -1,4 +1,5 @@
 import 'dart:ui' as ui;
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +47,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       'END:VCARD';
   @override
   void initState() {
+    setAnalytics();
     if (widget.isFromGuest == true) {
       getData();
     } else {
@@ -54,6 +56,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
       });
     }
     super.initState();
+  }
+
+  setAnalytics() async {
+    await FirebaseAnalytics.instance
+        .logScreenView(screenName: 'Profile Detail Screen');
   }
 
   getData() async {

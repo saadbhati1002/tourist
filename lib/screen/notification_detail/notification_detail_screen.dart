@@ -1,11 +1,29 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:tourist/models/notification/notification_model.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:tourist/widgets/app_bar_back.dart';
 
-class NotificationDetailScreen extends StatelessWidget {
+class NotificationDetailScreen extends StatefulWidget {
   final Data? notificationData;
   const NotificationDetailScreen({super.key, this.notificationData});
+
+  @override
+  State<NotificationDetailScreen> createState() =>
+      _NotificationDetailScreenState();
+}
+
+class _NotificationDetailScreenState extends State<NotificationDetailScreen> {
+  @override
+  void initState() {
+    setAnalytics();
+    super.initState();
+  }
+
+  setAnalytics() async {
+    await FirebaseAnalytics.instance
+        .logScreenView(screenName: 'Notification Detail Screen');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +44,7 @@ class NotificationDetailScreen extends StatelessWidget {
                   height: 15,
                 ),
                 Text(
-                  notificationData!.title ?? '',
+                  widget.notificationData!.title ?? '',
                   style: TextStyle(
                       fontFamily: "inter",
                       fontWeight: FontWeight.w600,
@@ -37,7 +55,7 @@ class NotificationDetailScreen extends StatelessWidget {
                   height: 15,
                 ),
                 Text(
-                  '${notificationData!.createdDate} | ${notificationData!.createdTime}',
+                  '${widget.notificationData!.createdDate} | ${widget.notificationData!.createdTime}',
                   maxLines: 3,
                   style: const TextStyle(
                       fontFamily: "inter",
@@ -49,7 +67,7 @@ class NotificationDetailScreen extends StatelessWidget {
                   height: 15,
                 ),
                 Text(
-                  notificationData!.description ?? '',
+                  widget.notificationData!.description ?? '',
                   style: TextStyle(
                       fontFamily: "inter",
                       fontWeight: FontWeight.w500,
