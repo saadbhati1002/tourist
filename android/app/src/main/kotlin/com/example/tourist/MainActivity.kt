@@ -1,4 +1,4 @@
-package com.tourist.vivah
+package com.vivaahweddings
 
 import io.flutter.embedding.android.FlutterActivity
 

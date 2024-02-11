@@ -12,7 +12,12 @@
           "package_name": "com.tourist.vivah"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "104570725171-ql7uescr18a68ef420dut2i72reu4a14.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDZchO94xzfYcTzUwIemiwADX_71Qrxn6k"
@@ -20,7 +25,73 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "104570725171-ql7uescr18a68ef420dut2i72reu4a14.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "104570725171-mj077noqeq8fer2ahph5du3gn4nvblkt.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.app.dws",
+                "app_store_id": "6476618988"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:104570725171:android:5f9ec0b6e1724bd940d446",
+        "android_client_info": {
+          "package_name": "com.vivaahweddings"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "104570725171-37hn78npobjr7680s6658iv8348k3c2d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vivaahweddings",
+            "certificate_hash": "e18deaf2e47163abc18aeebc438843fd3c376166"
+          }
+        },
+        {
+          "client_id": "104570725171-bcteo40dnln00o112buor55fgnvckus2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vivaahweddings",
+            "certificate_hash": "83eb768be06325ca5460f4d4dd95b8c0270403eb"
+          }
+        },
+        {
+          "client_id": "104570725171-ql7uescr18a68ef420dut2i72reu4a14.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZchO94xzfYcTzUwIemiwADX_71Qrxn6k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "104570725171-ql7uescr18a68ef420dut2i72reu4a14.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "104570725171-mj077noqeq8fer2ahph5du3gn4nvblkt.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.app.dws",
+                "app_store_id": "6476618988"
+              }
+            }
+          ]
         }
       }
     }
