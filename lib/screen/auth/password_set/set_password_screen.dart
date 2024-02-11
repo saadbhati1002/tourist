@@ -172,17 +172,6 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
                             ],
                           ),
                         ),
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Padding(
-                            padding: const EdgeInsets.only(bottom: 15),
-                            child: SizedBox(
-                              height: 65,
-                              width: 65,
-                              child: Image.asset(Images.vivah),
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                   ),

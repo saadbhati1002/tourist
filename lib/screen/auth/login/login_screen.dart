@@ -120,17 +120,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             ],
                           ),
                         ),
-                        Container(
-                          alignment: Alignment.center,
-                          child: Padding(
-                            padding: const EdgeInsets.only(bottom: 15),
-                            child: SizedBox(
-                              height: 65,
-                              width: 65,
-                              child: Image.asset(Images.vivah),
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                   ),
