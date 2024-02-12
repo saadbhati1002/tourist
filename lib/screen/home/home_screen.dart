@@ -404,7 +404,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget homeBanner1() {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 1,
-      height: MediaQuery.of(context).size.height * .25,
+      height: MediaQuery.of(context).size.height * .3,
       child: Swiper(
         itemCount: banner1List.length,
         autoplay: banner1List.length > 1 ? true : false,
@@ -420,7 +420,7 @@ class _HomeScreenState extends State<HomeScreen> {
             imageBuilder: (context, imageProvider) {
               return Container(
                 width: MediaQuery.of(context).size.width * 1,
-                height: MediaQuery.of(context).size.height * .25,
+                height: MediaQuery.of(context).size.height * .3,
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(
                     Radius.circular(5),

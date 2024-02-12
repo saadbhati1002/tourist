@@ -406,76 +406,848 @@ class _EventListScreenState extends State<EventListScreen> {
                               itemBuilder: (context, index) {
                                 return selectedData ==
                                         eventData[index].eventDate!
-                                    ? GestureDetector(
-                                        onTap: () async {
-                                          var response = await Get.to(
-                                            () => EventDetailScreen(
-                                              eventData: eventData[index],
-                                            ),
-                                          );
-                                          checkIsAnyEventLaved(response, index);
-                                        },
-                                        child: eventListing(
-                                            isMyEvent: selectedCalender == 0
-                                                ? true
-                                                : false,
-                                            isEventJoin:
-                                                checkUserJoinInEvent(index),
-                                            context: context,
-                                            eventData: eventData[index],
-                                            attendEvent: () {
-                                              if (eventData[index]
-                                                      .isAttendingEvent ==
-                                                  false) {
-                                                joinEvent(index);
-                                              } else {
-                                                leaveEvent(index);
-                                              }
-                                            },
-                                            addToMyCalender: () {
-                                              if (eventData[index]
-                                                      .isSavedToMyCalender ==
-                                                  false) {
-                                                addEventToMyCalender(index);
-                                              } else {
-                                                removeEventFromMyCalender(
-                                                    index);
-                                              }
-                                            },
-                                            onTapReview: () async {
+                                    ? (selectedCalender == 0)
+                                        ? GestureDetector(
+                                            onTap: () async {
                                               var response = await Get.to(
-                                                () => EventReviewScreen(
-                                                  eventID: eventData[index].id,
+                                                () => EventDetailScreen(
+                                                  eventData: eventData[index],
                                                 ),
                                               );
-                                              if (response != null) {
-                                                eventData[index]
-                                                    .eventReview!
-                                                    .insert(
-                                                      0,
-                                                      EventReview(
-                                                        createdDate:
-                                                            DateTime.now()
-                                                                .toString(),
-                                                        eventId:
-                                                            eventData[index]
-                                                                .id
-                                                                .toString(),
-                                                        review:
-                                                            response.toString(),
-                                                        userId: AppConstant
-                                                            .userData!.id
-                                                            .toString(),
-                                                      ),
-                                                    );
-                                                setState(() {});
-                                              }
+                                              checkIsAnyEventLaved(
+                                                  response, index);
                                             },
-                                            isEventEnded:
-                                                checkEventStatus(index),
-                                            isReviewSubmitted:
-                                                checkForUsersReview(index)),
-                                      )
+                                            child: eventListing(
+                                                isMyEvent: selectedCalender == 0
+                                                    ? true
+                                                    : false,
+                                                isEventJoin:
+                                                    checkUserJoinInEvent(index),
+                                                context: context,
+                                                eventData: eventData[index],
+                                                attendEvent: () {
+                                                  if (eventData[index]
+                                                          .isAttendingEvent ==
+                                                      false) {
+                                                    joinEvent(index);
+                                                  } else {
+                                                    leaveEvent(index);
+                                                  }
+                                                },
+                                                addToMyCalender: () {
+                                                  if (eventData[index]
+                                                          .isSavedToMyCalender ==
+                                                      false) {
+                                                    addEventToMyCalender(index);
+                                                  } else {
+                                                    removeEventFromMyCalender(
+                                                        index);
+                                                  }
+                                                },
+                                                onTapReview: () async {
+                                                  var response = await Get.to(
+                                                    () => EventReviewScreen(
+                                                      eventID:
+                                                          eventData[index].id,
+                                                    ),
+                                                  );
+                                                  if (response != null) {
+                                                    eventData[index]
+                                                        .eventReview!
+                                                        .insert(
+                                                          0,
+                                                          EventReview(
+                                                            createdDate:
+                                                                DateTime.now()
+                                                                    .toString(),
+                                                            eventId:
+                                                                eventData[index]
+                                                                    .id
+                                                                    .toString(),
+                                                            review: response
+                                                                .toString(),
+                                                            userId: AppConstant
+                                                                .userData!.id
+                                                                .toString(),
+                                                          ),
+                                                        );
+                                                    setState(() {});
+                                                  }
+                                                },
+                                                isEventEnded:
+                                                    checkEventStatus(index),
+                                                isReviewSubmitted:
+                                                    checkForUsersReview(index)),
+                                          )
+                                        : (AppConstant.userData!.id.toString() ==
+                                                eventData[index]
+                                                    .userID
+                                                    .toString()
+                                                    .trim())
+                                            ? GestureDetector(
+                                                onTap: () async {
+                                                  var response = await Get.to(
+                                                    () => EventDetailScreen(
+                                                      eventData:
+                                                          eventData[index],
+                                                    ),
+                                                  );
+                                                  checkIsAnyEventLaved(
+                                                      response, index);
+                                                },
+                                                child: eventListing(
+                                                    isMyEvent:
+                                                        selectedCalender == 0
+                                                            ? true
+                                                            : false,
+                                                    isEventJoin:
+                                                        checkUserJoinInEvent(
+                                                            index),
+                                                    context: context,
+                                                    eventData: eventData[index],
+                                                    attendEvent: () {
+                                                      if (eventData[index]
+                                                              .isAttendingEvent ==
+                                                          false) {
+                                                        joinEvent(index);
+                                                      } else {
+                                                        leaveEvent(index);
+                                                      }
+                                                    },
+                                                    addToMyCalender: () {
+                                                      if (eventData[index]
+                                                              .isSavedToMyCalender ==
+                                                          false) {
+                                                        addEventToMyCalender(
+                                                            index);
+                                                      } else {
+                                                        removeEventFromMyCalender(
+                                                            index);
+                                                      }
+                                                    },
+                                                    onTapReview: () async {
+                                                      var response =
+                                                          await Get.to(
+                                                        () => EventReviewScreen(
+                                                          eventID:
+                                                              eventData[index]
+                                                                  .id,
+                                                        ),
+                                                      );
+                                                      if (response != null) {
+                                                        eventData[index]
+                                                            .eventReview!
+                                                            .insert(
+                                                              0,
+                                                              EventReview(
+                                                                createdDate: DateTime
+                                                                        .now()
+                                                                    .toString(),
+                                                                eventId: eventData[
+                                                                        index]
+                                                                    .id
+                                                                    .toString(),
+                                                                review: response
+                                                                    .toString(),
+                                                                userId: AppConstant
+                                                                    .userData!
+                                                                    .id
+                                                                    .toString(),
+                                                              ),
+                                                            );
+                                                        setState(() {});
+                                                      }
+                                                    },
+                                                    isEventEnded:
+                                                        checkEventStatus(index),
+                                                    isReviewSubmitted:
+                                                        checkForUsersReview(
+                                                            index)),
+                                              )
+                                            : (AppConstant
+                                                        .userData!.userGroup ==
+                                                    eventData[index].group1)
+                                                ? GestureDetector(
+                                                    onTap: () async {
+                                                      var response =
+                                                          await Get.to(
+                                                        () => EventDetailScreen(
+                                                          eventData:
+                                                              eventData[index],
+                                                          title:
+                                                              eventData[index]
+                                                                  .group_title1,
+                                                        ),
+                                                      );
+                                                      checkIsAnyEventLaved(
+                                                          response, index);
+                                                    },
+                                                    child: eventListing(
+                                                        title: eventData[index]
+                                                            .group_title1,
+                                                        isMyEvent:
+                                                            selectedCalender ==
+                                                                    0
+                                                                ? true
+                                                                : false,
+                                                        isEventJoin:
+                                                            checkUserJoinInEvent(
+                                                                index),
+                                                        context: context,
+                                                        eventData:
+                                                            eventData[index],
+                                                        attendEvent: () {
+                                                          if (eventData[index]
+                                                                  .isAttendingEvent ==
+                                                              false) {
+                                                            joinEvent(index);
+                                                          } else {
+                                                            leaveEvent(index);
+                                                          }
+                                                        },
+                                                        addToMyCalender: () {
+                                                          if (eventData[index]
+                                                                  .isSavedToMyCalender ==
+                                                              false) {
+                                                            addEventToMyCalender(
+                                                                index);
+                                                          } else {
+                                                            removeEventFromMyCalender(
+                                                                index);
+                                                          }
+                                                        },
+                                                        onTapReview: () async {
+                                                          var response =
+                                                              await Get.to(
+                                                            () =>
+                                                                EventReviewScreen(
+                                                              eventID:
+                                                                  eventData[
+                                                                          index]
+                                                                      .id,
+                                                            ),
+                                                          );
+                                                          if (response !=
+                                                              null) {
+                                                            eventData[index]
+                                                                .eventReview!
+                                                                .insert(
+                                                                  0,
+                                                                  EventReview(
+                                                                    createdDate:
+                                                                        DateTime.now()
+                                                                            .toString(),
+                                                                    eventId: eventData[
+                                                                            index]
+                                                                        .id
+                                                                        .toString(),
+                                                                    review: response
+                                                                        .toString(),
+                                                                    userId: AppConstant
+                                                                        .userData!
+                                                                        .id
+                                                                        .toString(),
+                                                                  ),
+                                                                );
+                                                            setState(() {});
+                                                          }
+                                                        },
+                                                        isEventEnded:
+                                                            checkEventStatus(
+                                                                index),
+                                                        isReviewSubmitted:
+                                                            checkForUsersReview(
+                                                                index)),
+                                                  )
+                                                : (AppConstant.userData!
+                                                            .userGroup ==
+                                                        eventData[index].group2)
+                                                    ? GestureDetector(
+                                                        onTap: () async {
+                                                          var response =
+                                                              await Get.to(
+                                                            () =>
+                                                                EventDetailScreen(
+                                                              eventData:
+                                                                  eventData[
+                                                                      index],
+                                                              title: eventData[
+                                                                      index]
+                                                                  .group_title2,
+                                                            ),
+                                                          );
+                                                          checkIsAnyEventLaved(
+                                                              response, index);
+                                                        },
+                                                        child: eventListing(
+                                                            title: eventData[index]
+                                                                .group_title2,
+                                                            isMyEvent:
+                                                                selectedCalender ==
+                                                                        0
+                                                                    ? true
+                                                                    : false,
+                                                            isEventJoin:
+                                                                checkUserJoinInEvent(
+                                                                    index),
+                                                            context: context,
+                                                            eventData:
+                                                                eventData[
+                                                                    index],
+                                                            attendEvent: () {
+                                                              if (eventData[
+                                                                          index]
+                                                                      .isAttendingEvent ==
+                                                                  false) {
+                                                                joinEvent(
+                                                                    index);
+                                                              } else {
+                                                                leaveEvent(
+                                                                    index);
+                                                              }
+                                                            },
+                                                            addToMyCalender:
+                                                                () {
+                                                              if (eventData[
+                                                                          index]
+                                                                      .isSavedToMyCalender ==
+                                                                  false) {
+                                                                addEventToMyCalender(
+                                                                    index);
+                                                              } else {
+                                                                removeEventFromMyCalender(
+                                                                    index);
+                                                              }
+                                                            },
+                                                            onTapReview:
+                                                                () async {
+                                                              var response =
+                                                                  await Get.to(
+                                                                () =>
+                                                                    EventReviewScreen(
+                                                                  eventID:
+                                                                      eventData[
+                                                                              index]
+                                                                          .id,
+                                                                ),
+                                                              );
+                                                              if (response !=
+                                                                  null) {
+                                                                eventData[index]
+                                                                    .eventReview!
+                                                                    .insert(
+                                                                      0,
+                                                                      EventReview(
+                                                                        createdDate:
+                                                                            DateTime.now().toString(),
+                                                                        eventId: eventData[index]
+                                                                            .id
+                                                                            .toString(),
+                                                                        review:
+                                                                            response.toString(),
+                                                                        userId: AppConstant
+                                                                            .userData!
+                                                                            .id
+                                                                            .toString(),
+                                                                      ),
+                                                                    );
+                                                                setState(() {});
+                                                              }
+                                                            },
+                                                            isEventEnded:
+                                                                checkEventStatus(
+                                                                    index),
+                                                            isReviewSubmitted:
+                                                                checkForUsersReview(
+                                                                    index)),
+                                                      )
+                                                    : (AppConstant.userData!
+                                                                .userGroup ==
+                                                            eventData[index]
+                                                                .group3)
+                                                        ? GestureDetector(
+                                                            onTap: () async {
+                                                              var response =
+                                                                  await Get.to(
+                                                                () =>
+                                                                    EventDetailScreen(
+                                                                  eventData:
+                                                                      eventData[
+                                                                          index],
+                                                                  title: eventData[
+                                                                          index]
+                                                                      .group_title3,
+                                                                ),
+                                                              );
+                                                              checkIsAnyEventLaved(
+                                                                  response,
+                                                                  index);
+                                                            },
+                                                            child: eventListing(
+                                                                title: eventData[index]
+                                                                    .group_title3,
+                                                                isMyEvent:
+                                                                    selectedCalender ==
+                                                                            0
+                                                                        ? true
+                                                                        : false,
+                                                                isEventJoin:
+                                                                    checkUserJoinInEvent(
+                                                                        index),
+                                                                context:
+                                                                    context,
+                                                                eventData:
+                                                                    eventData[
+                                                                        index],
+                                                                attendEvent:
+                                                                    () {
+                                                                  if (eventData[
+                                                                              index]
+                                                                          .isAttendingEvent ==
+                                                                      false) {
+                                                                    joinEvent(
+                                                                        index);
+                                                                  } else {
+                                                                    leaveEvent(
+                                                                        index);
+                                                                  }
+                                                                },
+                                                                addToMyCalender:
+                                                                    () {
+                                                                  if (eventData[
+                                                                              index]
+                                                                          .isSavedToMyCalender ==
+                                                                      false) {
+                                                                    addEventToMyCalender(
+                                                                        index);
+                                                                  } else {
+                                                                    removeEventFromMyCalender(
+                                                                        index);
+                                                                  }
+                                                                },
+                                                                onTapReview:
+                                                                    () async {
+                                                                  var response =
+                                                                      await Get
+                                                                          .to(
+                                                                    () =>
+                                                                        EventReviewScreen(
+                                                                      eventID:
+                                                                          eventData[index]
+                                                                              .id,
+                                                                    ),
+                                                                  );
+                                                                  if (response !=
+                                                                      null) {
+                                                                    eventData[
+                                                                            index]
+                                                                        .eventReview!
+                                                                        .insert(
+                                                                          0,
+                                                                          EventReview(
+                                                                            createdDate:
+                                                                                DateTime.now().toString(),
+                                                                            eventId:
+                                                                                eventData[index].id.toString(),
+                                                                            review:
+                                                                                response.toString(),
+                                                                            userId:
+                                                                                AppConstant.userData!.id.toString(),
+                                                                          ),
+                                                                        );
+                                                                    setState(
+                                                                        () {});
+                                                                  }
+                                                                },
+                                                                isEventEnded:
+                                                                    checkEventStatus(
+                                                                        index),
+                                                                isReviewSubmitted:
+                                                                    checkForUsersReview(
+                                                                        index)),
+                                                          )
+                                                        : (AppConstant.userData!
+                                                                    .userGroup ==
+                                                                eventData[index]
+                                                                    .group4)
+                                                            ? GestureDetector(
+                                                                onTap:
+                                                                    () async {
+                                                                  var response =
+                                                                      await Get
+                                                                          .to(
+                                                                    () =>
+                                                                        EventDetailScreen(
+                                                                      eventData:
+                                                                          eventData[
+                                                                              index],
+                                                                      title: eventData[
+                                                                              index]
+                                                                          .group_title4,
+                                                                    ),
+                                                                  );
+                                                                  checkIsAnyEventLaved(
+                                                                      response,
+                                                                      index);
+                                                                },
+                                                                child:
+                                                                    eventListing(
+                                                                        title: eventData[index]
+                                                                            .group_title4,
+                                                                        isMyEvent: selectedCalender ==
+                                                                                0
+                                                                            ? true
+                                                                            : false,
+                                                                        isEventJoin:
+                                                                            checkUserJoinInEvent(
+                                                                                index),
+                                                                        context:
+                                                                            context,
+                                                                        eventData:
+                                                                            eventData[
+                                                                                index],
+                                                                        attendEvent:
+                                                                            () {
+                                                                          if (eventData[index].isAttendingEvent ==
+                                                                              false) {
+                                                                            joinEvent(index);
+                                                                          } else {
+                                                                            leaveEvent(index);
+                                                                          }
+                                                                        },
+                                                                        addToMyCalender:
+                                                                            () {
+                                                                          if (eventData[index].isSavedToMyCalender ==
+                                                                              false) {
+                                                                            addEventToMyCalender(index);
+                                                                          } else {
+                                                                            removeEventFromMyCalender(index);
+                                                                          }
+                                                                        },
+                                                                        onTapReview:
+                                                                            () async {
+                                                                          var response =
+                                                                              await Get.to(
+                                                                            () =>
+                                                                                EventReviewScreen(
+                                                                              eventID: eventData[index].id,
+                                                                            ),
+                                                                          );
+                                                                          if (response !=
+                                                                              null) {
+                                                                            eventData[index].eventReview!.insert(
+                                                                                  0,
+                                                                                  EventReview(
+                                                                                    createdDate: DateTime.now().toString(),
+                                                                                    eventId: eventData[index].id.toString(),
+                                                                                    review: response.toString(),
+                                                                                    userId: AppConstant.userData!.id.toString(),
+                                                                                  ),
+                                                                                );
+                                                                            setState(() {});
+                                                                          }
+                                                                        },
+                                                                        isEventEnded:
+                                                                            checkEventStatus(
+                                                                                index),
+                                                                        isReviewSubmitted:
+                                                                            checkForUsersReview(index)),
+                                                              )
+                                                            : (AppConstant
+                                                                        .userData!
+                                                                        .userGroup ==
+                                                                    eventData[
+                                                                            index]
+                                                                        .group5)
+                                                                ? GestureDetector(
+                                                                    onTap:
+                                                                        () async {
+                                                                      var response =
+                                                                          await Get
+                                                                              .to(
+                                                                        () =>
+                                                                            EventDetailScreen(
+                                                                          eventData:
+                                                                              eventData[index],
+                                                                          title:
+                                                                              eventData[index].group_title5,
+                                                                        ),
+                                                                      );
+                                                                      checkIsAnyEventLaved(
+                                                                          response,
+                                                                          index);
+                                                                    },
+                                                                    child: eventListing(
+                                                                        title: eventData[index].group_title5,
+                                                                        isMyEvent: selectedCalender == 0 ? true : false,
+                                                                        isEventJoin: checkUserJoinInEvent(index),
+                                                                        context: context,
+                                                                        eventData: eventData[index],
+                                                                        attendEvent: () {
+                                                                          if (eventData[index].isAttendingEvent ==
+                                                                              false) {
+                                                                            joinEvent(index);
+                                                                          } else {
+                                                                            leaveEvent(index);
+                                                                          }
+                                                                        },
+                                                                        addToMyCalender: () {
+                                                                          if (eventData[index].isSavedToMyCalender ==
+                                                                              false) {
+                                                                            addEventToMyCalender(index);
+                                                                          } else {
+                                                                            removeEventFromMyCalender(index);
+                                                                          }
+                                                                        },
+                                                                        onTapReview: () async {
+                                                                          var response =
+                                                                              await Get.to(
+                                                                            () =>
+                                                                                EventReviewScreen(
+                                                                              eventID: eventData[index].id,
+                                                                            ),
+                                                                          );
+                                                                          if (response !=
+                                                                              null) {
+                                                                            eventData[index].eventReview!.insert(
+                                                                                  0,
+                                                                                  EventReview(
+                                                                                    createdDate: DateTime.now().toString(),
+                                                                                    eventId: eventData[index].id.toString(),
+                                                                                    review: response.toString(),
+                                                                                    userId: AppConstant.userData!.id.toString(),
+                                                                                  ),
+                                                                                );
+                                                                            setState(() {});
+                                                                          }
+                                                                        },
+                                                                        isEventEnded: checkEventStatus(index),
+                                                                        isReviewSubmitted: checkForUsersReview(index)),
+                                                                  )
+                                                                : (AppConstant
+                                                                            .userData!
+                                                                            .userGroup ==
+                                                                        eventData[index]
+                                                                            .group6)
+                                                                    ? GestureDetector(
+                                                                        onTap:
+                                                                            () async {
+                                                                          var response =
+                                                                              await Get.to(
+                                                                            () =>
+                                                                                EventDetailScreen(
+                                                                              eventData: eventData[index],
+                                                                              title: eventData[index].group_title3,
+                                                                            ),
+                                                                          );
+                                                                          checkIsAnyEventLaved(
+                                                                              response,
+                                                                              index);
+                                                                        },
+                                                                        child: eventListing(
+                                                                            title: eventData[index].group_title6,
+                                                                            isMyEvent: selectedCalender == 0 ? true : false,
+                                                                            isEventJoin: checkUserJoinInEvent(index),
+                                                                            context: context,
+                                                                            eventData: eventData[index],
+                                                                            attendEvent: () {
+                                                                              if (eventData[index].isAttendingEvent == false) {
+                                                                                joinEvent(index);
+                                                                              } else {
+                                                                                leaveEvent(index);
+                                                                              }
+                                                                            },
+                                                                            addToMyCalender: () {
+                                                                              if (eventData[index].isSavedToMyCalender == false) {
+                                                                                addEventToMyCalender(index);
+                                                                              } else {
+                                                                                removeEventFromMyCalender(index);
+                                                                              }
+                                                                            },
+                                                                            onTapReview: () async {
+                                                                              var response = await Get.to(
+                                                                                () => EventReviewScreen(
+                                                                                  eventID: eventData[index].id,
+                                                                                ),
+                                                                              );
+                                                                              if (response != null) {
+                                                                                eventData[index].eventReview!.insert(
+                                                                                      0,
+                                                                                      EventReview(
+                                                                                        createdDate: DateTime.now().toString(),
+                                                                                        eventId: eventData[index].id.toString(),
+                                                                                        review: response.toString(),
+                                                                                        userId: AppConstant.userData!.id.toString(),
+                                                                                      ),
+                                                                                    );
+                                                                                setState(() {});
+                                                                              }
+                                                                            },
+                                                                            isEventEnded: checkEventStatus(index),
+                                                                            isReviewSubmitted: checkForUsersReview(index)),
+                                                                      )
+                                                                    : (AppConstant.userData!.userGroup ==
+                                                                            eventData[index].group7)
+                                                                        ? GestureDetector(
+                                                                            onTap:
+                                                                                () async {
+                                                                              var response = await Get.to(
+                                                                                () => EventDetailScreen(
+                                                                                  eventData: eventData[index],
+                                                                                  title: eventData[index].group_title4,
+                                                                                ),
+                                                                              );
+                                                                              checkIsAnyEventLaved(response, index);
+                                                                            },
+                                                                            child: eventListing(
+                                                                                title: eventData[index].group_title7,
+                                                                                isMyEvent: selectedCalender == 0 ? true : false,
+                                                                                isEventJoin: checkUserJoinInEvent(index),
+                                                                                context: context,
+                                                                                eventData: eventData[index],
+                                                                                attendEvent: () {
+                                                                                  if (eventData[index].isAttendingEvent == false) {
+                                                                                    joinEvent(index);
+                                                                                  } else {
+                                                                                    leaveEvent(index);
+                                                                                  }
+                                                                                },
+                                                                                addToMyCalender: () {
+                                                                                  if (eventData[index].isSavedToMyCalender == false) {
+                                                                                    addEventToMyCalender(index);
+                                                                                  } else {
+                                                                                    removeEventFromMyCalender(index);
+                                                                                  }
+                                                                                },
+                                                                                onTapReview: () async {
+                                                                                  var response = await Get.to(
+                                                                                    () => EventReviewScreen(
+                                                                                      eventID: eventData[index].id,
+                                                                                    ),
+                                                                                  );
+                                                                                  if (response != null) {
+                                                                                    eventData[index].eventReview!.insert(
+                                                                                          0,
+                                                                                          EventReview(
+                                                                                            createdDate: DateTime.now().toString(),
+                                                                                            eventId: eventData[index].id.toString(),
+                                                                                            review: response.toString(),
+                                                                                            userId: AppConstant.userData!.id.toString(),
+                                                                                          ),
+                                                                                        );
+                                                                                    setState(() {});
+                                                                                  }
+                                                                                },
+                                                                                isEventEnded: checkEventStatus(index),
+                                                                                isReviewSubmitted: checkForUsersReview(index)),
+                                                                          )
+                                                                        : (AppConstant.userData!.userGroup == eventData[index].group8)
+                                                                            ? GestureDetector(
+                                                                                onTap: () async {
+                                                                                  var response = await Get.to(
+                                                                                    () => EventDetailScreen(
+                                                                                      eventData: eventData[index],
+                                                                                      title: eventData[index].group_title8,
+                                                                                    ),
+                                                                                  );
+                                                                                  checkIsAnyEventLaved(response, index);
+                                                                                },
+                                                                                child: eventListing(
+                                                                                    title: eventData[index].group_title8,
+                                                                                    isMyEvent: selectedCalender == 0 ? true : false,
+                                                                                    isEventJoin: checkUserJoinInEvent(index),
+                                                                                    context: context,
+                                                                                    eventData: eventData[index],
+                                                                                    attendEvent: () {
+                                                                                      if (eventData[index].isAttendingEvent == false) {
+                                                                                        joinEvent(index);
+                                                                                      } else {
+                                                                                        leaveEvent(index);
+                                                                                      }
+                                                                                    },
+                                                                                    addToMyCalender: () {
+                                                                                      if (eventData[index].isSavedToMyCalender == false) {
+                                                                                        addEventToMyCalender(index);
+                                                                                      } else {
+                                                                                        removeEventFromMyCalender(index);
+                                                                                      }
+                                                                                    },
+                                                                                    onTapReview: () async {
+                                                                                      var response = await Get.to(
+                                                                                        () => EventReviewScreen(
+                                                                                          eventID: eventData[index].id,
+                                                                                        ),
+                                                                                      );
+                                                                                      if (response != null) {
+                                                                                        eventData[index].eventReview!.insert(
+                                                                                              0,
+                                                                                              EventReview(
+                                                                                                createdDate: DateTime.now().toString(),
+                                                                                                eventId: eventData[index].id.toString(),
+                                                                                                review: response.toString(),
+                                                                                                userId: AppConstant.userData!.id.toString(),
+                                                                                              ),
+                                                                                            );
+                                                                                        setState(() {});
+                                                                                      }
+                                                                                    },
+                                                                                    isEventEnded: checkEventStatus(index),
+                                                                                    isReviewSubmitted: checkForUsersReview(index)),
+                                                                              )
+                                                                            : (AppConstant.userData!.userGroup == eventData[index].group9)
+                                                                                ? GestureDetector(
+                                                                                    onTap: () async {
+                                                                                      var response = await Get.to(
+                                                                                        () => EventDetailScreen(
+                                                                                          eventData: eventData[index],
+                                                                                          title: eventData[index].group_title9,
+                                                                                        ),
+                                                                                      );
+                                                                                      checkIsAnyEventLaved(response, index);
+                                                                                    },
+                                                                                    child: eventListing(
+                                                                                        title: eventData[index].group_title9,
+                                                                                        isMyEvent: selectedCalender == 0 ? true : false,
+                                                                                        isEventJoin: checkUserJoinInEvent(index),
+                                                                                        context: context,
+                                                                                        eventData: eventData[index],
+                                                                                        attendEvent: () {
+                                                                                          if (eventData[index].isAttendingEvent == false) {
+                                                                                            joinEvent(index);
+                                                                                          } else {
+                                                                                            leaveEvent(index);
+                                                                                          }
+                                                                                        },
+                                                                                        addToMyCalender: () {
+                                                                                          if (eventData[index].isSavedToMyCalender == false) {
+                                                                                            addEventToMyCalender(index);
+                                                                                          } else {
+                                                                                            removeEventFromMyCalender(index);
+                                                                                          }
+                                                                                        },
+                                                                                        onTapReview: () async {
+                                                                                          var response = await Get.to(
+                                                                                            () => EventReviewScreen(
+                                                                                              eventID: eventData[index].id,
+                                                                                            ),
+                                                                                          );
+                                                                                          if (response != null) {
+                                                                                            eventData[index].eventReview!.insert(
+                                                                                                  0,
+                                                                                                  EventReview(
+                                                                                                    createdDate: DateTime.now().toString(),
+                                                                                                    eventId: eventData[index].id.toString(),
+                                                                                                    review: response.toString(),
+                                                                                                    userId: AppConstant.userData!.id.toString(),
+                                                                                                  ),
+                                                                                                );
+                                                                                            setState(() {});
+                                                                                          }
+                                                                                        },
+                                                                                        isEventEnded: checkEventStatus(index),
+                                                                                        isReviewSubmitted: checkForUsersReview(index)),
+                                                                                  )
+                                                                                : const SizedBox()
                                     : const SizedBox();
                               },
                             ),

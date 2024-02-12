@@ -9,13 +9,16 @@ import 'package:tourist/screen/profile/profile_screen.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:tourist/utility/constant.dart';
 import 'package:tourist/widgets/app_bar_back.dart';
+import 'package:tourist/widgets/custom_image_view.dart';
 import 'package:tourist/widgets/custom_user_list.dart';
 import 'package:tourist/widgets/show_progress_bar.dart';
 
 class EventDetailScreen extends StatefulWidget {
   final EventData? eventData;
   final String? eventDate;
-  const EventDetailScreen({super.key, this.eventData, this.eventDate});
+  final String? title;
+  const EventDetailScreen(
+      {super.key, this.eventData, this.eventDate, this.title});
 
   @override
   State<EventDetailScreen> createState() => _EventDetailScreenState();
@@ -89,14 +92,27 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Text(
-                        widget.eventData!.title ?? '',
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: ColorConstants.black,
-                            fontFamily: 'inter',
-                            fontWeight: FontWeight.w700),
-                      ),
+                      child: widget.title != null
+                          ? Text(
+                              widget.title == "Pickup From"
+                                  ? "${widget.title} ${AppConstant.userData!.userHotel}"
+                                  : widget.title == "Departure to"
+                                      ? "$widget.title ${AppConstant.userData!.userHotel}"
+                                      : "",
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: ColorConstants.black,
+                                  fontFamily: 'inter',
+                                  fontWeight: FontWeight.w700),
+                            )
+                          : Text(
+                              widget.eventData!.title ?? '',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: ColorConstants.black,
+                                  fontFamily: 'inter',
+                                  fontWeight: FontWeight.w700),
+                            ),
                     ),
                     const SizedBox(
                       height: 20,
@@ -402,36 +418,135 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                             color: ColorConstants.greyLight),
                       ),
                     ),
-                    ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      itemCount: widget.eventData!.userList!.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: UserListData(
-                            onProfileTap: () {
-                              Get.to(
-                                () => ProfileScreen(
-                                  isFromGuest: true,
-                                  id: widget.eventData!.userList![index].id
-                                      .toString(),
-                                ),
-                              );
-                            },
-                            onChatTap: () async {
-                              await Get.to(
-                                () => ChatScreen(
+                    widget.eventData!.eventType == "Event"
+                        ? ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            itemCount: widget.eventData!.userList!.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10),
+                                child: UserListData(
+                                  onProfileTap: () {
+                                    Get.to(
+                                      () => ProfileScreen(
+                                        isFromGuest: true,
+                                        id: widget
+                                            .eventData!.userList![index].id
+                                            .toString(),
+                                      ),
+                                    );
+                                  },
+                                  onChatTap: () async {
+                                    await Get.to(
+                                      () => ChatScreen(
+                                        userData:
+                                            widget.eventData!.userList![index],
+                                      ),
+                                    );
+                                  },
                                   userData: widget.eventData!.userList![index],
                                 ),
                               );
                             },
-                            userData: widget.eventData!.userList![index],
+                          )
+                        : Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 10),
+                                child: UserListData(
+                                  onProfileTap: () {
+                                    Get.to(
+                                      () => ProfileScreen(
+                                        // isFromGuest: true,
+                                        id: AppConstant.userData!.id.toString(),
+                                      ),
+                                    );
+                                  },
+                                  onChatTap: () async {},
+                                  userData: AppConstant.userData,
+                                ),
+                              ),
+                            ],
                           ),
-                        );
-                      },
-                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 10),
+                      child: SizedBox(
+                        height: 70,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 70,
+                              width: 70,
+                              child: Stack(
+                                children: [
+                                  CustomImage(
+                                    height: 70,
+                                    width: 70,
+                                    imagePath:
+                                        widget.eventData!.hotelImage ?? "",
+                                  ),
+                                  Align(
+                                    alignment: Alignment.bottomLeft,
+                                    child: Container(
+                                      height: 15,
+                                      width: 70,
+                                      decoration: BoxDecoration(
+                                        borderRadius: const BorderRadius.only(
+                                          bottomLeft: Radius.circular(
+                                            5,
+                                          ),
+                                          bottomRight: Radius.circular(5),
+                                        ),
+                                        gradient: LinearGradient(
+                                            stops: [0, 1],
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
+                                            colors: [
+                                              Color(0xFFF8A57E),
+                                              Color(0xFFBB6358),
+                                            ]),
+                                      ),
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        "Stakeholder",
+                                        maxLines: 1,
+                                        style: TextStyle(
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.w700,
+                                            fontFamily: 'inter',
+                                            color: ColorConstants.white),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 9,
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width * .74,
+                              child: Text(
+                                widget.eventData!.hotelName ?? "",
+                                maxLines: 1,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700,
+                                  color: ColorConstants.black,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),

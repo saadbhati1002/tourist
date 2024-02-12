@@ -3,9 +3,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tourist/models/event/event_list.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:avatar_stack/avatar_stack.dart';
+import 'package:tourist/utility/constant.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 Widget eventListing({
+  String? title,
   BuildContext? context,
   EventData? eventData,
   VoidCallback? attendEvent,
@@ -127,16 +129,31 @@ Widget eventListing({
               const SizedBox(
                 height: 15,
               ),
-              Text(
-                eventData.title ?? '',
-                style: TextStyle(
-                    fontSize: 14,
-                    color: isEventEnded == true
-                        ? ColorConstants.black.withOpacity(0.5)
-                        : ColorConstants.black,
-                    fontFamily: 'inter',
-                    fontWeight: FontWeight.w700),
-              ),
+              title != null
+                  ? Text(
+                      title == "Pickup From"
+                          ? "$title ${AppConstant.userData!.userHotel}"
+                          : title == "Departure to"
+                              ? "$title ${AppConstant.userData!.userHotel}"
+                              : title,
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: isEventEnded == true
+                              ? ColorConstants.black.withOpacity(0.5)
+                              : ColorConstants.black,
+                          fontFamily: 'inter',
+                          fontWeight: FontWeight.w700),
+                    )
+                  : Text(
+                      eventData.title ?? '',
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: isEventEnded == true
+                              ? ColorConstants.black.withOpacity(0.5)
+                              : ColorConstants.black,
+                          fontFamily: 'inter',
+                          fontWeight: FontWeight.w700),
+                    ),
               SizedBox(
                 height: eventData.eventType != null ? 15 : 0,
               ),

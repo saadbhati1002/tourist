@@ -18,6 +18,7 @@ class EventNetwork {
     final result = await httpManager.post(
       url: eventListUrl,
     );
+    print(result);
     EventRes loginRes = EventRes.fromJson(result);
     return loginRes;
   }
