@@ -116,7 +116,7 @@ class _UserListDataState extends State<UserListData> {
             SizedBox(
               width: widget.isFromChat == true
                   ? MediaQuery.of(context).size.width * .47
-                  : MediaQuery.of(context).size.width * .63,
+                  : MediaQuery.of(context).size.width * .61,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
