@@ -6,11 +6,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AppConstant {
   static const String appName = 'Vivaah Weddings';
   static const String baseUrl = 'https://dubaiweddingsymposium.com/API/v1/';
-  static List roleType = ['Delegate', 'Speaker', 'Stockholder', 'Media'];
+  static List roleType = ['Delegate', 'Speaker', 'Stakeholders', 'Media'];
   static List rolesSubRole = ['Answer 1', 'Answer 2', 'Answer 3', 'Answer 4'];
   static String? selectedRole;
   static String? selectedSubRole;
-  static bool isMyEvent = true;
+  static bool isMyEvent = false;
   static UserData? userData;
   static userDetailSaved(String userDetail) async {
     final pref = await SharedPreferences.getInstance();
