@@ -15,17 +15,17 @@
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
-	<string>1.0.13</string>
+	<string>1.0.14</string>
 	<key>CFBundleName</key>
 	<string>Dubai Wedding Symposium</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.13</string>
+	<string>1.14</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1.13</string>
+	<string>1.14</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>http</string>

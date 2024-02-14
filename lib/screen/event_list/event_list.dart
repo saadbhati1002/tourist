@@ -30,7 +30,7 @@ class _EventListScreenState extends State<EventListScreen> {
   bool isLoading = false;
   bool isAPiCalling = false;
   String selectedData = '16-02-2024';
-  int selectedCalender = 0;
+  int selectedCalender = 1;
   setStateNow() {
     setState(() {});
   }
@@ -50,7 +50,7 @@ class _EventListScreenState extends State<EventListScreen> {
 
   @override
   void dispose() {
-    AppConstant.isMyEvent = true;
+    AppConstant.isMyEvent = false;
     super.dispose();
   }
 
@@ -75,7 +75,7 @@ class _EventListScreenState extends State<EventListScreen> {
         myEventData = eventData;
       } else {
         EventRes response = await EventRepository().allEventListApiCall();
-        eventData = response.event!;
+
         if (response.event!.isNotEmpty) {
           eventData = response.event!;
           checkForSavedEvents();
@@ -352,7 +352,7 @@ class _EventListScreenState extends State<EventListScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * .59,
+                  height: MediaQuery.of(context).size.height * .55,
                   child: isLoading
                       ? ListView.builder(
                           padding: const EdgeInsets.symmetric(
