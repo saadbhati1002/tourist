@@ -138,10 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
       toastShow(message: "Please enter your email");
       return;
     }
-    if (!email.text.toString().contains(".com")) {
-      toastShow(message: "Please enter a valid email");
-      return;
-    }
+
     try {
       FocusScope.of(context).requestFocus(FocusNode());
       setState(() {
