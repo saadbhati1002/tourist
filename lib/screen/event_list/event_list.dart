@@ -352,7 +352,7 @@ class _EventListScreenState extends State<EventListScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * .55,
+                  height: MediaQuery.of(context).size.height * .59,
                   child: isLoading
                       ? ListView.builder(
                           padding: const EdgeInsets.symmetric(

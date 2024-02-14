@@ -158,12 +158,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         return chatSkeleton();
                       })
                   : chatHistory.isEmpty
-                      ? SizedBox(
-                          height: MediaQuery.of(context).size.height * .75,
-                          child: const Center(
-                              child: Text(
-                                  "Chat not found. Please start the start ")),
-                        )
+                      ? SizedBox()
                       : ListView.builder(
                           itemCount: chatHistory.length,
                           padding: const EdgeInsets.only(

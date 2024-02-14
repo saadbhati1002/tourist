@@ -97,7 +97,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                               widget.title == "Pickup From"
                                   ? "${widget.title} ${AppConstant.userData!.userHotel}"
                                   : widget.title?.trim() == "Departure to"
-                                      ? "${widget.title} ${AppConstant.userData!.userHotel}"
+                                      ? "$widget.title ${AppConstant.userData!.userHotel}"
                                       : widget.title ?? '',
                               style: TextStyle(
                                   fontSize: 14,
