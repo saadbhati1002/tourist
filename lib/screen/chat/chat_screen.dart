@@ -158,7 +158,9 @@ class _ChatScreenState extends State<ChatScreen> {
                         return chatSkeleton();
                       })
                   : chatHistory.isEmpty
-                      ? SizedBox()
+                      ? SizedBox(
+                          height: MediaQuery.of(context).size.height * .74,
+                        )
                       : ListView.builder(
                           itemCount: chatHistory.length,
                           padding: const EdgeInsets.only(
