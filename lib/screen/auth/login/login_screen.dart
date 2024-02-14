@@ -138,7 +138,6 @@ class _LoginScreenState extends State<LoginScreen> {
       toastShow(message: "Please enter your email");
       return;
     }
-
     try {
       FocusScope.of(context).requestFocus(FocusNode());
       setState(() {

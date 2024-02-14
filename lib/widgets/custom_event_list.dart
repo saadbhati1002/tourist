@@ -133,7 +133,7 @@ Widget eventListing({
                   ? Text(
                       title == "Pickup From"
                           ? "$title ${AppConstant.userData!.userHotel}"
-                          : title == "Departure to"
+                          : title.trim() == "Departure to"
                               ? "$title ${AppConstant.userData!.userHotel}"
                               : title,
                       style: TextStyle(

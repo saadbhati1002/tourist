@@ -96,9 +96,9 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                           ? Text(
                               widget.title == "Pickup From"
                                   ? "${widget.title} ${AppConstant.userData!.userHotel}"
-                                  : widget.title == "Departure to"
-                                      ? "$widget.title ${AppConstant.userData!.userHotel}"
-                                      : "",
+                                  : widget.title?.trim() == "Departure to"
+                                      ? "${widget.title} ${AppConstant.userData!.userHotel}"
+                                      : widget.title ?? '',
                               style: TextStyle(
                                   fontSize: 14,
                                   color: ColorConstants.black,
@@ -470,83 +470,92 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                                   userData: AppConstant.userData,
                                 ),
                               ),
-                            ],
-                          ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 10),
-                      child: SizedBox(
-                        height: 70,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: 70,
-                              width: 70,
-                              child: Stack(
-                                children: [
-                                  CustomImage(
-                                    height: 70,
-                                    width: 70,
-                                    imagePath:
-                                        widget.eventData!.hotelImage ?? "",
-                                  ),
-                                  Align(
-                                    alignment: Alignment.bottomLeft,
-                                    child: Container(
-                                      height: 15,
-                                      width: 70,
-                                      decoration: BoxDecoration(
-                                        borderRadius: const BorderRadius.only(
-                                          bottomLeft: Radius.circular(
-                                            5,
-                                          ),
-                                          bottomRight: Radius.circular(5),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 10),
+                                child: SizedBox(
+                                  height: 70,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        height: 70,
+                                        width: 70,
+                                        child: Stack(
+                                          children: [
+                                            CustomImage(
+                                              height: 70,
+                                              width: 70,
+                                              imagePath: widget
+                                                      .eventData!.hotelImage ??
+                                                  "",
+                                            ),
+                                            Align(
+                                              alignment: Alignment.bottomLeft,
+                                              child: Container(
+                                                height: 15,
+                                                width: 70,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      const BorderRadius.only(
+                                                    bottomLeft: Radius.circular(
+                                                      5,
+                                                    ),
+                                                    bottomRight:
+                                                        Radius.circular(5),
+                                                  ),
+                                                  gradient: LinearGradient(
+                                                      stops: [0, 1],
+                                                      begin: Alignment.topLeft,
+                                                      end:
+                                                          Alignment.bottomRight,
+                                                      colors: [
+                                                        Color(0xFFF8A57E),
+                                                        Color(0xFFBB6358),
+                                                      ]),
+                                                ),
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  "Stakeholder",
+                                                  maxLines: 1,
+                                                  style: TextStyle(
+                                                      fontSize: 10,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      fontFamily: 'inter',
+                                                      color:
+                                                          ColorConstants.white),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                        gradient: LinearGradient(
-                                            stops: [0, 1],
-                                            begin: Alignment.topLeft,
-                                            end: Alignment.bottomRight,
-                                            colors: [
-                                              Color(0xFFF8A57E),
-                                              Color(0xFFBB6358),
-                                            ]),
                                       ),
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        "Stakeholder",
-                                        maxLines: 1,
-                                        style: TextStyle(
-                                            fontSize: 10,
+                                      const SizedBox(
+                                        width: 9,
+                                      ),
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                .74,
+                                        child: Text(
+                                          widget.eventData!.hotelName ?? "",
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                            fontSize: 14,
                                             fontWeight: FontWeight.w700,
-                                            fontFamily: 'inter',
-                                            color: ColorConstants.white),
+                                            color: ColorConstants.black,
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 9,
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width * .74,
-                              child: Text(
-                                widget.eventData!.hotelName ?? "",
-                                maxLines: 1,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700,
-                                  color: ColorConstants.black,
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
+                            ],
+                          ),
                   ],
                 ),
               ),
