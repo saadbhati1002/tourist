@@ -30,11 +30,11 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
   bool isConfirmPassword = true;
   String? deviceToken;
 
-  // @override
-  // void initState() {
-  //   getDeviceToken();
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    getDeviceToken();
+    super.initState();
+  }
 
   getDeviceToken() async {
     deviceToken = await FirebaseMessaging.instance.getToken();

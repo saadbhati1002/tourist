@@ -17,6 +17,7 @@ class AuthNetwork {
       "auth-api.php/saveFavoriteUserList?user_id=";
 
   static Future<dynamic> checkEmail(prams) async {
+    print(prams);
     final result = await httpManager.post(url: emailCheckUrl, data: prams);
 
     Common loginRes = Common.fromJson(result);
@@ -30,6 +31,7 @@ class AuthNetwork {
   }
 
   static Future<dynamic> userLogin(prams) async {
+    print(prams);
     final result = await httpManager.post(url: userLoginUrl, data: prams);
     print(result);
     UserRes loginRes = UserRes.fromJson(result);

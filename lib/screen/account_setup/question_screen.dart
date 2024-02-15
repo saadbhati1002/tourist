@@ -58,7 +58,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          width: MediaQuery.of(context).size.width * .6,
+                          width: MediaQuery.of(context).size.width * .4,
                           alignment: Alignment.center,
                           child: Image.asset(Images.logoName),
                         ),
@@ -114,17 +114,6 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       ),
                     )
                   ],
-                ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 15),
-                child: SizedBox(
-                  height: 65,
-                  width: 65,
-                  child: Image.asset(Images.vivah),
                 ),
               ),
             ),
