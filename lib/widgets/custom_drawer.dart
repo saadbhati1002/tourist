@@ -5,11 +5,9 @@ import 'package:tourist/screen/favourite/favourite_screen.dart';
 import 'package:tourist/screen/find_people/find_people_screen.dart';
 import 'package:tourist/screen/qr_code/qr_code_screen.dart';
 import 'package:tourist/screen/splash/splash.dart';
-import 'package:tourist/screen/staff/staff_screen.dart';
 import 'package:tourist/screen/users/users_screen.dart';
 import 'package:tourist/utility/color.dart';
 import 'package:tourist/utility/constant.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key});

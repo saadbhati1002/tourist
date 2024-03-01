@@ -40,6 +40,7 @@ class AuthNetwork {
   }
 
   static Future<dynamic> updateProfile(prams) async {
+    print(prams);
     final result = await httpManager.postWithoutJson(
         url: "$updateProfileUrl${AppConstant.userData!.id!}", data: prams);
 

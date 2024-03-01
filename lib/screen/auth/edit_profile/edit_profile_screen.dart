@@ -587,10 +587,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       toastShow(message: "Please enter your email");
       return;
     }
-    if (!email.text.contains(".com")) {
-      toastShow(message: "Please enter correct email");
-      return;
-    }
+
     if (phoneNumber.text.isEmpty) {
       toastShow(message: "Please enter your mobile number");
       return;
